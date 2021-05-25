@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\BA_Work\BaPublish</_PublishTargetUrl>
+    <History>True|2021-05-24T10:57:48.2383140Z;True|2021-05-24T17:47:56.1285944+07:00;True|2021-05-24T17:42:39.5132222+07:00;True|2021-05-24T17:11:51.7350375+07:00;True|2021-05-24T16:28:39.5448483+07:00;True|2021-05-24T14:58:50.6962470+07:00;True|2021-05-24T10:14:19.2900658+07:00;True|2021-05-24T10:00:27.2392530+07:00;True|2021-05-24T09:43:49.3302412+07:00;True|2021-05-24T09:43:20.1075858+07:00;True|2021-05-24T09:34:56.1895042+07:00;True|2021-05-21T17:34:05.2068322+07:00;True|2021-05-21T17:25:07.7452839+07:00;True|2021-05-21T16:55:28.7947477+07:00;True|2021-05-21T16:20:05.3298757+07:00;True|2021-05-20T16:54:05.6659606+07:00;True|2021-05-20T16:49:02.7405846+07:00;True|2021-05-20T16:39:42.8331907+07:00;True|2021-05-19T15:10:48.1225967+07:00;True|2021-05-19T15:06:07.6060658+07:00;True|2021-05-18T17:54:40.1524938+07:00;True|2021-05-18T17:48:53.7727868+07:00;True|2021-05-18T15:27:18.8007506+07:00;True|2021-05-18T13:46:09.0282251+07:00;True|2021-05-18T11:21:20.4353695+07:00;True|2021-05-18T08:10:14.2224273+07:00;True|2021-05-17T13:55:32.7904112+07:00;True|2021-05-17T13:52:05.8006535+07:00;True|2021-05-14T17:53:42.4558836+07:00;True|2021-05-14T17:38:36.7042807+07:00;True|2021-05-14T17:25:45.7794625+07:00;True|2021-05-14T17:04:56.3912718+07:00;True|2021-05-14T11:51:06.1329909+07:00;True|2021-05-14T11:31:50.6117535+07:00;True|2021-05-14T11:31:01.1120014+07:00;True|2021-05-14T11:24:39.4444350+07:00;True|2021-05-14T10:48:33.9246577+07:00;</History>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="Views/BaoCaoTongHop/DonViVanTai.cshtml">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+    <File Include="wwwroot/datasample.json">
+      <publishTime>05/24/2021 17:31:18</publishTime>
+    </File>
+    <File Include="wwwroot/js/site.js">
+      <publishTime>05/24/2021 17:49:46</publishTime>
+    </File>
+    <File Include="wwwroot/js/trang-chu.js">
+      <publishTime>01/01/0001 00:00:00</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

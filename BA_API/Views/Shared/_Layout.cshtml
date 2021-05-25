@@ -1,0 +1,442 @@
+﻿@using Newtonsoft.Json
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Hệ thống giám sát hình ảnh</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/vendor/select2/dist/css/select2.min.css" />
+    <link href="~/vendor/fontawesome-free/css/all.css" rel="stylesheet" />
+    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/ruang-admin.min.css" rel="stylesheet">
+    <link href="~/lib/bootstrap/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/notify.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/js/ruang-admin.min.js"></script>
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/vendor/select2/dist/js/select2.min.js"></script>
+    <script src="~/vendor/excelexportjs.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datepicker.vi.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="~/lib/jquery/dist/jquery.datetimepicker.full.min.js"></script>
+    <link href="~/css/jquery.datetimepicker.css" rel="stylesheet" />
+
+
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        @*<a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("TrangChu","TrangChu")">
+                <div class="sidebar-brand-icon">
+                    <img src="~/img/logo/tcdb.png">
+                </div>
+                <div class="sidebar-brand-text mx-3">Hệ thống <br> Giám sát ảnh</div>
+            </a>*@
+
+
+        <!--Fake-->
+        <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar1">
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("trangchu","TrangChu")">
+                    <i class="far fa-fw fa-window-maximize"></i>
+                    <span>Trang chủ</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categoryReport" aria-expanded="true" aria-controls="categoryReport">
+                    <i class="fab fa-fw fa-wpforms"></i>
+                    <span>Báo cáo</span>
+                </a>
+                <div id="categoryReport" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar1">
+                    <div class="bg-white py-2 collapse-inner rounded" style="color: #fff !important">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#totalReport" aria-expanded="true" aria-controls="collapseForm">
+                            <i class="fab fa-fw fa-wpforms"></i>
+                            <span>Tổng hợp</span>
+                        </a>
+                        <div id="totalReport" class="collapse" aria-labelledby="headingTable" data-parent="#categoryReport">
+                            <div class="bg-white rp-color py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="@Url.Action("ToanQuoc","BaoCaoTongHop", new {type = "tong-hop"})">Toàn quốc</a>
+                                <a class="collapse-item" href="@Url.Action("SoGTVT","BaoCaoTongHop", new { type = "tong-hop"})">Sở GTVT</a>
+                                <a class="collapse-item" href="@Url.Action("DonViVanTai","BaoCaoTongHop", new {type = "tong-hop"})">Đơn vị vận tải</a>
+                                <a class="collapse-item" href="@Url.Action("DonViTruyenDuLieu","BaoCaoTongHop", new {type = "tong-hop"})">Đơn vị truyền dữ liệu</a>
+                                <a class="collapse-item" href="@Url.Action("PhuongTienViPham","BaoCaoTongHop", new {type = "tong-hop"})">Phương tiện vi phạm ảnh</a>
+                            </div>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#passDataReport" aria-expanded="true" aria-controls="collapseForm">
+                            <i class="fab fa-fw fa-wpforms"></i>
+                            <span>Truyền dữ liệu</span>
+                        </a>
+                        <div id="passDataReport" class="collapse" aria-labelledby="headingTable" data-parent="#categoryReport">
+                            <div class="bg-white rp-color py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="@Url.Action("ToanQuoc","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Toàn quốc</a>
+                                <a class="collapse-item" href="@Url.Action("SoGtvt","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Sở GTVT</a>
+                                <a class="collapse-item" href="@Url.Action("DonViVanTai","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Đơn vị vận tải</a>
+                                <a class="collapse-item" href="@Url.Action("DonViTruyenDuLieu","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Đơn vị truyền dữ liệu</a>
+                                <a class="collapse-item" href="@Url.Action("BienSoXe","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Biển số xe</a>
+                            </div>
+                        </div>
+
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#nonPassDataReport" aria-expanded="true" aria-controls="collapseForm">
+                            <i class="fab fa-fw fa-wpforms"></i>
+                            <span>Không truyền dữ liệu</span>
+                        </a>
+
+                        <div id="nonPassDataReport" class="collapse" aria-labelledby="headingTable" data-parent="#categoryReport">
+                            <div class="bg-white rp-color py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="">Toàn quốc</a>
+                                <a class="collapse-item" href="">Sở GTVT</a>
+                                <a class="collapse-item" href="">Đơn vị vận tải</a>
+                                <a class="collapse-item" href="">Thống kê truyền liên tiếp 7 ngày</a>
+                            </div>
+                        </div>
+
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#detailReport" aria-expanded="true" aria-controls="collapseForm">
+                            <i class="fab fa-fw fa-wpforms"></i>
+                            <span>Chi tiết</span>
+                        </a>
+
+                        <div id="detailReport" class="collapse" aria-labelledby="headingTable" data-parent="#categoryReport">
+                            <div class="bg-white rp-color py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="@Url.Action("LichSuHinhAnhLaiXe","BaoCaoTongHop", new {type = "chi-tiet"})">Lịch sử hình ảnh</a>
+                                <a class="collapse-item" href="">Ảnh vi phạm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categoryCategory" aria-expanded="true" aria-controls="collapseBootstrap">
+                    <i class="fas fa-fw fa-list"></i>
+                    <span>Danh mục</span>
+                </a>
+                <div id="categoryCategory" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar1">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="@Url.Action("PhuongTien","DanhMuc")">Danh mục phương tiện</a>
+                        <a class="collapse-item" href="@Url.Action("VanTai","DanhMuc")">Danh mục vận tải</a>
+                        <a class="collapse-item" href="@Url.Action("DanhSachTinh","DanhMuc")">Danh sách tỉnh</a>
+                        <a class="collapse-item" href="@Url.Action("DonViTruyenDuLieu","DanhMuc")">Danh sách đơn vị <br> truyền dữ liệu</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#adminSystem" aria-expanded="true" aria-controls="collapseForm">
+                    <i class="fa fa-fw fa-users-cog"></i>
+                    <span>Quản trị hệ thống</span>
+                </a>
+                <div id="adminSystem" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar1">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="@Url.Action("QuanLyNguoiDung","QuanTriHeThong")">Quản lý người dùng</a>
+                        <a class="collapse-item" href="@Url.Action("PhanQuyenHeThong","QuanTriHeThong")">Phân quyền hệ thống</a>
+                        <a class="collapse-item" href="@Url.Action("NhomNguoiDung","QuanTriHeThong")">Nhóm người dùng</a>
+                        <a class="collapse-item" href="@Url.Action("NhatKyTruyCap","QuanTriHeThong")">Nhật ký truy cập</a>
+                        <a class="collapse-item" href="@Url.Action("ChucNangHeThong","QuanTriHeThong")">Chức năng hệ thống</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-info"></i>
+                    <span>Thông tin cần biết</span>
+                </a>
+            </li>
+        </ul>
+
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- TopBar -->
+                <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+                    <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown no-arrow d-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-1 small" placeholder="What do you want to look for?" aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <span class="badge badge-danger badge-counter">3+</span>
+                            </a>
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Trung tâm thông báo
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 12, 2019</div>
+                                        <span class="font-weight-bold">Thông báo 1</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 7, 2019</div>
+                                        <span class="font-weight-bold">Thông báo 2</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 2, 2019</div>
+                                        <span class="font-weight-bold">Thông báo 3</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown no-arrow mx-1 d-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <span class="badge badge-warning badge-counter">2</span>
+                            </a>
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Message Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="~/img/man.png" style="max-width: 60px" alt="">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate">
+                                            Hi there! I am wondering if you can help me with a problem I've been
+                                            having.
+                                        </div>
+                                        <div class="small text-gray-500">Udin Cilok · 58m</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="~/img/girl.png" style="max-width: 60px" alt="">
+                                        <div class="status-indicator bg-default"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">
+                                            Am I a good boy? The reason I ask is because someone told me that people
+                                            say this to all dogs, even if they aren't good...
+                                        </div>
+                                        <div class="small text-gray-500">Jaenab · 2w</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown no-arrow mx-1 d-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-tasks fa-fw"></i>
+                                <span class="badge badge-success badge-counter">3</span>
+                            </a>
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Task
+                                </h6>
+                                <a class="dropdown-item align-items-center" href="#">
+                                    <div class="mb-3">
+                                        <div class="small text-gray-500">
+                                            Design Button
+                                            <div class="small float-right"><b>50%</b></div>
+                                        </div>
+                                        <div class="progress" style="height: 12px;">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item align-items-center" href="#">
+                                    <div class="mb-3">
+                                        <div class="small text-gray-500">
+                                            Make Beautiful Transitions
+                                            <div class="small float-right"><b>30%</b></div>
+                                        </div>
+                                        <div class="progress" style="height: 12px;">
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item align-items-center" href="#">
+                                    <div class="mb-3">
+                                        <div class="small text-gray-500">
+                                            Create Pie Chart
+                                            <div class="small float-right"><b>75%</b></div>
+                                        </div>
+                                        <div class="progress" style="height: 12px;">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">View All Taks</a>
+                            </div>
+                        </li>
+                        <div class="topbar-divider d-none d-sm-block"></div>
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="img-profile rounded-circle" src="~/img/boy.png" style="max-width: 60px">
+                                <span class="ml-2 d-none d-lg-inline text-white small user-full-name"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="@Url.Action("Login","Login")">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Đăng xuất
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- Topbar -->
+                <!-- Container Fluid-->
+                <div class="container-fluid" id="container-wrapper">
+                    <div class="row">
+                        @RenderBody()
+                    </div>
+                </div>
+                <!---Container Fluid-->
+            </div>
+            <!-- Footer -->
+            @*<footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>
+                                copyright ©
+                                <script>document.write(new Date().getFullYear());</script>2021 - developed by
+                                <b><a href="https://indrijunanda.gitlab.io/" target="_blank">tienhv</a></b>
+                            </span>
+                        </div>
+                    </div>
+                </footer>*@
+            <!-- Footer -->
+        </div>
+    </div>
+
+    @*<footer class="footer text-muted">
+            <div class="container">
+                &copy; 2021 - BA_API - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
+    <footer class="footer text-white main-footer bg-transparent container-fluid" style="position: absolute;bottom: 0;width: 100%;background-color: #5a9fc7 !important">
+        Tổng cục đường bộ Việt Nam
+        <div class="float-right d-none d-sm-inline-block">Trung tâm thí điểm của Tổng cục đường bộ Việt Nam</div>
+    </footer>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+<script type="text/javascript">
+    var authorization = localStorage.getItem("bagps");
+    if (authorization == null)
+        window.location.href = "/login/login";
+    else {
+        $(".user-full-name").html(localStorage.getItem("bafullname"));
+        var menu = JSON.parse(localStorage.getItem("bagpsData"));
+        let html = ``;
+        let stt = 1;
+        let arr = [];
+        let arrChild = [];
+        menu.forEach((res) => {
+            if (res.featureParentId === 0)
+                arr.push(res);
+            else
+                arrChild.push(res);
+        });
+
+
+        var arrNumber = [24, 25, 26, 27, 29, 30, 31, 32];
+        arr.forEach(parent => {
+            html += `<li class="nav-item">`;
+            if (parent.featureId === 1 || parent.featureId === 33) {
+                html += `<a class="nav-link" href='/${parent.page}'>`;
+            } else {
+                html += `<a class="nav-link collapsed" href="/${parent.page}" data-toggle="collapse" data-target="#row-${stt}" aria-expanded="true" aria-controls="row-${stt}">`;
+            }
+            html += `<i class="${parent.icon}"></i>`;
+            html += `<span>${parent.name}</span>`;
+            html += `</a>`;
+            html += `<div id="row-${stt}" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar1">`;
+            html += `<div class="bg-white py-2 collapse-inner rounded" style="color: #fff !important">`;
+            let sttChild = 1;
+            arrChild.forEach((child) => {
+                if (child.featureParentId === parent.featureId) {
+                    if (arrNumber.includes(child.featureId)) {
+                        html += `<a class="collapse-item" href="/${child.page}" style="color: #000 !important; width: 100%;align-items: baseline;">`;
+                    } else {
+                        html += `<a class="nav-link collapsed" href="/${child.page}" style="color: #000 !important; width: 100%;align-items: baseline;" data-toggle="collapse" data-target="#row-child-${sttChild}" aria-expanded="true" aria-controls="collapseForm">`;
+                    }
+
+                    html += `<i class="fab fa-fw fa-wpforms"></i><span>${child.name}</span></a>`;
+                    html += `<div id="row-child-${sttChild}" class="collapse" aria-labelledby="headingTable" data-parent="#row-${stt}">`;
+                    html += `<div class="bg-white rp-color py-2 collapse-inner rounded">`;
+                    menu.forEach((child3) => {
+                        if (child3.featureParentId === child.featureId) {
+                            html += `<a class="collapse-item" href="/${child3.page}">${child3.name}</a>`;
+                        }
+                    });
+                    html += `</div></div>`;
+                    sttChild++;
+                }
+            });
+            stt++;
+            html += `</div>`;
+            html += `</div>`;
+            html += `</li>`;
+        });
+        $("#accordionSidebar1").html(html);
+    }
+    $("#sidebarToggle, #sidebarToggleTop").on('click', function (e) {
+        $("body").toggleClass("sidebar-toggled");
+        $(".sidebar").toggleClass("toggled");
+        if ($(".sidebar").hasClass("toggled")) {
+            $('.sidebar .collapse').collapse('hide');
+        };
+    });
+</script>

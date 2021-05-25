@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewData["Title"] = "Toàn quốc";
+}
+
+<!-- Khu vực tìm kiếm -->
+<div class="col-xl-12 col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Tra cứu thông tin
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-xl-4 col-lg-6">
+                    <label for="start">Từ ngày</label>
+                    <input type="text" class="form-control" id="start" name="start" placeholder="Từ ngày">
+                </div>
+                <div class="form-group col-xl-4 col-lg-6">
+                    <label for="end">Đến ngày</label>
+                    <input type="text" class="form-control" id="end" name="end" placeholder="Đến ngày">
+                </div>
+                <div class="form-group col-xl-4 col-lg-6">
+                    <label for="vehicleType">Loại hình</label>
+                    <select class="form-control" id="vehicleType" placeholder="Loại hình">
+                        <option value="-1">Tất cả loại phương tiện</option>
+                    </select>
+                </div>
+                <button type="submit" name="showSynthesisReport" class="btn btn-info" style="margin: auto">Xem báo cáo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hiển thị dữ liệu-->
+<div class="col-xl-12 col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Báo cáo tổng hợp toàn quốc</h6>
+            <h6 class="total font-weight-bold"></h6>
+        </div>
+        <div class="table-responsive p-3">
+            <table id="synthesisReport" class="table table-bordered text-center" style="color: black">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="width: 10px;">STT</th>
+                        <th rowspan="2">Sở GTVT</th>
+                        <th colspan="3">Đơn vị vận tải</th>
+                        <th colspan="3">Xe</th>
+                    </tr>
+                    <tr>
+                        <th>Vi phạm</th>
+                        <th>Σ</th>
+                        <th>%</th>
+                        <th>Vi phạm</th>
+                        <th>Σ</th>
+                        <th>%</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot><tr></tr></tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    datePicker();
+    loadLoaiHinh();
+</script>
+<script asp-append-version="true" src="~/js/bao-cao.js"></script>
