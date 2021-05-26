@@ -83,25 +83,36 @@
         datePicker();
         loadLoaiHinh();
         $("#vehicleType").val(vehicleType);
-        loadSoGTVT();
+        loadSoGTVT("");
 
-        //if (start > 0)
-        //    $('[name="start"]').datepicker('setDate', EpochToHuman(start));
-        //if (end > 0)
-        //    $('[name="end"]').datepicker('setDate', EpochToHuman(end));
+
+
+        if (USER_ROLE === 2 || USER_ROLE === 3) {
+            $("#department").prop("disabled", true);
+            $("#department1").prop("disabled", true);
+            loadSoGTVT(ALLOW_QUERY.Department);
+        } else if (USER_ROLE === 4 || USER_ROLE === 5) {
+            $("#department1").val(ALLOW_QUERY.Company);
+            $("#department").val(ALLOW_QUERY.Company);
+            $("#transportUnit").val(ALLOW_QUERY.Company);
+            $("#department1").prop("disabled", true);
+            $("#department").prop("disabled", true);
+            $("#transportUnit").prop("disabled", true);
+        } else if (USER_ROLE === 6 || USER_ROLE === 7) {
+            $("#transmissionUnit").val(ALLOW_QUERY.Provider);
+            $("#transmissionUnit").prop("disabled", true);
+        }
+    
+        
         if (start > 0)
             $('[name="start"]').datepicker({ format: 'dd/mm/yyyy'}).datepicker('setDate', EpochToHuman(start));
         if (end > 0)
             $('[name="end"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', EpochToHuman(end));
-
-
-
-
         showDepartmentReport(index);
     });
 
 
-    function loadSoGTVT() {
+    function loadSoGTVT(department) {
         callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
             let res = "<option value='-1'>Chọn sở GTVT</option>";
             obj.forEach(function (pro) {
@@ -112,8 +123,9 @@
            
             if (id !== "") {
                 $("#department1").val(id);
-                //showDepartmentReport();
             }
+            if (department !== 0)
+                $("#department1").val(department);
         });
     }
     $("[name='showDepartmentReport']").click(function (e) {

@@ -98,19 +98,8 @@
     var department = '@ViewBag.department';
     var status = false;
     $(document).ready(function() {
-        callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
-            let res = "<option value='-1'>Chọn sở GTVT</option>";
-            obj.forEach(function (pro) {
-                res += `<option value="${pro.id}">${pro.name}</option>`;
-            });
-            $("#department").select2();
-            $("#department").html(res);
-            if (department !== "") {
-                $("#department").val(department);
-                loadDVVT(department);
-            }
+        loadSoGTVT("");
 
-        });
         $("#department").change(function () {
             loadDVVT($(this).val());
         });
@@ -134,10 +123,45 @@
                 $('[name="end"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', EpochToHuman(end));
 
         }, 1000);
-        //if (department !== "") {
-        //    showResult(index);
-        //}
+
+
+        if (USER_ROLE === 2 || USER_ROLE === 3) {
+            $("#department").prop("disabled", true);
+            $("#department1").prop("disabled", true);
+            loadSoGTVT(ALLOW_QUERY.Department);
+        } else if (USER_ROLE === 4 || USER_ROLE === 5) {
+            $("#department1").val(ALLOW_QUERY.Company);
+            $("#department").val(ALLOW_QUERY.Company);
+            $("#transportUnit").val(ALLOW_QUERY.Company);
+            $("#department1").prop("disabled", true);
+            $("#department").prop("disabled", true);
+            $("#transportUnit").prop("disabled", true);
+        } else if (USER_ROLE === 6 || USER_ROLE === 7) {
+            $("#transmissionUnit").val(ALLOW_QUERY.Provider);
+            $("#transmissionUnit").prop("disabled", true);
+        }
+
     });
+
+    function loadSoGTVT(depa){
+        callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
+            let res = "<option value='-1'>Chọn sở GTVT</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.id}">${pro.name}</option>`;
+            });
+            $("#department").select2();
+            $("#department").html(res);
+            if (department !== "") {
+                $("#department").val(department);
+                
+            }
+            if (depa !== 0) {
+                $("#department").val(depa);
+                loadDVVT(department);
+            }
+
+        });
+    }
 
     function showResult(index) {
         var transportUnit = $("#transportUnit").val();
