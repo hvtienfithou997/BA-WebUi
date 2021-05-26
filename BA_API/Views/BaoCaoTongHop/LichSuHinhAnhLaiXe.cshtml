@@ -157,8 +157,7 @@
             var lat = 10.829619407653809;
             var lng = 106.76204681396484;
             showMap(lat, lng);
-        });
-
+        });        
         $('#report2 tbody').on('click', 'tr', function () {
             $("#embedIframe").append(DIV_LOADING);
             var lat = $(this).attr("data-latitude");
@@ -190,8 +189,6 @@
         }).addTo(mymap);
 
         var marker = L.marker([lat, lng]).addTo(mymap).bindPopup(`<img width="300" height="250" src="${urlImg}"/>`).openPopup();;
-
-
         //$("#image").css("background-image", `url(${urlImg})`);
     }
     //
