@@ -17,6 +17,8 @@ namespace BA_API.Controllers
             ViewBag.start = start;
             ViewBag.end = end;
             ViewBag.index = index;
+
+
             return View();
         }
 
