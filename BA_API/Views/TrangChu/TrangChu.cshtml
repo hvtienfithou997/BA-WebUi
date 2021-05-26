@@ -1,0 +1,183 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- Khu vực tìm kiếm -->
+<div class="col-xl-6 col-lg-6">
+    <div class="card mb-4 divOne">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Tra cứu thông tin hành trình của phương tiện
+            </h6>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <label for="vehiclePlate">
+                        Biển kiểm soát
+                    </label>
+                    <input type="text" class="form-control" id="vehiclePlate" autocomplete="off" placeholder="Nhập biển kiểm soát">
+                </div>
+                <div class="form-group">
+                    <label for="date">Thời điểm</label>
+                    <input type="text" class="form-control" id="date" name="date" placeholder="Nhập thời điểm">
+                </div>
+                <button type="button" name="quickSearch" class="btn btn-primary">Tra cứu nhanh</button>
+                <button type="submit" class="btn btn-info" name="showDetail">Tìm kiếm</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Thông tin liên hệ-->
+<div class="col-xl-6 col-lg-6">
+    <div class="card mb-4 divTwo">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Thông tin liên hệ
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <i class="fas fa-info fa-fw"></i> <b>Tổng cục đường bộ Việt Nam</b>
+                <h6>&nbsp;Hotline: 0936 295 919</h6>
+            </div>
+            <div class="form-group">
+                <i class="fas fa-phone fa-fw"></i> <b>Hỗ trợ kỹ thuật</b>
+                <h6>&nbsp;Điện thoại: 0936 295 919</h6>
+                <h6>&nbsp;email: camera.drvn@gmail.com</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Datatables -->
+<div class="col-lg-12 d-none">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
+        </div>
+        <div class="table-responsive p-3">
+            <table class="table align-items-center table-flush" id="dataTable">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Biển số xe</th>
+                        <th>Tên lái xe</th>
+                        <th>Giấy phép lái xe</th>
+                        <th>Thời gian truyền</th>
+                        <th>Kinh độ</th>
+                        <th>Vĩ độ</th>
+                        <th>Tốc độ</th>
+                        <th>Hình ảnh vi phạm</th>
+                        <th>Địa chỉ</th>
+                        <th>Trạng thái</th>
+                        <th>Loại vi phạm</th>
+                        <th>Kênh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12">
+    <div class="container-fluid">
+        <div id="linechart"></div>
+    </div>
+    
+</div>
+
+
+<div class="modal fade" id="showDataTransfer" tabindex="-1" role="dialog" aria-labelledby="modalDataTransfer" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" name="showDetail">Xem chi tiết</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+</script>
+
+<script>
+
+
+    let d1 = $(".divOne").height();
+    $(".divTwo").height(d1);
+
+    datePickerOne();
+    var totalCaptured = [];
+    var totalTransfer = [];
+    var totalViolation = [];
+
+    $.getJSON("../data.json", function (data) {
+
+        data.data.totalCaptured.forEach(function (item) {
+            let arr = {};
+            arr = { "name": item.name, y: item.value }
+            totalCaptured.push(arr);
+        });
+
+        data.data.totalTransfer.forEach(function (item) {
+            let arr = {};
+            arr = { "name": item.name, "y": item.value }
+            totalTransfer.push(arr);
+        });
+
+        data.data.totalViolation.forEach(function (item) {
+            let arr = {};
+            arr = { "name": item.name, "y": item.value }
+            totalViolation.push(arr);
+        });
+
+        $("#div_loader").remove();
+    }).fail(function () {
+        console.log("An error has occurred.");
+    });
+    var myApp;
+    $(document).ready(function () {
+
+        var chart = new Highcharts.Chart('linechart',{
+            chart: {
+                width: 1500,
+                height: 500
+            },
+            xAxis: {
+                categories: ['01/05', '02/05', '03/05', '04/05', '05/05', '06/05', '07/05', '08/05',
+                    '09/05', '10/05', '11/05', '12/05', '13/05', '14/05', '15/05', '16/05', '17/05', '18/05', '19/05', '20/05', '21/05', '22/05', '23/05', '24/05']
+            },
+            legend: {
+                rtl: false
+            },
+            title: {
+                text: 'Biểu đồ đường thống kê dữ liệu'
+            },
+            series: [{
+                name: 'Thống kê số lượng hình ảnh',
+                data: totalCaptured,
+                
+            }, {
+                name: 'Thống kê dữ liệu đã truyền',
+                data: totalTransfer
+            }, {
+                name: 'Thống kê vi phạm',
+                data: totalViolation
+            }]
+        });
+    });
+
+</script>
+<script src="~/js/trang-chu.js"></script>
+

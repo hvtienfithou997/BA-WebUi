@@ -1,0 +1,254 @@
+﻿
+@{
+    ViewData["Title"] = "Phân quyền hệ thống";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .hiddenRow {
+        padding: 0 !important;
+    }
+
+    .check-right {
+        float: right;
+    }
+</style>
+
+<!-- Khu vực tìm kiếm -->
+<div class="col-xl-12 col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Tra cứu thông tin
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-xl-4 col-lg-6">
+                    <label for="term">Tên nhóm người dùng</label>
+                    <select class="form-control" id="inputRole" placeholder="Chọn nhóm người dùng">
+                        <option value="-1">Chọn nhóm người dùng</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 text-center">
+                    <button type="submit" name="btn-update" class="btn btn-info" style="margin: auto">Cập nhật phân quyền</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Hiển thị dữ liệu-->
+<div class="col-xl-12 col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách nhóm người dùng</h6>
+        </div>
+        <div id="rolee"></div>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination"></ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+
+    $("#inputRole").change(function (e) {
+        e.preventDefault();
+        let p = $(this).val();
+        menuShow(p);
+
+    });
+
+
+    callApi(`${REP_URL}roles?name=`, null, "GET", function (item) {
+        let res = ` <option value="-1">Chọn nhóm người dùng</option>`;
+        item.forEach(function (pro) {
+            res += ` <option value="${pro.id}">${pro.name}</option>`;
+        });
+        $("#inputRole").html(res);
+    });
+
+    var listCheck = [];
+    $("[name='btn-update']").click(function () {
+        let role = $("#inputRole").val();
+
+        if (role === "-1") {
+            $.notify("Bạn chưa chọn nhóm người dùng", "error");
+            return;
+        }
+
+        listCheck = [];
+        $(`input[name^='menu-level-']:checked`).each(function () {
+            listCheck.push($(this).val());
+        });
+        callApi(`${REP_URL}roles/${role}/features`, listCheck, "POST", function (item) {
+            $.notify("Cập nhật thành công", "success");
+            menuShow(role);
+        });
+
+    });
+
+
+    function orderRole() {
+        callApi(`${REP_URL}roles/2/features`, null, "GET", function (item) {
+            let html = ``;
+            let arr = [];
+            let arrChild = [];
+            item.forEach((res) => {
+                if (res.featureParentId === 0)
+                    arr.push(res);
+                else
+                    arrChild.push(res);
+            });
+
+            let stt = 1;
+            arr.forEach((parent) => {
+                html += `<tr data-toggle="collapse" data-target="#row-${stt}" class="accordion-toggle">`;
+                if (parent.featureId === 1 || parent.featureId === 33)
+                    html += `<td class=""></td>`;
+                else
+                    html += `<td class=""><i class="fas fa-chevron-down fa-fw"></i></td>`;
+                html += `<td class="text-left">${parent.name}</td>`;
+                html += `<td class="text-left">${parent.code}</td>`;
+                html += `<td><input type='checkbox'/></td>`;
+                arrChild.forEach((child) => {
+                    if (child.featureParentId === parent.featureId) {
+                        html += `</tr>`;
+                        html += `<tr><td colspan="12" class="hiddenRow"><div class="accordian-body collapse" id=row-${stt}>`;
+                        html += `<table class="table table-striped">`;
+                        html += `<tbody><tr data-toggle="collapse" class="accordion-toggle" data-target="#row-${stt + 10}">`;
+                        html += `<td class=""></td>`;
+                        html += `<td class="text-left"><i class="fas fa-chevron-down fa-fw"></i> ${child.name}</td>`;
+                        html += `<td class="text-left">${child.code}</td>`;
+                        html += `<td><input type='checkbox'/></td>`;
+                        html += ` </tr></tbody>`;
+                        html += ` </table>`;
+                        item.forEach((child3) => {
+                            if (child3.featureParentId === child.featureId) {
+                                html += `</div></td></tr>`;
+                                html += `<tr><td colspan="12" class="hiddenRow"><div class="accordian-body collapse" id=row-${stt + 10}>`;
+                                html += `<table class="table table-striped"><tbody><tr>`;
+                                html += `<td class="text-left"></td>`;
+                                html += `<td class="text-left">${child3.name}</td>`;
+                                html += `<td class="text-left">${child3.code}</td>`;
+                                html += `<td><input type='checkbox'/></td>`;
+                                html += ` </tr></tbody>`;
+                                html += ` </table>`;
+                                html += `</div></td></tr>`;
+                            }
+                        });
+                    }
+                });
+                stt++;
+            });
+            $("#rolee").html(html);
+        });
+    }
+
+    function menuShow(role) {
+        callApi(`${REP_URL}roles/${role}/features`, null, "GET", function (item) {
+            let html = ``;
+            let arr = [];
+            let arrChild = [];
+            item.forEach((res) => {
+                if (res.featureParentId === 0)
+                    arr.push(res);
+                else
+                    arrChild.push(res);
+            });
+            let stt = 1;
+
+            html += `<ul class='list-group'>`;
+            arr.forEach((parent) => {
+                html += `<li class="list-group-item">${stt} - ${parent.name} <input type="checkbox" class='menu-level-1 check-right' name="menu-level-1" value='${parent.featureId}'><ul class='list-group'>`;
+                let sttChild = 1;
+                arrChild.forEach((child) => {
+                    if (child.featureParentId === parent.featureId) {
+                        html += `<li class="list-group-item list-group-item-action">${stt}.${sttChild} - ${child.name} <input type="checkbox" name="menu-level-2" class='menu-level-2 check-right' value='${child.featureId}'>`;
+                        html += `<ul class='list-group'>`;
+                        item.forEach((child3) => {
+                            if (child3.featureParentId === child.featureId) {
+                                html += `<li class="list-group-item list-group-item-action">${child3.name} <input type="checkbox" class='menu-level-3 check-right' name="menu-level-3" value='${child3.featureId}'></li>`;
+                            }
+                        });
+                        html += `</ul></li>`;
+                        sttChild++;
+                    }
+                });
+                html += `</ul></li>`;
+                stt++;
+            });
+            html += `</ul>`;
+
+            $("#rolee").html(html);
+
+            if (item.length > 0) {
+                for (var i = 0; i < item.length; i++) {
+                    if (item[i].isAllow)
+                        $(`input[name^='menu-level-'][value='${item[i].featureId}']`).prop('checked', true);
+                }
+            }
+
+        });
+    }
+
+    $(document).on('click', ".menu-level-1", function () {
+        var _parent = $(this); //input hiện tại
+        var nextChildren = $(this).next("ul").children();//input con bên trong
+        if (_parent.prop('checked')) {
+            nextChildren.each(function () {
+                $(this).children().prop('checked', true);
+                let item = $(this).children().children();
+                item.each(function () {
+                    $(this).children().prop('checked', true);
+                });
+            });
+
+        } else {
+            nextChildren.each(function () {
+                $(this).children().prop('checked', false);
+                let item = $(this).children().children();
+                item.each(function () {
+                    $(this).children().prop('checked', false);
+                });
+            });
+        }
+    });
+
+    $(document).on('click', ".menu-level-2", function () {
+        var _parent = $(this); //input hiện tại
+        var nextChildren = $(this).next("ul").children();//input con bên trong
+        if (_parent.prop('checked')) {
+            nextChildren.each(function () {
+                $(this).children().prop('checked', true);
+                $(this).parent().parent().parent().parent().children().prop('checked', true);
+            });
+
+        } else {
+            nextChildren.each(function () {
+                $(this).children().prop('checked', false);
+                //$(this).parent().parent().parent().parent().children().prop('checked', false);
+            });
+        }
+    });
+
+    $(document).on('click', ".menu-level-3", function () {
+        var _parent = $(this); //input hiện tại
+        var nextChildren = $(this).next("ul").children(); //input con bên trong
+        if (_parent.prop('checked')) {
+            let item = $(this).parent().parent().parent();
+            item.children().prop('checked', true);
+            item.parent().parent().children().prop('checked', true);
+
+        } else {
+
+        }
+    });
+
+
+</script>

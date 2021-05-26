@@ -1,0 +1,539 @@
+﻿
+@{
+    ViewData["Title"] = "Quản lý người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /*   .modalEdit .star label:nth-child(1):after {
+        content: " (*)";
+        color: red;
+    }*/
+
+    /* .custom {
+        float: right;
+        height: 25px;
+        font-size: 12px;
+        line-height: 1;
+    }*/
+
+    .select2 {
+        width: 100% !important;
+    }
+</style>
+
+<div class="col-xl-12 col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Quản lý người dùng
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="username">Tên tài khoản</label>
+                    <input type="text" class="form-control" id="username" placeholder="Nhập tên tài khoản" name="name" value="" />
+                </div>
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="role">Nhóm người dùng</label>
+                    <select class="form-control" id="role" placeholder="Quyền">
+                        <option value="0">Chọn quyền</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="status">Trạng thái</label>
+                    <select class="form-control" id="status" placeholder="Trạng thái">
+                        <option value="-1">Tất cả</option>
+                        <option value="0">Offline</option>
+                        <option value="1">Online</option>
+                        <option value="2">Lock</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-xl-12" style="text-align: center">
+                    <button name="btn-result" class="btn btn-info">Tìm kiếm</button>&nbsp;
+                    <button name="btn-addNew" class="btn btn-success" data-toggle="modal" data-target=".modalEdit" onclick="clearBeforeSave()"><i class="fas fa-plus fa-fw"></i>Thêm</button>
+                    <button name="btn-Lock" class="btn btn-success"><i class="fas fa-lock fa-fw"></i>Khóa tài khoản</button>
+                    <button name="btn-unLock" class="btn btn-success"><i class="fas fa-unlock fa-fw"></i>Mở khóa tài khoản</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xl-12 col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách người dùng</h6>
+            <h6 class="total font-weight-bold"></h6>
+        </div>
+        <div class="table-responsive p-3">
+            <table id="userList" class="table table-bordered text-center" style="color: black">
+                <thead>
+                    <tr>
+                        <th rowspan="2"></th>
+                        <th rowspan="2" style="width: 10px;">STT</th>
+                        <th rowspan="2">Tên tài khoản</th>
+                        <th rowspan="2">Tên đầy đủ</th>
+                        <th rowspan="2">Email</th>
+                        <th rowspan="2">Nhóm người dùng</th>
+                        <th rowspan="2">Trạng thái</th>
+                        <th rowspan="2">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot><tr></tr></tfoot>
+            </table>
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination"></ul>
+        </nav>
+    </div>
+</div>
+
+<div class="modal fade modalEdit" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <input type="text" hidden="hidden" id="id" value="0" />
+                <div class="mb-3 star">
+                    <label data-error="wrong" data-success="right" for="">Tên tài khoản </label>
+                    <input type="text" id="inputUser" class="form-control">
+                </div>
+                <div class="mb-3 star hidepass">
+                    <label data-error="wrong" data-success="right" for="">Mật khẩu </label>
+                    <input type="password" id="inputPassword" class="form-control">
+                </div>
+                <div class="mb-3 star">
+                    <label data-error="wrong" data-success="right" for="">Tên đầy đủ </label>
+                    <input type="text" id="inputFullName" class="form-control">
+                </div>
+                <div class="mb-3 star">
+                    <label data-error="wrong" data-success="right" for="">Email </label>
+                    <input type="text" id="inputEmail" class="form-control">
+                </div>
+
+                <div class="mb-3 star">
+                    <label data-error="wrong" data-success="right" for="inputRole">Nhóm người dùng </label>
+                    <select class="form-control" id="inputRole" placeholder="Quyền">
+                        <option value="0">Chọn quyền</option>
+                    </select>
+                </div>
+                <div class="mb-3 star d-none">
+                    <label data-error="wrong" data-success="right" for="department">Chọn sở GTVT </label>
+                    <select class="form-control" id="department" placeholder="Sở GTVT">
+                    </select>
+                </div>
+                <div class="mb-3 star d-none">
+                    <label data-error="wrong" data-success="right" for="company">Chọn đơn vị vận tải </label>
+                    <select class="form-control" id="company" placeholder="Sở GTVT">
+                    </select>
+                </div>
+                <div class="mb-3 star d-none">
+                    <label data-error="wrong" data-success="right" for="provider1">Chọn đơn vị truyền dữ liệu </label>
+                    <select class="form-control" id="provider1" placeholder="Sở GTVT">
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-success d-none" name="btnAdd">Lưu</button>
+                <button class="btn btn-success" name="btnSave">Lưu</button>
+                <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade changePass" id="changePass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <input type="text" hidden="hidden" id="idUser" value="" />
+                <div class="mb-3 star">
+                    <label data-error="wrong" data-success="right" for="">Tên đăng nhập </label>
+                    <input type="text" id="tenDangNhap" readonly="readonly" class="form-control">
+                </div>
+                <div class="mb-3 star">
+                    <label data-error="wrong" data-success="right" for="">Mật khẩu </label>
+                    <input type="text" id="passMoi" class="form-control">
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-success" name="btnChange">Lưu</button>
+                <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="boxMessage">
+    <p id="msg"></p>
+    <button class="btn btn-light custom" onclick="cancel()">Hoàn tác</button>
+</div>
+<script>
+    var username = '@ViewBag.username';
+    var roleId = '@ViewBag.roleId';
+    var status = '@ViewBag.status';
+    var index = '@ViewBag.index';
+    $(function () {
+
+        $("#inputRole").on('change', function () {
+
+            $("#department").parent().addClass("d-none");
+            $("#company").parent().addClass("d-none");
+            $("#provider1").parent().addClass("d-none");
+
+            let select = $(this).val();
+            if (select === "2" || select === "3") {
+                loadSoGTVT(-1);
+                $("#department").parent().removeClass("d-none");
+            } else if (select === "4" || select === "5") {
+                $("#department").parent().removeClass("d-none");
+                $("#company").parent().removeClass("d-none");
+            } else if (select === "6" || select === "7") {
+                $("#provider1").parent().removeClass("d-none");
+            }
+        });
+
+
+        if (username !== "") {
+            $("#username").val(username);
+        }
+        showResult(index);
+    });
+
+    $('[name="btn-result"]').click(function() {
+        showResult(0);
+    });
+
+    function showResult(index) {
+        try {
+            var username = $("#username").val();
+            var role = $("#role").val();
+            var status = $("#status").val();
+            $("#userList tbody tr").remove();
+            window.history.pushState(window.location.href, "Quản lý người dùng", `?username=${username}&roleId=${role}&status=${status}&index=${index}`);
+            callApi(`${REP_URL}user?username=${username}&roleId=${role}&status=${status}&index=${index}`, null, "GET", function (item) {
+
+                if (item.records > 0) {
+                    $.notify("Tải dữ liệu thành công", "success");
+                    let res = "";
+                    let count = 1;
+
+                    item.data.forEach(function (pro) {
+                        res += "<tr>";
+                        res += `<td><input type='checkbox' value='${pro.id}' name='choosed'/></td>`;
+                        res += `<td>${count}</td>`;
+                        res += `<td class="text-left"><a href='/quan-tri/nhat-ky-truy-cap?username=${pro.username}&start=0&end=0&index=0'>${pro.username}</a></td>`;
+                        res += `<td class="text-left">${pro.fullname}</td>`;
+                        res += `<td class="text-left">${pro.email}</td>`;
+                        res += `<td class="text-left">${pro.role_name}</td>`;
+                        res += `<td class="text-left">${pro.status_name}</td>`;
+                        res += `<td><a href="" class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target=".modalEdit" onclick="loadData('${pro.username}')">Sửa</a>&nbsp<button class="btn btn-danger btn-rounded mb-4" onclick="showDelete('${
+                            pro.username}')">Xóa</button>&nbsp<button class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target=".changePass" onclick="changePass('${pro.username}', '${pro.id}')" >Đổi mật khẩu</button></td>`;
+                        res += "</tr>";
+                        count++;
+                    });
+                    $("#userList tbody").html(res);
+                    Paging(index, 'showResult', item.records);
+                } else {
+                    $.notify(`không tìm thấy kết quả nào`, "error");
+                }
+            });
+        } catch (e) {
+
+        }
+    }
+
+    $("[name='btnSave']").click(function () {
+        save();
+    });
+
+    $("[name='btnAdd']").click(function () {
+        save();
+    });
+    $("[name='btnSaveContinue']").click(function () {
+        save();
+        $("#userGroup").val("");
+    });
+
+
+    function save() {
+        let id = $("#id").val();
+        let username = $("#inputUser").val();
+        let inputFullName = $("#inputFullName").val();
+        let inputEmail = $("#inputEmail").val();
+        let inputPassword = $("#inputPassword").val();
+        let inputRole = $("#inputRole").val();
+
+        if (username === "" || username == null) {
+            $.notify("Chưa nhập tên tài khoản");
+            $("#username").focus();
+            return;
+        }
+
+        if (inputFullName === "" || inputFullName == null) {
+            $.notify("Chưa nhập tên đầy đủ");
+            $("#inputFullName").focus();
+            return;
+        }
+
+        if (inputEmail === "" || inputEmail == null) {
+            $.notify("Chưa nhập email");
+            $("#inputEmail").focus();
+            return;
+        }
+
+        if (inputRole === "" || inputRole == null) {
+            $.notify("Chưa nhập quyền");
+            $("#inputRole").focus();
+            return;
+        }
+        var obj;
+        var expire = Math.floor((new Date().setFullYear(2121)));
+
+        var ref = "";
+
+        let selectRole = $("#inputRole").val();
+        if (selectRole === "2" || selectRole === "3") {
+            ref = $("#department").val();
+        } else if (selectRole === "4" || selectRole === "5") {
+            ref = $("#company").val();
+        } else if (selectRole === "6" || selectRole === "7") {
+            ref = $("#provider1").val();
+        }
+
+        if (id === "0") {
+
+            if (inputPassword === "" || inputPassword == null) {
+                $.notify("Chưa nhập mật khẩu");
+                $("#inputPassword").focus();
+                return;
+            }
+            obj = { "id": id, "username": username, "fullname": inputFullName, "email": inputEmail, "password": inputPassword, "roleId": inputRole, "refId": ref, "exprie": expire}
+        } else {
+            obj = { "id": id, "username": username, "fullname": inputFullName, "email": inputEmail, "roleId": inputRole, "refId": ref, "exprie": expire }
+        }
+
+        callApi(`${REP_URL}user`, obj, "POST", function (res) { });
+        $('#modalEdit').modal('hide');
+    }
+
+    function clearBeforeSave() {
+        $("#department").parent().addClass("d-none");
+        $("#company").parent().addClass("d-none");
+        $("#provider1").parent().addClass("d-none");
+        $(".hidepass").removeClass('d-none');
+        $(".modal-title").html("Tạo mới dữ liệu");
+        $("[name='btnSave']").addClass("d-none");
+        $("[name='btnAdd']").removeClass("d-none");
+        $("[name='btnSaveContinue']").removeClass("d-none");
+        $("#id").val("0");
+        $("#inputUser").val("");
+        $("#inputPassword").val("");
+        $("#inputFullName").val("");
+        $("#inputEmail").val("");
+        loadSoGTVT("");
+        loadDvtdl("");
+    }
+
+
+    callApi(`${REP_URL}roles?name=`, null, "GET", function (item) {
+        let res = ` <option value="0">Chọn nhóm người dùng</option>`;
+        item.forEach(function (pro) {
+            res += ` <option value="${pro.id}">${pro.name}</option>`;
+        });
+        $("#role").html(res);
+        $("#inputRole").html(res);
+    });
+
+    function loadData(user) {
+
+        $("#department").parent().addClass("d-none");
+        $("#company").parent().addClass("d-none");
+        $("#provider1").parent().addClass("d-none");
+        $(".hidepass").addClass('d-none');
+        if (id !== "") {
+            $(".modal-title").html("Sửa thông tin ");
+            //$("[name='btnSaveContinue']").addClass("d-none");
+            $("[name='btnAdd']").addClass("d-none");
+            $("[name='btnSave']").removeClass("d-none");
+            $("#id").val("");
+            $("#inputUser").val("");
+            //$("#inputPassword").addClass("d-none");
+            $("#inputFullName").val("");
+            $("#inputEmail").val("");
+            $("#inputRole").val(0);
+            callApi(`${REP_URL}user/${user}`, null, "GET", function (item) {
+                $("#id").val(item.id);
+                $("#inputUser").val(item.username);
+                $("#inputFullName").val(item.fullname);
+                $("#inputEmail").val(item.email);
+                $("#inputRole").val(item.roleId);
+                //dvvtThuocSo(item.refId);
+                if (item.roleId === 2 || item.roleId === 3) {
+                    $("#department").parent().removeClass("d-none");
+                    loadSoGTVT(item.refId);
+                } else if (item.roleId === 4 || item.roleId === 5) {
+                    $("#department").parent().removeClass("d-none");
+                    $("#company").parent().removeClass("d-none");
+                    dvvtThuocSo(item.refId, item.refId);
+                    //$("#company").val(item.refId);
+                } else if (item.roleId === 6 || item.roleId === 7) {
+                    $("#provider1").parent().removeClass("d-none");
+                    loadDvtdl(item.refId);
+                }
+            });
+        }
+    }
+
+    var listChoose = [];
+
+    $("[name='btn-Lock']").click(function (e) {
+        e.preventDefault();
+        listChoose = [];
+        $("[name='choosed']:checked").each(function() {
+            listChoose.push(parseInt($(this).val()));
+        });
+        callApi(`${REP_URL}user/lock`, listChoose, "POST", function (item) {
+            showResult(0);
+            $.notify("Khóa thành công", "success");
+        });
+    });
+    $("[name='btn-unLock']").click(function (e) {
+        e.preventDefault();
+        listChoose = [];
+        $("[name='choosed']:checked").each(function () {
+            listChoose.push(parseInt($(this).val()));
+        });
+        callApi(`${REP_URL}user/unlock`, listChoose, "POST", function (item) {
+            showResult(0);
+            $.notify("Mở khóa thành công", "success");
+        });
+    });
+
+    function changePass(user, id) {
+        $("#tenDangNhap").val(user);
+        $("#idUser").val(id);
+        $("#passMoi").val("");
+    }
+
+    $("[name='btnChange']").click(function (e) {
+        let username = $("#tenDangNhap").val();
+        let idUser = $("#idUser").val();
+        let passMoi = $("#passMoi").val();
+        var obj = {
+            "id":idUser,
+            "username":username,
+            "password": passMoi
+        }
+        callApi(`${REP_URL}user/resetpass`, obj, "POST", function (item) {
+            $.notify("Đổi mật khẩu thành công", "success");
+            showResult(0);
+            $('#changePass').modal('hide');
+        });
+    });
+
+    var interval;
+    function showDelete(user) {
+        var timer = 3;
+        $("#boxMessage").addClass("show");
+        interval = setInterval(function () {
+            timer--;
+            document.getElementById("msg").innerHTML = "Dữ liệu sẽ được xóa sau: " + timer;
+            $("#boxMessage").addClass("show");
+            if (timer < 1) {
+                clearInterval(interval);
+                callApi(`${REP_URL}user/${user}`, null, "DELETE", function (res) {
+                    $.notify("Xóa thành công", "success");
+                    showResult(0);
+                });
+                document.getElementById("msg").innerHTML = "Đã xóa";
+                setTimeout(function () {
+                    $("#boxMessage").removeClass("show");
+                }, 500);
+            }
+        }, 1000);
+    }
+    function cancel() {
+        clearInterval(interval);
+        document.getElementById("msg").innerHTML = "Đã hủy";
+        setTimeout(function () {
+            $("#boxMessage").removeClass("show");
+        }, 500);
+    }
+
+
+    
+    function loadSoGTVT(id) {
+        let res = ``;
+        callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
+            res += "<option value='-1'>Chọn sở GTVT</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.id}">${pro.name}</option>`;
+            });
+            $("#department").select2();
+            $("#department").html(res);
+            $("#department").val(id);
+        });
+        //loadDVVT(id);
+    };
+
+    $("#department").change(function() {
+        loadDVVT($(this).val(), "");
+    });
+
+    function loadDVVT(value, idRef) {
+        callApi(`${REP_URL}company/department/${value}`, null, "GET", function (obj) {
+            let res = "<option value='-1'>Chọn đơn vị vận tải</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.id}">${pro.name}</option>`;
+            });
+            $("#company").select2();
+            $("#company").html(res);
+            if (idRef !== "")
+                $("#company").val(idRef);
+            
+        });
+    }
+
+    function loadDvtdl(value) {
+        callApi(`${REP_URL}provider/all`, null, "GET", function (obj) {
+            let res = "<option value='-1'>Chọn đơn vị truyền dữ liệu</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.id}">${pro.name}</option>`;
+            });
+            $("#provider1").select2();
+            $("#provider1").html(res);
+            if (value !== "")
+                $("#provider1").val(value);
+        });
+    }
+
+
+    function dvvtThuocSo(dvvt, idRef) {
+        callApi(`${REP_URL}department/company/${dvvt}`, null, "GET", function (obj) {
+            //let res = "<option value='-1'>Chọn đơn vị vận tải</option>";
+            loadSoGTVT(obj.id);
+            loadDVVT(obj.id, idRef);
+        });
+       
+    }
+
+</script>

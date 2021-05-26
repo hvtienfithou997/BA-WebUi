@@ -1,0 +1,446 @@
+﻿
+@{
+    ViewData["Title"] = "Danh mục phương tiện";
+}
+<style>
+    .select2 {
+        width: 100% !important;
+    }
+
+
+    .custom {
+        float: right;
+        height: 25px;
+        font-size: 12px;
+        line-height: 1;
+    }
+
+    .modalEdit label::after {
+        content: " (*)";
+        color: red;
+    }
+</style>
+<div class="col-xl-12 col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Tra cứu thông tin phương tiện
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="transmissionUnit">Đơn vị truyền dữ liệu</label>
+                    <select class="form-control" id="transmissionUnit" placeholder="Đơn vị truyền dữ liệu">
+                        <option value="-1">Chọn đơn vị truyền dữ liệu</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="department">Sở GTVT</label>
+                    <select class="form-control" id="department" placeholder="Sở GTVT">
+                        <option value="-1">Chọn sở GTVT</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="transportUnit">Đơn vị vận tải</label>
+                    <select class="form-control" id="transportUnit" placeholder="Đơn vị vận tải">
+                        <option value="-1">Chọn đơn vị vận tải</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="licensePlate">Biển kiểm soát</label>
+                    <select class="form-control" id="licensePlate" placeholder="Biển kiểm soát">
+                        <option value="">Chọn biển kiểm soát</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="vehicleType">Loại hình</label>
+                    <select class="form-control" id="vehicleType" placeholder="Loại hình">
+                        <option value="-1">Chọn loại hình</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-10"></div>
+                <div class="col-xl-2" style="text-align: right">
+                    <button name="btn-result" class="btn btn-info">Tìm kiếm</button>&nbsp;
+                    <button name="btn-addNew" class="btn btn-success" data-toggle="modal" data-target=".modalEdit" onclick="clearBeforeSave()"><i class="fas fa-plus fa-fw"></i>Thêm</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Hiển thị dữ liệu-->
+<div class="col-xl-12 col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách phương tiện</h6>
+            <h6 class="total font-weight-bold"></h6>
+        </div>
+        <div class="table-responsive p-3">
+            <table id="result" class="table table-bordered text-center" style="color: black">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="width: 10px;">STT</th>
+                        <th rowspan="2">Biển kiểm soát</th>
+                        <th rowspan="2">Loại hình</th>
+                        <th rowspan="2">Đơn vị vận tải</th>
+                        <th rowspan="2">Đơn vị truyền dữ liệu</th>
+                        <th rowspan="2">Tải trọng</th>
+                        <th rowspan="2">Số ghế</th>
+                        <th rowspan="2">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot><tr></tr></tfoot>
+            </table>
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination"></ul>
+        </nav>
+    </div>
+</div>
+
+<div class="modal fade modalEdit" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <input type="text" hidden="hidden" id="id" value="0" />
+                <div class="mb-3">
+                    <label data-error="wrong" data-success="right" for="formVehicle">Biển số xe:</label>
+                    <input type="text" id="formVehicle" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label data-error="wrong" data-success="right" for="formDepartment">Sở GTVT :</label><br />
+                    <select class="form-control" id="formDepartment" placeholder="Sở GTVT">
+                        <option value="-1">Chọn sở GTVT</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label data-error="wrong" data-success="right" for="formCompany">Đơn vị vận tải :</label><br />
+                    <select class="form-control" id="formCompany" placeholder="Sở GTVT">
+                        <option value="-1">Chọn đơn vị vận tải</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label data-error="wrong" data-success="right" for="formProvider">Đơn vị truyền dữ liệu :</label><br />
+                    <select class="form-control" id="formProvider" placeholder="Sở GTVT">
+                        <option value="-1">Chọn đơn vị truyền dữ liệu</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label data-error="wrong" data-success="right" for="formVehicleType">Loại hình :</label>
+                    <select class="form-control" id="formVehicleType" placeholder="Sở GTVT">
+                        <option value="-1">Chọn loại hình</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label data-error="wrong" data-success="right" for="formTon">Tải trọng :</label>
+                    <input type="text" id="formTon" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label data-error="wrong" data-success="right" for="formSeat">Số ghế :</label>
+                    <input type="text" id="formSeat" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-success d-none" name="btnAdd">Lưu</button>
+                <button class="btn btn-success" name="btnSave">Lưu</button>
+                <button class="btn btn-primary" name="btnSaveContinue">Lưu và tiếp tục</button>
+                <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="boxMessage">
+    <p id="msg"></p>
+    <button class="btn btn-light custom" onclick="cancel()">Hoàn tác</button>
+</div>
+<script>
+    var interval;
+    function showDelete(vehicle) {
+        var timer = 3;
+        $("#boxMessage").addClass("show");
+        interval = setInterval(function () {
+            timer--;
+            document.getElementById("msg").innerHTML = "Dữ liệu sẽ được xóa sau: " + timer;
+            $("#boxMessage").addClass("show");
+            if (timer < 1) {
+                clearInterval(interval);
+                callApi(`${REP_URL}vehicle/${vehicle}`, null, "DELETE", function (res) {
+                    $.notify("Xóa thành công", "success");
+                });
+                document.getElementById("msg").innerHTML = "Đã xóa";
+                setTimeout(function() {
+                    $("#boxMessage").removeClass("show");
+                },500);
+            }
+        },1000);
+    }
+    function cancel() {
+        clearInterval(interval);
+        document.getElementById("msg").innerHTML = "Đã hủy";
+        setTimeout(function() {
+            $("#boxMessage").removeClass("show");
+        },500);
+    }
+    var providerId = '@ViewBag.providerId';
+    var departmentId ='@ViewBag.departmentId';
+    var companyId ='@ViewBag.companyId';
+    var vehicle ='@ViewBag.vehicle';
+    var type ='@ViewBag.type';
+    var index ='@ViewBag.index';
+
+    $(function () {
+        $("#transmissionUnit").select2().select2('val', providerId);
+        $("#department").select2().select2('val', departmentId);
+        //$("#transportUnit").select2().select2('val', companyId);
+        //$("#licensePlate").select2().select2('val', vehicle);
+       
+
+        $("#transmissionUnit").select2();
+        $("#department").select2();
+        $("#transportUnit").select2();
+        $("#licensePlate").select2();
+        loadLoaiHinh();
+      
+
+        //showResult(index);
+    });
+
+
+    callApi(`${REP_URL}provider/all`, null, "GET", function (obj) {
+        let res = "<option value='0'>Chọn đơn vị truyền dữ liệu</option>";
+        obj.forEach(function (pro) {
+            res += `<option value="${pro.id}">${pro.name}</option>`;
+        });
+        $("#transmissionUnit").html(res);
+        $("#formProvider").html(res);
+    });
+
+    callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
+        let res = "<option value='0'>Chọn sở GTVT</option>";
+        obj.forEach(function (pro) {
+            res += `<option value="${pro.id}">${pro.name}</option>`;
+        });
+        $("#department").html(res);
+        $("#formDepartment").html(res);
+    });
+    $("#department").change(function () {
+        loadDVVT($(this).val(),'');
+    });
+    $("#formDepartment").change(function () {
+        loadDVVT($(this).val(),'');
+    });
+
+    $("#transportUnit").change(function () {
+        callApi(`${REP_URL}vehicle/company/${$(this).val()}`, null, "GET", function (obj) {
+            let res = "<option value=''>Chọn biển kiểm soát</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.vehicle}">${pro.vehicle}</option>`;
+            });
+            $("#licensePlate").html(res);
+        });
+    });
+
+    $("[name='btn-result']").click(function () {
+        index = 0;
+        showResult(index);
+    });
+
+    function showResult(index) {
+        var transmissionUnit = $("#transmissionUnit").val();
+        var department = $("#department").val();
+        var transportUnit = $("#transportUnit").val();
+        var licensePlate = $("#licensePlate").val();
+        var vehicleType = $("#vehicleType").val();
+        $("#result tbody tr").remove();
+        window.history.pushState(window.location.href, "Danh mục phương tiện", `?providerId=${transmissionUnit}&departmentId=${department}&companyId=${transportUnit}&vehicle=${licensePlate}&type=${vehicleType}&index=${index}`);
+        callApi(`${REP_URL}vehicle?providerId=${transmissionUnit}&departmentId=${department}&companyId=${transportUnit}&vehicle=${licensePlate}&type=${vehicleType}&index=${index}`, null, "GET", function (item) {
+            if (item.records > 0) {
+                $.notify("Tải dữ liệu thành công", "success");
+                let res = "";
+                let count = 1;
+                item.data.forEach(function (pro) {
+                    res += "<tr>";
+                    res += `<td>${count}</td>`;
+                    res += `<td class="text-left">${pro.vehicle}</td>`;
+                    res += `<td class="text-left">${pro.vehicleTypeString}</td>`;
+                    res += `<td class="text-left">${pro.companyName}</td>`;
+                    res += `<td class="text-left">${pro.providerName}</td>`;
+                    res += `<td class="text-right">${pro.tonnage}</td>`;
+                    res += `<td class="text-right">${pro.seats}</td>`;
+                    res += `<td><a href="" class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target=".modalEdit" onclick="loadData('${pro.vehicle}')">Sửa</a>&nbsp<button class="btn btn-danger btn-rounded mb-4" onclick="showDelete('${pro.vehicle}')">Xóa</button></td>`;
+                    res += "</tr>";
+                    count++;
+                });
+                $("#result tbody").html(res);
+                Paging(index, 'showResult', item.records);
+            } else {
+                $.notify(`Không tìm thấy kết quả nào`, "error");
+            }
+        });
+    }
+
+    function loadData(vehicle) {
+        if (vehicle !== "") {
+            $(".modal-title").html("Sửa thông tin biển kiểm soát - " + vehicle);
+            $("[name='btnSaveContinue']").addClass("d-none");
+            $("[name='btnAdd']").addClass("d-none");
+            $("[name='btnSave']").removeClass("d-none");
+            $("#formVehicle").val("");
+            $("#formDepartment").val("0");
+            $("#formProvider").val("-1");
+            $("#formVehicleType").val("-1");
+            $("#formTon").val("");
+            $("#formSeat").val("");
+            $("#id").val("");
+            callApi(`${REP_URL}vehicle/${vehicle}`, null, "GET", function (item) {
+                $("#id").val(item.id);
+                $("#formVehicle").val(item.vehicle);
+                $("#formDepartment").val(item.departmentId);
+                $("#formProvider").val(item.providerId);
+                loadDVVT(item.departmentId, item.companyId);
+                $("#formVehicleType").val(item.vehicleType);
+                $("#formTon").val(item.tonnage);
+                $("#formSeat").val(item.seats);
+                $("#formDepartment").select2();
+                $("#formCompany").select2();
+                $("#formProvider").select2();
+            });
+        }
+    }
+
+    function loadDVVT(departmentId, companyId) {
+
+        try {
+            callApi(`${REP_URL}company/department/${departmentId}`, null, "GET", function (obj) {
+                let res = "<option value='-1'>Chọn đơn vị vận tải</option>";
+                obj.forEach(function (pro) {
+                    res += `<option value="${pro.id}">${pro.name}</option>`;
+                });
+                $("#transportUnit").html(res);
+                $("#formCompany").html(res);
+                if (companyId !== '') {
+                    $("#formCompany").html(res);
+                    $("#formCompany").val(companyId);
+                }
+            });
+        } catch (e) {
+
+        } 
+    }
+
+    function save() {
+        //var success = true;
+        let id = $("#id").val();
+        let vehicle = $("#formVehicle").val();
+        let department = $("#formDepartment").val();
+        let provider = $("#formProvider").val();
+        let company = $("#formCompany").val();
+        let vihicleType = $("#formVehicleType").val();
+        let ton = $("#formTon").val();
+        let seat = $("#formSeat").val();
+        if (vehicle === "" || vehicle == null) {
+            $.notify("Chưa nhập biển số xe");
+            $("#formVehicle").focus();
+            return;
+        } else if (regexInput(vehicle)){
+            $("#formVehicle").focus();
+            $.notify("Định dạng biển số không được chứa ký tự đặc biệt, vd: 30C66666");
+            return;
+        }
+        if (department === "0" || department == null) {
+            $.notify("Chưa chọn sở giao thông vận tải");
+            $("#formDepartment").focus();
+            return;
+        }
+        if (company === "-1" || company === "0" || company == null) {
+            $.notify("Chưa chọn đơn vị vận tải");
+            $("#formCompany").focus();
+            
+            return;
+        }
+        if (provider === "-1" || provider === "0" || provider == null) {
+            $.notify("Chưa chọn đơn vị truyền dữ liệu");
+            $("#formProvider").focus();
+           
+            return;
+        }
+        if (ton === "" || ton == null) {
+            $.notify("Chưa nhập trọng tải");
+            $("#formTon").focus();
+           
+            return;
+        }
+        if (seat === "" || seat == null) {
+            $.notify("Chưa nhập số ghế");
+            $("#seat").focus();
+            
+            return;
+        }
+
+            var obj = { "id": id, "vehicle": vehicle, "providerId": provider, "companyId": company, "vehicleType": vihicleType, "seats": seat, "tonnage": ton, "departmentId": department }
+            callApi(`${REP_URL}vehicle`, obj, "POST", function(res) {});
+            $('#modalEdit').modal('hide');
+    }
+
+    $("[name='btnSave']").click(function() {
+        save();
+    });
+
+    $("[name='btnSaveContinue']").click(function() {
+        save();
+        $("#formVehicle").val("");
+    });
+    $("[name='btnAdd']").click(function () {
+        save();
+    });
+
+    function clearBeforeSave() {
+        $(".modal-title").html("Tạo mới dữ liệu");
+        $("[name='btnSave']").addClass("d-none");
+        $("[name='btnAdd']").removeClass("d-none");
+        $("[name='btnSaveContinue']").removeClass("d-none");
+        $("#formVehicle").val("");
+        callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
+            let res = "<option value='0'>Chọn sở GTVT</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.id}">${pro.name}</option>`;
+            });
+
+            $("#formDepartment").html(res);
+        });
+        callApi(`${REP_URL}provider/all`, null, "GET", function (obj) {
+            let res = "<option value='0'>Chọn đơn vị truyền dữ liệu</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.id}">${pro.name}</option>`;
+            });
+            $("#formProvider").html(res);
+        });
+        //company
+        loadDVVT('-1','');
+        $("#formVehicleType").val("-1");
+        $("#formTon").val("");
+        $("#formSeat").val("");
+        $("#id").val("0");
+        $("#formDepartment").select2();
+        $("#formCompany").select2();
+        $("#formProvider").select2();
+    }
+
+
+
+</script>
+
