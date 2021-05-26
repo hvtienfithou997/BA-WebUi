@@ -1,0 +1,203 @@
+﻿
+@{
+    ViewData["Title"] = "Đơn vị truyền dữ liệu";
+}
+
+<div class="col-xl-12 col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Tra cứu thông tin
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="transmissionUnit">Đơn vị truyền dữ liệu</label>
+                    <select class="form-control" id="transmissionUnit" placeholder="Đơn vị truyền dữ liệu">
+                        <option value="-1">Chọn đơn vị truyền dữ liệu</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="department">Sở GTVT</label>
+                    <select class="form-control" id="department" placeholder="Sở GTVT">
+                        <option value="-1">Chọn sở GTVT</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="transportUnit">Đơn vị vận tải</label>
+                    <select class="form-control" id="transportUnit" placeholder="Đơn vị vận tải">
+                        <option value="-1">Chọn đơn vị vận tải</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="licensePlate">Biển kiểm soát</label>
+                    <select class="form-control" id="licensePlate" placeholder="Biển kiểm soát">
+                        <option value="">Chọn biển kiểm soát</option>
+                    </select>
+                </div>
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="start">Từ ngày</label>
+                    <input type="text" class="form-control" id="start" name="start" placeholder="Từ ngày">
+                </div>
+                <div class="form-group col-xl-3 col-lg-6">
+                    <label for="end">Đến ngày</label>
+                    <input type="text" class="form-control" id="end" name="end" placeholder="Đến ngày">
+                </div>
+            </div>
+            <button type="submit" name="btn-result" class="btn btn-info" style="margin: auto">Tìm kiếm</button>
+        </div>
+    </div>
+</div>
+
+<!-- Hiển thị dữ liệu-->
+<div class="col-xl-12 col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Báo cáo tổng hợp đơn vị truyền dữ liệu</h6>
+            <h6 class="total font-weight-bold"></h6>
+        </div>
+        <div class="table-responsive p-3">
+            <table id="report" class="table table-bordered text-center" style="color: black">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="width: 10px;">STT</th>
+                        <th rowspan="2">Biển kiểm soát</th>
+                        <th rowspan="2">Sở GTVT</th>
+                        <th rowspan="2">Đơn vị vận tải</th>
+                        <th colspan="3">Dữ liệu ảnh</th>
+                    </tr>
+                    <tr>
+                        <th>Vi phạm</th>
+                        <th>Σ</th>
+                        <th>%</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot><tr></tr></tfoot>
+            </table>
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination"></ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+    datePicker();
+    $(document).ready(function () {
+
+        //$(".nav-link").addClass('active-menu');
+        loadDVTruyenDL();
+        loadSoGTVT();
+        $("#transmissionUnit").select2();
+        $("#department").select2();
+        $("#transportUnit").select2();
+        $("#licensePlate").select2();
+    });
+
+    var id = '@ViewBag.id';
+    var start = '@ViewBag.start';
+    var end = '@ViewBag.end';
+    var companyId = '@ViewBag.companyId';
+    var vehicle = '@ViewBag.vehicle';
+    var departmentId = '@ViewBag.departmentId';
+    var index = '@ViewBag.index';
+
+    function loadSoGTVT() {
+        callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
+            let res = "<option value='-1'>Chọn sở GTVT</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.id}">${pro.name}</option>`;
+            });
+            $("#department").html(res);
+        });
+    }
+
+    function loadDVTruyenDL() {
+        callApi(`${REP_URL}provider/all`, null, "GET", function (obj) {
+            let res = "<option value='-1'>Chọn đơn vị truyền dữ liệu</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.id}">${pro.name}</option>`;
+            });
+            $("#transmissionUnit").html(res);
+           
+        });
+    }
+
+    $("#department").change(function () {
+        callApi(`${REP_URL}company/department/${$(this).val()}`, null, "GET", function (obj) {
+            let res = "<option value='-1'>Chọn đơn vị vận tải</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.id}">${pro.name}</option>`;
+            });
+            $("#transportUnit").html(res);
+        });
+    });
+
+    $("#transportUnit").change(function () {
+        callApi(`${REP_URL}vehicle/company/${$(this).val()}`, null, "GET", function (obj) {
+            let res = "<option value=''>Chọn biển kiểm soát</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.vehicle}">${pro.vehicle}</option>`;
+            });
+            $("#licensePlate").html(res);
+        });
+    });
+    
+
+    $("[name='btn-result']").click(function () {
+        index = 0;
+        showResult(index);
+    });
+
+    function showResult(index) {
+        var transmissionUnit = $("#transmissionUnit").val();
+        var start = $("#start").val();
+        var end = $("#end").val();
+        start = start !== "" ? ConvertToUnix(start) : 0;
+        end = end !== "" ? ConvertToUnix(end) : 0;
+        var department = $("#department").val();
+        var transportUnit = $("#transportUnit").val();
+        var licensePlate = $("#licensePlate").val();
+        $("#report tbody tr").remove();
+        $("#report tfoot tr th").remove();
+        window.history.pushState(window.location.href, "Báo cáo đơn vị truyền dữ liệu", `?id=${transmissionUnit}&start=${start}&end=${end}&index=${index}&department=${department}&transportUnit=${transportUnit}&licensePlate=${licensePlate}`);
+        callApi(`${REP_URL}generalreport/provider/${transmissionUnit}?companyId=${transportUnit}&departmentId=${department}&start=${start}&index=${index}&end=${end}&vehicle=${licensePlate}`, null, "GET", function (item) {
+            if (item.records > 0) {
+                $.notify("Tải dữ liệu thành công", "success");
+                let res = "";
+                let count = 1;
+                item.data.forEach(function (pro) {
+                    res += "<tr>";
+                    res += `<td>${count}</td>`;
+                    //res += `<td class="text-left"><a href="/bao-cao/tong-hop/lich-su-hinh-anh-lai-xe?plate=${pro.vehicle}&start=${start}&end=${end}">${pro.vehicle}</a></td>`;
+                    res += `<td class="text-left">${pro.vehicle}</td>`;
+                    res += `<td class="text-left">${pro.department_name}</td>`;
+                    res += `<td class="text-left">${pro.company_name}</td>`;
+                    res += `<td>${pro.image_violate_count}</td>`;
+                    res += `<td>${pro.image_total}</td>`;
+                    res += `<td>${pro.image_rate}</td>`;
+                    res += "</tr>";
+                    count++;
+                });
+                let totalRes = `<th>Tổng</th>`;
+                totalRes += `<th></th>`;
+                totalRes += `<th></th>`;
+                totalRes += `<th></th>`;
+                totalRes += `<th>${item.totalViolateSum}</th>`;
+                totalRes += `<th>${item.totalImageSum}</th>`;
+                totalRes += `<th>${item.totalViolateRate}</th>`;
+
+                $("#report tbody").html(res);
+                $("#report tfoot tr").html(totalRes);
+                $("#report tfoot tr th").addClass("text-danger");
+                Paging(index, 'showResult', item.records);
+            } else {
+                $.notify(`Không tìm thấy kết quả nào`, "error");
+            }
+        });
+    }
+</script>
+
+
