@@ -49,7 +49,7 @@
 
         <!--Fake-->
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar1">
-            <li class="nav-item">
+            @*<li class="nav-item">
                 <a class="nav-link" href="@Url.Action("trangchu","TrangChu")">
                     <i class="far fa-fw fa-window-maximize"></i>
                     <span>Trang chủ</span>
@@ -151,7 +151,7 @@
                     <i class="fas fa-fw fa-info"></i>
                     <span>Thông tin cần biết</span>
                 </a>
-            </li>
+            </li>*@
         </ul>
 
 
@@ -375,12 +375,14 @@
 </html>
 
 <script type="text/javascript">
-    var authorization = localStorage.getItem("bagps");
+    var authorization = localStorage.getItem("userLogin");
     if (authorization == null)
         window.location.href = "/login/login";
     else {
-        $(".user-full-name").html(localStorage.getItem("bafullname"));
-        var menu = JSON.parse(localStorage.getItem("bagpsData"));
+
+        var user = JSON.parse(localStorage.getItem("userLogin"));
+        $(".user-full-name").html(user.fullname);
+        var menu = user.features;
         let html = ``;
         let stt = 1;
         let arr = [];
@@ -393,7 +395,8 @@
         });
         var arrNumber = [24, 25, 26, 27, 29, 30, 31, 32];
         arr.forEach(parent => {
-            html += `<li class="nav-item">`;
+            let sharpToText = "category-" + parent.code;
+            html += `<li class="nav-item ${sharpToText}">`;
             if (parent.featureId === 1 || parent.featureId === 33) {
                 html += `<a class="nav-link" href='/${parent.page}'>`;
             } else {
@@ -401,16 +404,17 @@
             }
             html += `<i class="${parent.icon}"></i>`;
             html += `<span>${parent.name}</span>`;
-            html += `</a>`;
-            html += `<div id="row-${stt}" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar1">`;
+            html += `</a>`;            
+
+            html += `<div id="row-${stt}" class="collapse " aria-labelledby="headingForm" data-parent="#accordionSidebar1">`;
             html += `<div class="bg-white py-2 collapse-inner rounded" style="color: #fff !important">`;
             let sttChild = 1;
             arrChild.forEach((child) => {
                 if (child.featureParentId === parent.featureId) {
                     if (arrNumber.includes(child.featureId)) {
-                        html += `<a class="collapse-item" href="/${child.page}" style="color: #000 !important; width: 100%;align-items: baseline;">`;
+                        html += `<a class="collapse-item ${child.code}" href="/${child.page}" style="color: #000 !important; width: 100%;align-items: baseline;">`;
                     } else {
-                        html += `<a class="nav-link collapsed" href="/${child.page}" style="color: #000 !important; width: 100%;align-items: baseline;" data-toggle="collapse" data-target="#row-child-${sttChild}" aria-expanded="true" aria-controls="collapseForm">`;
+                        html += `<a class="nav-link collapsed ${child.code}" href="/${child.page}" style="color: #000 !important; width: 100%;align-items: baseline;" data-toggle="collapse" data-target="#row-child-${sttChild}" aria-expanded="true" aria-controls="collapseForm">`;
                     }
 
                     html += `<i class="fab fa-fw fa-wpforms"></i><span>${child.name}</span></a>`;
@@ -418,7 +422,7 @@
                     html += `<div class="bg-white rp-color py-2 collapse-inner rounded">`;
                     menu.forEach((child3) => {
                         if (child3.featureParentId === child.featureId) {
-                            html += `<a class="collapse-item" href="/${child3.page}">${child3.name}</a>`;
+                            html += `<a class="collapse-item ${child3.code}" href="/${child3.page}">${child3.name}</a>`;
                         }
                     });
                     html += `</div></div>`;
@@ -432,23 +436,31 @@
         });
         $("#accordionSidebar1").html(html);
     }
-    $("#sidebarToggle, #sidebarToggleTop").on('click', function (e) {
-        $("body").toggleClass("sidebar-toggled");
-        $(".sidebar").toggleClass("toggled");
-        if ($(".sidebar").hasClass("toggled")) {
-            $('.sidebar .collapse').collapse('hide');
-        };
-    });
+    //$("#sidebarToggle, #sidebarToggleTop").on('click', function (e) {
+    //    $("body").toggleClass("sidebar-toggled");
+    //    $(".sidebar").toggleClass("toggled");
+    //    if ($(".sidebar").hasClass("toggled")) {
+    //        $('.sidebar .collapse').collapse('hide');
+    //    };
+    //});
 
+
+    //$(".sidebar li.nav-item ").on("click",
+    //    function (e) {
+    //        //$(this).removeClass('active');
+    //        $(this).addClass('active');
+    //        $(this).children().removeClass("collapsed");
+    //    });
+
+
+    var curUrl = window.location.pathname;
     $("#logout").on('click',
         function() {
             callApi(`${REP_URL}user/logout`,
                 null,
                 "POST",
                 function(obj) {
-                    localStorage.removeItem("bagps");
-                    localStorage.removeItem("bagpsData");
-                    localStorage.removeItem("bafullname");
+                    localStorage.removeItem("userLogin");
                     window.location.href = "/login/login";
                 });
 

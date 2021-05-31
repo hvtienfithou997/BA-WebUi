@@ -10,11 +10,29 @@ var REP_URL = "http://210.211.96.3:8080/image-report-api/";
 //var REP_URL = "http://14.232.243.194:29090/";
 //var WAY_URL = "http://14.232.243.194:29091/";
 
+
+var API_THONG_KE = "http://10.0.10.44:8081/api/";
+
+
 var API_LHVT = "http://192.168.1.59:800/api/v1/transporttypelandmarks/lists?queryJson={%22FK_LanguageId%22:1}";
 var PAGE_SIZE = 75;
 var DIV_LOADING = `<div id="div_loader" class="loader"></div>`;
 
-var AUTH = localStorage.getItem("bagps");
+var user = JSON.parse(localStorage.getItem("userLogin"));
+var AUTH = user.authorization;
+
+var USER_ROLE = user.roleId;
+
+var ALLOW_QUERY = user.allowQueryData;
+
+function addClassActive(selector1, selector2) {
+    $("." + selector1).children("div").addClass("show");
+    $("." + selector1).children("div").find("." + selector2).addClass("active");
+    $("." + selector2).parent("div").parent("div").addClass("show");
+
+    //console.log($("." + selector2).parent("div"));
+}
+
 
 $.ajaxSetup({
     contentType: 'application/json',
@@ -125,13 +143,13 @@ function formatDate() {
     if (mm < 10) {
         mm = '0' + mm;
     }
-    
+
     return dd + '/' + mm + '/' + yyyy;
 }
 
 
 function Paging(page, functionName, totalRecord) {
-    
+
     $(".total").html("Tổng số: " + totalRecord);
     if (totalRecord === 0) { $('.pagination').html(''); return; }
     let extSpace = false;
@@ -168,8 +186,8 @@ function Paging(page, functionName, totalRecord) {
 }
 
 function loadLoaiHinh() {
-    let res = `<option value="-1" selected="">Tất cả</option>
-<option value="0">Xe chưa phân loại </option>
+    let res = `<option value="-1" >Tất cả</option>
+    <option value="0">Xe chưa phân loại </option>
     <option value="100">Xe tuyến cố định </option>
     <option value="200">Xe BUS </option>
     <option value="300">Xe hợp đồng </option>
@@ -180,7 +198,7 @@ function loadLoaiHinh() {
     <option value="800">Xe taxi tải </option>
     <option value="900">Xe đầu kéo </option>
     <option value="950">Xe trung chuyển </option>`;
-    $("#vehicleType").select2();
+    //$("#vehicleType").select2();
     $("#vehicleType").html(res);
     //$("#formVehicleType").select2();
     $("#formVehicleType").html(res);
@@ -500,9 +518,9 @@ function regexInput(input) {
     return input.match(regex);
 }
 
-var interval = (1000 * 60 * 60 * 24) ;
+var interval = (1000 * 60 * 60 * 24);
 function SetDefaultDateTime() {
-    
+
     //let dt = new Date().toLocaleDateString();
     var formatDt = formatDate();
     let startOfDay = (ConvertToUnix(formatDt) / interval) * interval;

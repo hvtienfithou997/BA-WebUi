@@ -203,22 +203,44 @@
     var index ='@ViewBag.index';
 
     $(function () {
+
+        //$(".category-DANH_MUC").children("div").addClass("show");
+        //$(".category-DANH_MUC").children("div").find(".DANH_MUC_PHUONG_TIEN").addClass("active");
+
+        addClassActive("category-DANH_MUC", "DANH_MUC_PHUONG_TIEN");
+
         $("#transmissionUnit").select2().select2('val', providerId);
         $("#department").select2().select2('val', departmentId);
-        //$("#transportUnit").select2().select2('val', companyId);
-        //$("#licensePlate").select2().select2('val', vehicle);
-       
-
         $("#transmissionUnit").select2();
         $("#department").select2();
         $("#transportUnit").select2();
         $("#licensePlate").select2();
+        loadSoGTVT(0);
         loadLoaiHinh();
-      
+        if (USER_ROLE === 2 || USER_ROLE === 3) {
+            $("#department").prop("disabled", true);
+            $("#formDepartment").prop("disabled", true);
+            
+            setTimeout(function () {
+                    loadSoGTVT(ALLOW_QUERY.Department);
+                },
+                500);
+        } else if (USER_ROLE === 4 || USER_ROLE === 5) {
+            setTimeout(function () {
+                    loadSoGTVT(ALLOW_QUERY.Department);
+                },
+                500);
+            $("#department").prop("disabled", true);
+            $("#transportUnit").prop("disabled", true);
+        } else if (USER_ROLE === 6 || USER_ROLE === 7) {
+            $("#transmissionUnit").val(ALLOW_QUERY.Provider);
+            $("#transmissionUnit").prop("disabled", true);
+        }
 
         //showResult(index);
     });
 
+    
 
     callApi(`${REP_URL}provider/all`, null, "GET", function (obj) {
         let res = "<option value='0'>Chọn đơn vị truyền dữ liệu</option>";
@@ -229,14 +251,24 @@
         $("#formProvider").html(res);
     });
 
-    callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
-        let res = "<option value='0'>Chọn sở GTVT</option>";
-        obj.forEach(function (pro) {
-            res += `<option value="${pro.id}">${pro.name}</option>`;
+    function loadSoGTVT(sogtvt) {
+        callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
+            let res = "<option value='0'>Chọn sở GTVT</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.id}">${pro.name}</option>`;
+            });
+            $("#department").html(res);
+            $("#formDepartment").html(res);
+
+            if (sogtvt !== 0) {
+                $("#department").val(sogtvt);
+                loadDVVT(sogtvt, '');
+            }
+
         });
-        $("#department").html(res);
-        $("#formDepartment").html(res);
-    });
+    }
+
+
     $("#department").change(function () {
         loadDVVT($(this).val(),'');
     });
@@ -339,7 +371,7 @@
             });
         } catch (e) {
 
-        } 
+        }
     }
 
     function save() {
@@ -369,25 +401,25 @@
         if (company === "-1" || company === "0" || company == null) {
             $.notify("Chưa chọn đơn vị vận tải");
             $("#formCompany").focus();
-            
+
             return;
         }
         if (provider === "-1" || provider === "0" || provider == null) {
             $.notify("Chưa chọn đơn vị truyền dữ liệu");
             $("#formProvider").focus();
-           
+
             return;
         }
         if (ton === "" || ton == null) {
             $.notify("Chưa nhập trọng tải");
             $("#formTon").focus();
-           
+
             return;
         }
         if (seat === "" || seat == null) {
             $.notify("Chưa nhập số ghế");
             $("#seat").focus();
-            
+
             return;
         }
 
@@ -419,8 +451,13 @@
             obj.forEach(function (pro) {
                 res += `<option value="${pro.id}">${pro.name}</option>`;
             });
-
             $("#formDepartment").html(res);
+
+            if (ALLOW_QUERY.Department !== 0) {
+                $("#formDepartment").val(ALLOW_QUERY.Department);
+                loadDVVT(ALLOW_QUERY.Department, "");
+            }
+
         });
         callApi(`${REP_URL}provider/all`, null, "GET", function (obj) {
             let res = "<option value='0'>Chọn đơn vị truyền dữ liệu</option>";

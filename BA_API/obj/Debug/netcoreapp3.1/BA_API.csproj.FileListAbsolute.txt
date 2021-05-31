@@ -133,4 +133,4 @@ D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.dll
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.pdb
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.genruntimeconfig.cache
 D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\wwwroot\data.json
-D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.csprojAssemblyReference.cache
+D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.csproj.AssemblyReference.cache

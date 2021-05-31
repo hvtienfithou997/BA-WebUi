@@ -246,3 +246,8 @@ body {
 .highcharts-data-table tr:hover {
     background: #f1f7ff;
 }
+
+.active {
+    margin: 0 !important;
+    background-color: rgba(112, 220, 125, 0.33) !important;
+}

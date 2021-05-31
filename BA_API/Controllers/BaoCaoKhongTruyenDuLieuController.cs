@@ -22,7 +22,7 @@ namespace BA_API.Controllers
         }
 
         [Route("bao-cao-khong-truyen-du-lieu/dvtdl")]
-        public IActionResult DVTDL(string provider, string departmentId, string companyId, string vehicle, int start, int end, int index)
+        public IActionResult DVTDL(string provider, string departmentId, string companyId, string vehicle, int start, int end, int index = 0)
         {
             ViewBag.departmentId = departmentId;
             ViewBag.provider = provider;

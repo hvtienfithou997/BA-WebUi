@@ -90,26 +90,23 @@
     var index = '@ViewBag.index';
 
     $(document).ready(function () {
-        loadDVTruyenDL();
-        loadSoGTVT("");
+        addClassActive("category-BAO_CAO", "BAO_CAO_TONG_HOP_PT_VI_PHAM_ANH");
+        loadDVTruyenDL(0);
         $("#transmissionUnit").select2();
         $("#department").select2();
-
+        loadSoGTVT(0);
         if (USER_ROLE === 2 || USER_ROLE === 3) {
             $("#department").prop("disabled", true);
-            $("#department1").prop("disabled", true);
             loadSoGTVT(ALLOW_QUERY.Department);
         } else if (USER_ROLE === 4 || USER_ROLE === 5) {
-            $("#department1").val(ALLOW_QUERY.Company);
-            $("#department").val(ALLOW_QUERY.Company);
-            $("#transportUnit").val(ALLOW_QUERY.Company);
-            $("#department1").prop("disabled", true);
             $("#department").prop("disabled", true);
             $("#transportUnit").prop("disabled", true);
+            loadSoGTVT(ALLOW_QUERY.Department);
         } else if (USER_ROLE === 6 || USER_ROLE === 7) {
-            $("#transmissionUnit").val(ALLOW_QUERY.Provider);
             $("#transmissionUnit").prop("disabled", true);
-        }
+            loadDVTruyenDL(ALLOW_QUERY.Provider);
+        } 
+        
 
     });
 
@@ -125,17 +122,15 @@
         });
     }
 
-    function loadDVTruyenDL() {
+    function loadDVTruyenDL(dvtdl) {
         callApi(`${REP_URL}provider/all`, null, "GET", function (obj) {
             let res = "<option value='-1'>Chọn đơn vị truyền dữ liệu</option>";
             obj.forEach(function (pro) {
                 res += `<option value="${pro.id}">${pro.name}</option>`;
             });
             $("#transmissionUnit").html(res);
-            //if (id !== "") {
-            //    $("#department1").val(id);
-            //    showDepartmentReport();
-            //}
+            if (dvtdl !== 0)
+                $("#transmissionUnit").val(dvtdl);
         });
     }
 

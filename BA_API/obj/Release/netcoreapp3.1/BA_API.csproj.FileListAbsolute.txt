@@ -81,7 +81,6 @@ D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\ru\Microsoft.CodeAnalysis.Wor
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\BA_API.csprojAssemblyReference.cache
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\BA_API.AssemblyInfoInputs.cache
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\BA_API.AssemblyInfo.cs
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\BA_API.csproj.CoreCompileInputs.cache
@@ -134,3 +133,4 @@ D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\Razor\Views\BaoCaoKhongTruyen
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\Razor\Views\BaoCaoKhongTruyenDuLieu\SoGtvt.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\Razor\Views\BaoCaoTongHop\AnhViPham.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\wwwroot\data.json
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\BA_API.csproj.AssemblyReference.cache

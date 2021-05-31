@@ -2374,7 +2374,7 @@ D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\dbgshim.dl
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\hostfxr.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\hostpolicy.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\mscordaccore.dll
-D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\mscordaccore_amd64_amd64_4.700.21.16201.dll
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\mscordaccore_amd64_amd64_4.700.21.21202.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\mscordbi.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\mscorrc.debug.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\mscorrc.dll

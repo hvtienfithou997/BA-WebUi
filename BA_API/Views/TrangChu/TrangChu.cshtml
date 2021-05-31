@@ -108,48 +108,35 @@
 
 
 <script>
-
-</script>
-
-<script>
-
-
     let d1 = $(".divOne").height();
     $(".divTwo").height(d1);
-
     datePickerOne();
     var totalCaptured = [];
     var totalTransfer = [];
     var totalViolation = [];
-
     $.getJSON("../data.json", function (data) {
-
         data.data.totalCaptured.forEach(function (item) {
             let arr = {};
             arr = { "name": item.name, y: item.value }
             totalCaptured.push(arr);
         });
-
         data.data.totalTransfer.forEach(function (item) {
             let arr = {};
             arr = { "name": item.name, "y": item.value }
             totalTransfer.push(arr);
         });
-
         data.data.totalViolation.forEach(function (item) {
             let arr = {};
             arr = { "name": item.name, "y": item.value }
             totalViolation.push(arr);
         });
-
         $("#div_loader").remove();
     }).fail(function () {
         console.log("An error has occurred.");
     });
     var myApp;
     $(document).ready(function () {
-
-        var chart = new Highcharts.Chart('linechart',{
+        var chart = new Highcharts.Chart('linechart', {
             chart: {
                 width: 1500,
                 height: 500
@@ -167,7 +154,7 @@
             series: [{
                 name: 'Thống kê số lượng hình ảnh',
                 data: totalCaptured,
-                
+
             }, {
                 name: 'Thống kê dữ liệu đã truyền',
                 data: totalTransfer
@@ -177,7 +164,131 @@
             }]
         });
     });
-
 </script>
+@*<script>
+    let d1 = $(".divOne").height();
+    $(".divTwo").height(d1);
+    datePickerOne();
+    var TotalVehicle = [];
+    var TotalVehicleTransfer = [];
+    var SumImageInvalid = [];
+    var day = [];
+
+    callApi(`${API_THONG_KE}imagereport/count-image`, null, "GET", function (res) {
+        res.TotalVehicle.forEach(function (item) {
+            let arr = {};
+            arr = { "name": item.name, y: item.value }
+            TotalVehicle.push(arr);
+            day.push(item.name);
+        });
+        res.TotalVehicleTransfer.forEach(function (item) {
+            let arr = {};
+            arr = { "name": item.name, "y": item.value }
+            TotalVehicleTransfer.push(arr);
+        });
+        res.SumImageInvalid.forEach(function (item) {
+            let arr = {};
+            arr = { "name": item.name, "y": item.value }
+            SumImageInvalid.push(arr);
+        });
+        $("#div_loader").remove();
+
+        console.log(TotalVehicle)
+        console.log(TotalVehicleTransfer)
+        console.log(SumImageInvalid)
+    });
+    setTimeout(function() {
+            var chart = new Highcharts.Chart('linechart',
+                {
+                    chart: {
+                        width: 1500,
+                        height: 500
+                    },
+                    xAxis: {
+                        categories: day
+                    },
+                    legend: {
+                        rtl: false
+                    },
+                    title: {
+                        text: 'Biểu đồ đường thống kê dữ liệu'
+                    },
+                    series: [
+                        {
+                            name: 'Thống kê số lượng xe trong ngày',
+                            data: TotalVehicle
+
+                        }, {
+                            name: 'Thống kê số xe truyền dữ liệu trong ngày',
+                            data: TotalVehicleTransfer
+                        }, {
+                            name: 'Thống kê tổng số ảnh vi phạm trong ngày',
+                            data: SumImageInvalid
+                        }
+                    ]
+                });
+        },
+        200);
+   
+
+    
+
+    //$.getJSON("../data.json", function (data) {
+
+    //    data.data.totalCaptured.forEach(function (item) {
+    //        let arr = {};
+    //        arr = { "name": item.name, y: item.value }
+    //        totalCaptured.push(arr);
+    //    });
+
+    //    data.data.totalTransfer.forEach(function (item) {
+    //        let arr = {};
+    //        arr = { "name": item.name, "y": item.value }
+    //        totalTransfer.push(arr);
+    //    });
+
+    //    data.data.totalViolation.forEach(function (item) {
+    //        let arr = {};
+    //        arr = { "name": item.name, "y": item.value }
+    //        totalViolation.push(arr);
+    //    });
+
+    //    $("#div_loader").remove();
+    //}).fail(function () {
+    //    console.log("An error has occurred.");
+    //});
+    //var myApp;
+    //$(document).ready(function () {
+
+    //    var chart = new Highcharts.Chart('linechart1',{
+    //        chart: {
+    //            width: 1500,
+    //            height: 500
+    //        },
+    //        xAxis: {
+    //            categories: ['01/05', '02/05', '03/05', '04/05', '05/05', '06/05', '07/05', '08/05',
+    //                '09/05', '10/05', '11/05', '12/05', '13/05', '14/05', '15/05', '16/05', '17/05', '18/05', '19/05', '20/05', '21/05', '22/05', '23/05', '24/05']
+    //        },
+    //        legend: {
+    //            rtl: false
+    //        },
+    //        title: {
+    //            text: 'Biểu đồ đường thống kê dữ liệu'
+    //        },
+    //        series: [{
+    //            name: 'Thống kê số lượng hình ảnh',
+    //            data: totalCaptured,
+                
+    //        }, {
+    //            name: 'Thống kê dữ liệu đã truyền',
+    //            data: totalTransfer
+    //        }, {
+    //            name: 'Thống kê vi phạm',
+    //            data: totalViolation
+    //        }]
+    //    });
+    //});
+
+</script>*@
 <script src="~/js/trang-chu.js"></script>
 

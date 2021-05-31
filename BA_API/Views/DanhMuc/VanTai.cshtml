@@ -145,35 +145,68 @@
     <button class="btn btn-light custom" onclick="cancel()">Hoàn tác</button>
 </div>
 <script>
-
+    
+    
     var departmentid = '@ViewBag.departmentid';
     var companyid = '@ViewBag.companyid';
     var index = '@ViewBag.index';
     $(function () {
+        addClassActive("category-DANH_MUC", "DANH_MUC_DVVT");
         $("#department").select2();
         $("#transportUnit").select2();
-        //$("[name='btn-result']").click();
+
+        loadSoGTVT(0);
+
+        if (USER_ROLE === 2 || USER_ROLE === 3) {
+            $("#department").prop("disabled", true);
+            $("#formDepartment").prop("disabled", true);
+            
+            setTimeout(function () {
+                    loadSoGTVT(ALLOW_QUERY.Department);
+            }, 500);
+        } else if (USER_ROLE === 4 || USER_ROLE === 5) {
+            setTimeout(function () {
+                    loadSoGTVT(ALLOW_QUERY.Department);
+                },
+                500);
+            $("#department").prop("disabled", true);
+            $("#transportUnit").prop("disabled", true);
+        } else if (USER_ROLE === 6 || USER_ROLE === 7) {
+            $("#transmissionUnit").val(ALLOW_QUERY.Provider);
+            $("#transmissionUnit").prop("disabled", true);
+        }
+
+
         if (departmentid !== "")
             showResult(index);
     });
     $("[name='btn-result']").click(function () {
-
         index = 0;
         showResult(index);
     });
 
-    callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
-        let res = "<option value='0'>Chọn sở GTVT</option>";
-        obj.forEach(function (pro) {
-            res += `<option value="${pro.id}">${pro.name}</option>`;
+    function loadSoGTVT(sogtvt) {
+        callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
+            let res = "<option value='0'>Chọn sở GTVT</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.id}">${pro.name}</option>`;
+            });
+            $("#department").html(res);
+            $("#formDepartment").html(res);
+            if (departmentid !== "") {
+                $("#department").val(departmentid).change();
+                loadDVVT(departmentid, '');
+            }
+            if (sogtvt !== 0) {
+                $("#department").val(sogtvt);
+                $("#formDepartment").val(sogtvt);
+                loadDVVT(sogtvt, '');
+                showResult(index);
+            }
+
         });
-        $("#department").html(res);
-        $("#formDepartment").html(res);
-        if (departmentid > 0) {
-            $("#department").val(departmentid).change();
-            loadDVVT(departmentid, '');
-        }
-    });
+
+    }
     $("#department").change(function () {
         console.log($(this).val());
         loadDVVT($(this).val(), "");
@@ -223,11 +256,10 @@
                 });
                 $("#transportUnit").select2();
                 $("#transportUnit").html(res);
-                $("#formCompany").select2();
                 $("#formCompany").html(res);
+                $("#formCompany").select2();
                 //$("#transportUnit").val(companyid).trigger('change.select2');
                 if (companyId !== '') {
-                    $("#formCompany").html(res);
                     $("#formCompany").val(companyId);
                 }
             });
@@ -245,6 +277,8 @@
                 res += `<option value="${pro.id}">${pro.name}</option>`;
             });
             $("#formDepartment").html(res);
+            if (ALLOW_QUERY.Department !== 0)
+                $("#formDepartment").val(ALLOW_QUERY.Department);
         });
         $("#formCompany").val("");
         $("#formTax").val("");

@@ -296,7 +296,6 @@ D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\win-x64\dbgshim.dll
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\win-x64\hostfxr.dll
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\win-x64\hostpolicy.dll
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\win-x64\mscordaccore.dll
-D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\win-x64\mscordaccore_amd64_amd64_4.700.21.16201.dll
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\win-x64\mscordbi.dll
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\win-x64\mscorrc.debug.dll
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\win-x64\mscorrc.dll
@@ -484,3 +483,4 @@ D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\Razor\Views\BaoCaoKho
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\Razor\Views\BaoCaoKhongTruyenDuLieu\SoGtvt.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\Razor\Views\BaoCaoTongHop\AnhViPham.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\win-x64\wwwroot\data.json
+D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\win-x64\mscordaccore_amd64_amd64_4.700.21.21202.dll

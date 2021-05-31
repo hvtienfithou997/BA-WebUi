@@ -382,12 +382,12 @@
 </body>
 </html>
 <script>
-    localStorage.removeItem("bagps");
-    localStorage.removeItem("bagpsData");
-    localStorage.removeItem("bafullname");
+    localStorage.removeItem("userLogin");
+    //localStorage.removeItem("bagpsData");
+    //localStorage.removeItem("bafullname");
     function login(event) {
         event.preventDefault();
-        localStorage.removeItem("bagpsData");
+        localStorage.removeItem("userLogin");
         let user = $("#username").val();
         let pass = $("#password").val();
         if (user === "" || pass === "") {
@@ -397,16 +397,16 @@
             //$.notify("Đăng nhập thành công");
             var obj = { "username": user, "password": pass }
             callApi(`${REP_URL}user/login`, obj, "POST", function (item) {
-                localStorage.setItem("bagps", item.authorization);
-                localStorage.setItem("bafullname", item.fullname);
-                if (localStorage.getItem("bagps") !== null)
-                    localStorage.setItem("bagpsData", JSON.stringify(item.features));
-                window.location.href = "/he-thong-giam-sat-anh/trang-chu";
+                console.log(item);
+                localStorage.setItem("userLogin", JSON.stringify(item));
+                //localStorage.setItem("bagps", item.authorization);
+                //localStorage.setItem("bafullname", item.fullname);
+                if (localStorage.getItem("userLogin") !== null) 
+                    window.location.href = "/he-thong-giam-sat-anh/trang-chu";
+                    //localStorage.setItem("bagpsData", JSON.stringify(item.features));
+                //window.location.href = "/he-thong-giam-sat-anh/trang-chu";
             });
         }
-        //localStorage.removeItem("bagps");
-        //localStorage.removeItem("bagpsData");
-        //localStorage.removeItem("bafullname");
         return false;
     }
 </script>

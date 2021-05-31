@@ -65,9 +65,12 @@
     var end = '@ViewBag.end';
     var index = '@ViewBag.index';
 
-    $(document).ready(function() {
-        datePicker();
+    $(document).ready(function () {
 
+
+        addClassActive("category-QUAN_TRI_HE_THONG", "QUAN_TRI_HE_THONG_NHAT_KY_TRUY_CAP");
+
+            datePicker();
         if (start > 0)
             $('[name="start"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', EpochToHuman(start));
         if (end > 0)
@@ -91,7 +94,7 @@
         $("#report tbody tr").remove();
         $("#report tfoot tr th").remove();
         window.history.pushState(window.location.href, "Nhật ký truy cập", `?username=${username}&start=${start}&end=${end}&index=${index}`);
-        
+
         callApi(`${REP_URL}user/log?username=${username}&start=${start}&end=${end}&index=${index}`, null, "GET", function (item) {
             if (item.records > 0) {
                 $.notify("Tải dữ liệu thành công", "success");

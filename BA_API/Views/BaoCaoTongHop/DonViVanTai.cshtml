@@ -98,20 +98,15 @@
     var department = '@ViewBag.department';
     var status = false;
     $(document).ready(function() {
-        loadSoGTVT("");
+       
+        addClassActive("category-BAO_CAO", "BAO_CAO_TONG_HOP_DVVT");
+            
 
         $("#department").change(function () {
             loadDVVT($(this).val());
         });
         $("#transportUnit").change(function () {
-            callApi(`${REP_URL}vehicle/company/${$(this).val()}`, null, "GET", function (obj) {
-                let res = "<option value=''>Chọn biển kiểm soát</option>";
-                obj.forEach(function (pro) {
-                    res += `<option value="${pro.vehicle}">${pro.vehicle}</option>`;
-                });
-                $("#licensePlate").select2().trigger('change');
-                $("#licensePlate").html(res);
-            });
+            loadBSX($(this).val());
         });
         if (vehicle === "")
             $("#licensePlate").val();
@@ -124,24 +119,31 @@
 
         }, 1000);
 
-
+        loadSoGTVT(0);
         if (USER_ROLE === 2 || USER_ROLE === 3) {
             $("#department").prop("disabled", true);
-            $("#department1").prop("disabled", true);
             loadSoGTVT(ALLOW_QUERY.Department);
         } else if (USER_ROLE === 4 || USER_ROLE === 5) {
-            $("#department1").val(ALLOW_QUERY.Company);
-            $("#department").val(ALLOW_QUERY.Company);
-            $("#transportUnit").val(ALLOW_QUERY.Company);
-            $("#department1").prop("disabled", true);
             $("#department").prop("disabled", true);
             $("#transportUnit").prop("disabled", true);
+            loadSoGTVT(ALLOW_QUERY.Department);
         } else if (USER_ROLE === 6 || USER_ROLE === 7) {
-            $("#transmissionUnit").val(ALLOW_QUERY.Provider);
             $("#transmissionUnit").prop("disabled", true);
         }
-
+        
     });
+
+    function loadBSX(bsx) {
+        callApi(`${REP_URL}vehicle/company/${bsx}`, null, "GET", function (obj) {
+            let res = "<option value=''>Chọn biển kiểm soát</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.vehicle}">${pro.vehicle}</option>`;
+            });
+            $("#licensePlate").select2().trigger('change');
+            $("#licensePlate").html(res);
+        });
+    }
+
 
     function loadSoGTVT(depa){
         callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
@@ -153,11 +155,14 @@
             $("#department").html(res);
             if (department !== "") {
                 $("#department").val(department);
-                
+                loadDVVT(department);
             }
+                
+
+
             if (depa !== 0) {
                 $("#department").val(depa);
-                loadDVVT(department);
+                loadDVVT(depa);
             }
 
         });
@@ -227,10 +232,17 @@
             });
             $("#transportUnit").select2();
             $("#transportUnit").html(res);
+
             if (company !== "") {
                 $("#transportUnit").val(company);
+                loadBSX(company);
                 showResult(index);
             }
+            if (ALLOW_QUERY.Company !== 0) {
+                $("#transportUnit").val(ALLOW_QUERY.Company);
+                loadBSX(ALLOW_QUERY.Company);
+            }
+            
         });
 
     }

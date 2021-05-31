@@ -40,7 +40,7 @@
                     <label for="date">Chọn ngày</label>
                     <input type="text" class="form-control" id="date" name="date" placeholder="Nhập ngày">
                 </div>
-              
+
             </div>
             <button type="submit" name="btn-result" class="btn btn-info" style="margin: auto">Tìm kiếm</button>
         </div>
@@ -65,7 +65,7 @@
                         <th rowspan="2">Đơn vị vận tải</th>
                         <th rowspan="2">Số bản tin</th>
                     </tr>
-                
+
                 </thead>
                 <tbody></tbody>
                 <tfoot><tr></tr></tfoot>
@@ -87,43 +87,90 @@
     var index = '@ViewBag.index';
 
     $(document).ready(function () {
+        addClassActive("category-BAO_CAO", "BAO_CAO_TRUYEN_DL_DVTDL");
+        
         datePickerOne();
-        loadDVTruyenDL();
-        loadSoGTVT();
+        loadDVTruyenDL(0);
+
         $("#transmissionUnit").select2();
         $("#department").select2();
         $("#transportUnit").select2();
         $("#licensePlate").select2();
+
+        loadSoGTVT(0);
+
+        if (USER_ROLE === 2 || USER_ROLE === 3) {
+            $("#department").prop("disabled", true);
+            
+            setTimeout(function () {
+                loadSoGTVT(ALLOW_QUERY.Department);
+            },
+                500);
+        } else if (USER_ROLE === 4 || USER_ROLE === 5) {
+            loadSoGTVT(ALLOW_QUERY.Department);
+            $("#department").prop("disabled", true);
+            $("#transportUnit").prop("disabled", true);
+        } else if (USER_ROLE === 6 || USER_ROLE === 7) {
+            $("#transmissionUnit").prop("disabled", true);
+            loadDVTruyenDL(ALLOW_QUERY.Provider);
+        }
+        
+
+
     });
-    function loadSoGTVT() {
+    function loadSoGTVT(sgtvt) {
         callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
             let res = "<option value='-1'>Chọn sở GTVT</option>";
             obj.forEach(function (pro) {
                 res += `<option value="${pro.id}">${pro.name}</option>`;
             });
             $("#department").html(res);
+            if (sgtvt !== 0) {
+                $("#department").val(sgtvt);
+                loadDVVT(sgtvt);
+            }
+
         });
     }
 
-    function loadDVTruyenDL() {
+    function loadDVTruyenDL(dvtdl) {
         callApi(`${REP_URL}provider/all`, null, "GET", function (obj) {
             let res = "<option value='-1'>Chọn đơn vị truyền dữ liệu</option>";
             obj.forEach(function (pro) {
                 res += `<option value="${pro.id}">${pro.name}</option>`;
             });
-            $("#transmissionUnit").html(res);           
+            $("#transmissionUnit").html(res);
+            if (dvtdl !== 0)
+                $("#transmissionUnit").val(dvtdl);
         });
     }
-
-
-    $("#department").change(function () {
-        callApi(`${REP_URL}company/department/${$(this).val()}`, null, "GET", function (obj) {
+    function loadDVVT(sgtvt) {
+        callApi(`${REP_URL}company/department/${sgtvt}`, null, "GET", function (obj) {
             let res = "<option value='0'>Chọn đơn vị vận tải</option>";
             obj.forEach(function (pro) {
                 res += `<option value="${pro.id}">${pro.name}</option>`;
             });
             $("#transportUnit").html(res);
+            if (ALLOW_QUERY.Company !== 0) {
+                $("#transportUnit").val(ALLOW_QUERY.Company);
+                loadBSX(ALLOW_QUERY.Company);
+            }
         });
+    }
+
+    function loadBSX(bsx) {
+        callApi(`${REP_URL}vehicle/company/${bsx}`, null, "GET", function (obj) {
+            let res = "<option value=''>Chọn biển kiểm soát</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.vehicle}">${pro.vehicle}</option>`;
+            });
+            $("#licensePlate").select2().trigger('change');
+            $("#licensePlate").html(res);
+        });
+    }
+
+    $("#department").change(function () {
+        loadDVVT($(this).val());
     });
 
     $("#transportUnit").change(function () {
@@ -175,7 +222,7 @@
                 totalRes += `<th></th>`;
                 totalRes += `<th></th>`;
                 totalRes += `<th class="text-right">${item.totalWaypoints}</th>`;
-                
+
                 $("#report tbody").html(res);
                 $("#report tfoot tr").html(totalRes);
                 $("#report tfoot tr th").addClass("text-danger");

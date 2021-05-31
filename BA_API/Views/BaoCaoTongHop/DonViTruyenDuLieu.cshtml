@@ -86,30 +86,31 @@
 <script>
     datePicker();
     $(document).ready(function () {
-        loadDVTruyenDL();
-        loadSoGTVT("");
+
+      
+           
+        addClassActive("category-BAO_CAO", "BAO_CAO_TONG_HOP_DVTDL");
+      
+
+
+        loadDVTruyenDL(0);
         $("#transmissionUnit").select2();
         $("#department").select2();
         $("#transportUnit").select2();
         $("#licensePlate").select2();
-
-
+        loadSoGTVT(0);
         if (USER_ROLE === 2 || USER_ROLE === 3) {
-            
             $("#department").prop("disabled", true);
-            $("#department1").prop("disabled", true);
             loadSoGTVT(ALLOW_QUERY.Department);
         } else if (USER_ROLE === 4 || USER_ROLE === 5) {
-            $("#department1").val(ALLOW_QUERY.Company);
-            $("#department").val(ALLOW_QUERY.Company);
-            $("#transportUnit").val(ALLOW_QUERY.Company);
-            $("#department1").prop("disabled", true);
+            loadSoGTVT(ALLOW_QUERY.Department);
             $("#department").prop("disabled", true);
             $("#transportUnit").prop("disabled", true);
         } else if (USER_ROLE === 6 || USER_ROLE === 7) {
-            $("#transmissionUnit").val(ALLOW_QUERY.Provider);
             $("#transmissionUnit").prop("disabled", true);
+            loadDVTruyenDL(ALLOW_QUERY.Provider);
         }
+       
     });
 
     var id = '@ViewBag.id';
@@ -127,40 +128,57 @@
                 res += `<option value="${pro.id}">${pro.name}</option>`;
             });
             $("#department").html(res);
-            if (department !== 0)
+            if (department !== 0) {
                 $("#department").val(department);
+                loadDVVT(department);
+            }
         });
     }
 
-    function loadDVTruyenDL() {
+    function loadDVTruyenDL(dvtdl) {
         callApi(`${REP_URL}provider/all`, null, "GET", function (obj) {
             let res = "<option value='-1'>Chọn đơn vị truyền dữ liệu</option>";
             obj.forEach(function (pro) {
                 res += `<option value="${pro.id}">${pro.name}</option>`;
             });
             $("#transmissionUnit").html(res);
+            if (dvtdl !== 0)
+                $("#transmissionUnit").val(dvtdl);
            
         });
     }
 
     $("#department").change(function () {
-        callApi(`${REP_URL}company/department/${$(this).val()}`, null, "GET", function (obj) {
+        loadDVVT($(this).val());
+    });
+
+
+    function loadDVVT(dvvt) {
+        callApi(`${REP_URL}company/department/${dvvt}`, null, "GET", function (obj) {
             let res = "<option value='-1'>Chọn đơn vị vận tải</option>";
             obj.forEach(function (pro) {
                 res += `<option value="${pro.id}">${pro.name}</option>`;
             });
             $("#transportUnit").html(res);
+            if (ALLOW_QUERY.Company !== 0) {
+                $("#transportUnit").val(ALLOW_QUERY.Company);
+                loadBSX(ALLOW_QUERY.Company);
+            }
         });
-    });
-
-    $("#transportUnit").change(function () {
-        callApi(`${REP_URL}vehicle/company/${$(this).val()}`, null, "GET", function (obj) {
+    }
+    function loadBSX(bsx) {
+        callApi(`${REP_URL}vehicle/company/${bsx}`, null, "GET", function (obj) {
             let res = "<option value=''>Chọn biển kiểm soát</option>";
             obj.forEach(function (pro) {
                 res += `<option value="${pro.vehicle}">${pro.vehicle}</option>`;
             });
+            $("#licensePlate").select2().trigger('change');
             $("#licensePlate").html(res);
         });
+    }
+
+    $("#transportUnit").change(function () {
+        loadBSX($(this).val());
     });
     
 

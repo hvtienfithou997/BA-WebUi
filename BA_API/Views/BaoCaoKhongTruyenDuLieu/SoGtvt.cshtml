@@ -13,7 +13,6 @@
         </div>
         <div class="card-body">
             <div class="row">
-
                 <div class="form-group col-xl-4 col-lg-6">
                     <label for="department">Sở GTVT</label>
                     <select class="form-control" id="department" placeholder="Sở GTVT">
@@ -75,10 +74,24 @@
 </div>
 
 <script>
-
-    $(document).ready(function() {
+    $(document).ready(function () {
+        addClassActive("category-BAO_CAO", "BAO_CAO_KHONG_TRUYEN_DL_SO_GTVT");
         datePicker();
-        loadSoGTVT();
+        if (USER_ROLE === 2 || USER_ROLE === 3) {
+            $("#department").prop("disabled", true);
+            setTimeout(function () {
+                loadSoGTVT(ALLOW_QUERY.Department);
+            }, 500);
+        } else if (USER_ROLE === 4 || USER_ROLE === 5) {
+            $("#department").prop("disabled", true);
+            $("#transportUnit").prop("disabled", true);
+            loadSoGTVT(ALLOW_QUERY.Department);
+        } else if (USER_ROLE === 6 || USER_ROLE === 7) {
+            $("#transmissionUnit").val(ALLOW_QUERY.Provider);
+            $("#transmissionUnit").prop("disabled", true);
+        } else {
+            loadSoGTVT(0);
+        }
     });
     var department = '@ViewBag.department';
     var companyId = '@ViewBag.companyId';
@@ -86,7 +99,7 @@
     var start = '@ViewBag.start';
     var end = '@ViewBag.end';
     var index = '@ViewBag.index';
-    function loadSoGTVT() {
+    function loadSoGTVT(sgtvt) {
         callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
             let res = "<option value='-1'>Chọn sở GTVT</option>";
             obj.forEach(function (pro) {
@@ -94,7 +107,10 @@
             });
             $('#department').select2();
             $("#department").html(res);
-
+            if (sgtvt !== 0) {
+                $("#department").val(sgtvt);
+                loadDVVT(sgtvt);
+            }
         });
     }
 
@@ -110,6 +126,21 @@
             });
             $("#transportUnit").select2();
             $("#transportUnit").html(res);
+            if (ALLOW_QUERY.Company !== 0) {
+                $("#transportUnit").val(ALLOW_QUERY.Company);
+                loadBSX(ALLOW_QUERY.Company);
+            }
+        });
+    }
+
+    function loadBSX(bsx) {
+        callApi(`${REP_URL}vehicle/company/${bsx}`, null, "GET", function (obj) {
+            let res = "<option value=''>Chọn biển kiểm soát</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.vehicle}">${pro.vehicle}</option>`;
+            });
+            $("#licensePlate").select2().trigger('change');
+            $("#licensePlate").html(res);
         });
     }
 
@@ -152,7 +183,7 @@
                     res += `<td class="text-left"><a href="/bao-cao-truyen-du-lieu/truyen-du-lieu/bien-so-xe?vehicle=${pro.vehicle}&start=${start}&end=${end}">${pro.vehicle}</a></td>`;
                     res += `<td class="text-left">${pro.company_name}</td>`;
                     res += `<td class="text-left">${pro.provider_name}</td>`;
-                    res += `<td class="text-left">${pro.total_day}</td>`;
+                    res += `<td class="text-right">${pro.total_day}</td>`;
                     res += "</tr>";
                     count++;
                 });

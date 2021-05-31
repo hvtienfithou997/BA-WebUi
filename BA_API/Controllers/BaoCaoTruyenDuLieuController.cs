@@ -16,7 +16,7 @@ namespace BA_API.Controllers
         }
 
         [Route("bao-cao-truyen-du-lieu/{type}/so-gtvt")]
-        public IActionResult SoGtvt(string department, string date, string index)
+        public IActionResult SoGtvt(string department, string date, int index = 0)
         {
             ViewBag.department = department;
             ViewBag.date = date;
@@ -25,7 +25,7 @@ namespace BA_API.Controllers
         }
 
         [Route("bao-cao-truyen-du-lieu/{type}/don-vi-van-tai")]
-        public IActionResult DonViVanTai(string companyId, string date, string department, string index)
+        public IActionResult DonViVanTai(string companyId, string date, string department, int index = 0)
         {
             ViewBag.companyId = companyId;
             ViewBag.date = date;
@@ -45,7 +45,7 @@ namespace BA_API.Controllers
 
 
         [Route("bao-cao-truyen-du-lieu/{type}/don-vi-truyen-du-lieu")]
-        public IActionResult DonViTruyenDuLieu(string provider, string companyId, string vehicle, string date, string index)
+        public IActionResult DonViTruyenDuLieu(string provider, string companyId, string vehicle, string date, int index = 0)
         {
             ViewBag.provider = provider;
             ViewBag.companyId = companyId;

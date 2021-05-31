@@ -40,16 +40,16 @@
         <div class="table-responsive p-3">
             <table id="report" class="table table-bordered text-center" style="color: black">
                 <thead>
-                <tr>
-                    <th rowspan="2" style="width: 10px;">STT</th>
-                    <th rowspan="2">Biển kiểm soát</th>
-                    <th rowspan="2">Loại hình</th>
-                    <th rowspan="2">Sở GTVT</th>
-                    <th rowspan="2">Đơn vị vận tải</th>
-                    <th rowspan="2">Đơn vị truyền dữ liệu</th>
-                    <th rowspan="2">Ngày</th>
-                    <th rowspan="2">Số bản tin</th>
-                </tr>
+                    <tr>
+                        <th rowspan="2" style="width: 10px;">STT</th>
+                        <th rowspan="2">Biển kiểm soát</th>
+                        <th rowspan="2">Loại hình</th>
+                        <th rowspan="2">Sở GTVT</th>
+                        <th rowspan="2">Đơn vị vận tải</th>
+                        <th rowspan="2">Đơn vị truyền dữ liệu</th>
+                        <th rowspan="2">Ngày</th>
+                        <th rowspan="2">Số bản tin</th>
+                    </tr>
                 </thead>
                 <tbody></tbody>
                 <tfoot><tr></tr></tfoot>
@@ -69,29 +69,24 @@
     var end = '@ViewBag.end';
 
 
-    $(document).ready(function() {
+    $(document).ready(function () {
+        addClassActive("category-BAO_CAO", "BAO_CAO_TRUYEN_DL_PHUONG_TIEN");
         $("#licensePlate").val(vehicle);
-        //if (start > 0)
-        //    $('[name="start"]').datepicker('setDate', EpochToHuman(start));
-        //if (end > 0)
-        //    $('[name="end"]').datepicker('setDate', EpochToHuman(end));
+        
         if (start > 0)
             $('[name="start"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', EpochToHuman(start));
         if (end > 0)
             $('[name="end"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', EpochToHuman(end));
 
-
-    
-
         setTimeout(function () {
-            showResult();
+            if (vehicle !== "")
+                showResult();
         }, 1500);
-
 
     });
 
     $("[name='btnReport']").click(function () {
-       
+
         showResult();
     });
 

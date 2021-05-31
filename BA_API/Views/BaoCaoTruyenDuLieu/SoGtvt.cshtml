@@ -65,11 +65,34 @@
     var date = '@ViewBag.date';
     var index = '@ViewBag.index';
     $(document).ready(function () {
-        datePickerOne();
+        addClassActive("category-BAO_CAO", "BAO_CAO_TRUYEN_DL_SO_GTVT");
         
+        datePickerOne();
         $("#department").select2();
+        loadSoGTVT(0);
         if (date > 0)
             $('[name="date"]').datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', EpochToHuman(date));
+
+        if (USER_ROLE === 2 || USER_ROLE === 3) {
+            $("#department").prop("disabled", true);
+            
+            setTimeout(function () {
+                loadSoGTVT(ALLOW_QUERY.Department);
+            },
+                500);
+        } else if (USER_ROLE === 4 || USER_ROLE === 5) {
+            setTimeout(function () {
+                    loadSoGTVT(ALLOW_QUERY.Department);
+                },
+                500);
+            $("#department").prop("disabled", true);
+            $("#transportUnit").prop("disabled", true);
+        } else if (USER_ROLE === 6 || USER_ROLE === 7) {
+            $("#transmissionUnit").val(ALLOW_QUERY.Provider);
+            $("#transmissionUnit").prop("disabled", true);
+        }
+        
+        
 
         setTimeout(function() {
                 showResult(index);
@@ -78,16 +101,22 @@
     });
 
 
-    callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
-        let res = "<option value='-1'>Chọn sở GTVT</option>";
-        obj.forEach(function (pro) {
-            res += `<option value="${pro.id}">${pro.name}</option>`;
-        });
-        $("#department").html(res);
-        if (department !== "" || department !== null)
-            $("#department").val(department);
+    function loadSoGTVT(sgtvt) {
+        callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
+            let res = "<option value='-1'>Chọn sở GTVT</option>";
+            obj.forEach(function (pro) {
+                res += `<option value="${pro.id}">${pro.name}</option>`;
+            });
+            $("#department").html(res);
+            if (department !== '')
+                $("#department").val(department);
 
-    });
+            if (sgtvt !== 0)
+                $("#department").val(sgtvt);
+        });
+    }
+
+    
 
     $("[name='btnReport']").click(function (e) {
         e.preventDefault();

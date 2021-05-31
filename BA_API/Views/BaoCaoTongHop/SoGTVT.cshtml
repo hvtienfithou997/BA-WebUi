@@ -80,28 +80,29 @@
     var vehicleType = '@ViewBag.vehicleType';
     var index = '@ViewBag.index';
     $(document).ready(function () {
+            
+        addClassActive("category-BAO_CAO", "BAO_CAO_TONG_HOP_SO_GTVT");
+            
         datePicker();
         loadLoaiHinh();
-        $("#vehicleType").val(vehicleType);
-        loadSoGTVT("");
-
-
-
+        //$("#vehicleType").val(vehicleType);
+        
+        loadSoGTVT(0);
         if (USER_ROLE === 2 || USER_ROLE === 3) {
             $("#department").prop("disabled", true);
             $("#department1").prop("disabled", true);
             loadSoGTVT(ALLOW_QUERY.Department);
         } else if (USER_ROLE === 4 || USER_ROLE === 5) {
-            $("#department1").val(ALLOW_QUERY.Company);
-            $("#department").val(ALLOW_QUERY.Company);
-            $("#transportUnit").val(ALLOW_QUERY.Company);
+            loadSoGTVT(ALLOW_QUERY.Department);
             $("#department1").prop("disabled", true);
             $("#department").prop("disabled", true);
             $("#transportUnit").prop("disabled", true);
         } else if (USER_ROLE === 6 || USER_ROLE === 7) {
-            $("#transmissionUnit").val(ALLOW_QUERY.Provider);
             $("#transmissionUnit").prop("disabled", true);
-        }
+            
+        } 
+        
+        
     
         
         if (start > 0)
@@ -111,7 +112,6 @@
         showDepartmentReport(index);
     });
 
-
     function loadSoGTVT(department) {
         callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
             let res = "<option value='-1'>Chọn sở GTVT</option>";
@@ -120,7 +120,7 @@
             });
             $('#department1').select2();
             $("#department1").html(res);
-           
+            $("#department1").val(-1);
             if (id !== "") {
                 $("#department1").val(id);
             }
@@ -188,28 +188,7 @@
         });
     }
 
-    $("[name='exportToExcel']").click(function(e) {
-        e.preventDefault();
-        var department = $("#department1").val();
-        if (id !== "")
-            department = id;
-        var vehicleType = $("#vehicleType").val();
-        var start = $("#start").val();
-        var end = $("#end").val();
-        start = start !== "" ? ConvertToUnix(start) : 0;
-        end = end !== "" ? ConvertToUnix(end) : 0;
-
-
-        //callApi(`${REP_URL}topicalreport/department/${department}/export?start=${start}&end=${end}&vehicleType=${vehicleType}`, null, "GET", function(item) {
-        callApi(`${REP_URL}topicalreport/department/60/export?start=1585674000000&end=1588265999000&vehicleType=-1`, null, "GET", function(item) {
-            $("#dvjson").excelexportjs({
-                containerid: "dvjson"
-                , datatype: 'json'
-                , dataset: item.data
-                , columns: getColumns(item.data)
-            });
-        });
-    });
+  
 
 </script>
 

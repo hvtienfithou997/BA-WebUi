@@ -30,6 +30,10 @@
 </div>
 
 <script>
+
+    $(function () {
+        addClassActive("category-DANH_MUC", "DANH_MUC_DVTDL");
+    });
     callApi(`${REP_URL}provider/all`, null, "GET", function (item) {
         if (item.length > 0) {
             $.notify("Tải dữ liệu thành công", "success");

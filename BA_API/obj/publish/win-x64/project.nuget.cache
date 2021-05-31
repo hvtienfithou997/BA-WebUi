@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "vkpPH4PpFIULgBSLpx33mcdbna+WGO/j++v2RX1fLWjRuRAAinIlQQYE/GtwCHn2b7nszfKyqwvLtSUdZSqE/w==",
+  "dgSpecHash": "5c8+n0YhERJR3eKsxCOH5CfpocYuDIN3jHVPYiWdJ7/TYAzg23vckehRuctNXiqt4i+0N/ZyclJ0cqxxhM0gMQ==",
   "success": true,
   "projectFilePath": "D:\\BA_Work\\BA_API\\BA_API\\BA_API.csproj",
   "expectedPackageFiles": [
@@ -141,9 +141,9 @@
     "C:\\Users\\tienhv\\.nuget\\packages\\system.threading.timer\\4.3.0\\system.threading.timer.4.3.0.nupkg.sha512",
     "C:\\Users\\tienhv\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\tienhv\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\tienhv\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\3.1.14\\microsoft.netcore.app.runtime.win-x64.3.1.14.nupkg.sha512",
-    "C:\\Users\\tienhv\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\3.1.14\\microsoft.windowsdesktop.app.runtime.win-x64.3.1.14.nupkg.sha512",
-    "C:\\Users\\tienhv\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\3.1.14\\microsoft.aspnetcore.app.runtime.win-x64.3.1.14.nupkg.sha512"
+    "C:\\Users\\tienhv\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\3.1.15\\microsoft.netcore.app.runtime.win-x64.3.1.15.nupkg.sha512",
+    "C:\\Users\\tienhv\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\3.1.15\\microsoft.windowsdesktop.app.runtime.win-x64.3.1.15.nupkg.sha512",
+    "C:\\Users\\tienhv\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\3.1.15\\microsoft.aspnetcore.app.runtime.win-x64.3.1.15.nupkg.sha512"
   ],
   "logs": []
 }

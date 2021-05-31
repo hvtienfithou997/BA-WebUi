@@ -29,9 +29,11 @@
 </div>
 
 <script>
-
+    $(function () {
+        addClassActive("category-DANH_MUC", "DANH_MUC_TINH");  
+    });
    
-
+    
     callApi(`${REP_URL}department/all`, null, "GET", function (item) {
         if (item.length > 0) {
             $.notify("Tải dữ liệu thành công", "success");

@@ -73,13 +73,47 @@
     var index = '@ViewBag.index';
 
     var department = '@ViewBag.department';
-    $(document).ready(function() {
+    $(document).ready(function () {
+        addClassActive("category-BAO_CAO", "BAO_CAO_TRUYEN_DL_DVVT");
+        
         $("#department").select2();
         $("#transportUnit").select2();
+
+        
 
         if (date > 0)
             $('[name="date"]').datepicker({format:'dd/mm/yyyy'}).datepicker('setDate', EpochToHuman(date));
 
+        
+        $("#department").change(function () {
+            loadDVVT($(this).val());
+        });
+
+        if (USER_ROLE === 2 || USER_ROLE === 3) {
+            $("#department").prop("disabled", true);
+            setTimeout(function () {
+                loadSoGTVT(ALLOW_QUERY.Department);
+            },
+                500);
+        } else if (USER_ROLE === 4 || USER_ROLE === 5) {
+            setTimeout(function () {
+                    loadSoGTVT(ALLOW_QUERY.Department);
+                },
+                500);
+            $("#department").prop("disabled", true);
+            $("#transportUnit").prop("disabled", true);
+        } else if (USER_ROLE === 6 || USER_ROLE === 7) {
+            $("#transmissionUnit").val(ALLOW_QUERY.Provider);
+            $("#transmissionUnit").prop("disabled", true);
+        }
+        loadSoGTVT(0);
+        setTimeout(function () {
+            if (department !== "")
+                showResult(index);
+        },1500);
+    });
+
+    function loadSoGTVT(sgtvt) {
         callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
             let res = "<option value='-1'>Chọn sở GTVT</option>";
             obj.forEach(function (pro) {
@@ -90,15 +124,15 @@
                 $("#department").val(department);
                 loadDVVT(department);
             }
-        });
-        $("#department").change(function () {
-            loadDVVT($(this).val());
-        });
-        setTimeout(function () {
-            showResult(index);
-        },1500);
 
-    });
+            if (sgtvt !== 0) {
+                $("#department").val(sgtvt);
+                loadDVVT(sgtvt);
+            }
+
+        });
+    }
+
 
     $("[name='btnReport']").click(function () {
         index = 0;
@@ -109,7 +143,7 @@
         var transportUnit = $("#transportUnit").val();
         var date = $("#date").val();
         date = date !== "" ? ConvertToUnix(date) : 0;
-
+        let department = $("#department").val();
         $("#report tbody tr").remove();
         $("#report tfoot tr th").remove();
         window.history.pushState(window.location.href, "Báo cáo đơn vị vận tải", `?companyId=${transportUnit}&department=${department}&date=${date}&index=${index}`);
@@ -155,7 +189,10 @@
             $("#transportUnit").html(res);
             if (companyId !== "")
                 $("#transportUnit").val(companyId);
-            status = true;
+
+            if (ALLOW_QUERY.Company !== 0) {
+                $("#transportUnit").val(ALLOW_QUERY.Company);
+            }
         });
     }
 

@@ -192,7 +192,9 @@
     var status = '@ViewBag.status';
     var index = '@ViewBag.index';
     $(function () {
-
+        $(function() {
+            addClassActive("category-QUAN_TRI_HE_THONG", "QUAN_TRI_HE_THONG_NGUOI_DUNG");
+        });
         $("#inputRole").on('change', function () {
 
             $("#department").parent().addClass("d-none");
