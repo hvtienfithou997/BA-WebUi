@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Hệ thống giám sát hình ảnh</title>
+    <link href="~/img/logo/logoBa.png" rel="icon">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/vendor/select2/dist/css/select2.min.css" />
     <link href="~/vendor/fontawesome-free/css/all.css" rel="stylesheet" />
@@ -35,16 +36,18 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 </head>
 <body id="page-top">
     <div id="wrapper">
-        <!-- Sidebar -->
-        @*<a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("TrangChu","TrangChu")">
+        <!-- sidebar -->
+        <!--<a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("trangchu","trangchu")">
                 <div class="sidebar-brand-icon">
                     <img src="~/img/logo/tcdb.png">
                 </div>
-                <div class="sidebar-brand-text mx-3">Hệ thống <br> Giám sát ảnh</div>
-            </a>*@
+                <div class="sidebar-brand-text mx-3">hệ thống <br> giám sát ảnh</div>
+            </a>-->
 
 
         <!--Fake-->
@@ -159,7 +162,7 @@
             <div id="content">
                 <!-- TopBar -->
                 <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-                    <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+                    <button id="sidebarToggleTop" class="d-block d-sm-block d-md-block d-lg-none btn btn-link rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
                     <ul class="navbar-nav ml-auto">
@@ -185,7 +188,7 @@
                                 <i class="fas fa-bell fa-fw"></i>
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown" style="z-index: 99999">
                                 <h6 class="dropdown-header">
                                     Trung tâm thông báo
                                 </h6>
@@ -375,6 +378,7 @@
 </html>
 
 <script type="text/javascript">
+    $(".table").addClass("table-striped");
     var authorization = localStorage.getItem("userLogin");
     if (authorization == null)
         window.location.href = "/login/login";
@@ -436,13 +440,13 @@
         });
         $("#accordionSidebar1").html(html);
     }
-    //$("#sidebarToggle, #sidebarToggleTop").on('click', function (e) {
-    //    $("body").toggleClass("sidebar-toggled");
-    //    $(".sidebar").toggleClass("toggled");
-    //    if ($(".sidebar").hasClass("toggled")) {
-    //        $('.sidebar .collapse').collapse('hide');
-    //    };
-    //});
+    $("#sidebarToggle, #sidebarToggleTop").on('click', function (e) {
+        $("body").toggleClass("sidebar-toggled");
+        $(".sidebar").toggleClass("toggled");
+        if ($(".sidebar").hasClass("toggled")) {
+            $('.sidebar .collapse').collapse('hide');
+        };
+    });
 
 
     //$(".sidebar li.nav-item ").on("click",

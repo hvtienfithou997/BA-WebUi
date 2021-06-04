@@ -1,10 +1,25 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+#page-top {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+table {
+    font-size: 14px;
+}
+.table td {
+    padding: .25rem;
+}
+.table th {
+    padding: .25rem;
+}
 
+.table thead th {
+    vertical-align: middle;
+}
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
@@ -123,7 +138,7 @@ body {
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
-    line-height: 35px;
+    line-height: 21px;
 }
 
 
@@ -249,5 +264,29 @@ body {
 
 .active {
     margin: 0 !important;
-    background-color: rgba(112, 220, 125, 0.33) !important;
+    background-color: #464646;
+}
+    .active span, .active i {
+        color: #f3f3f3;
+    }
+.form-control {
+    height: calc(1.5em + .5rem + 2px) !important;
+    padding: .25rem .5rem !important;
+    font-size: .875rem;
+    line-height: 1.5;
+}
+
+span.select2-selection.select2-selection--single {
+    height: calc(1.5em + .5rem + 2px) !important;
+    padding: .25rem .5rem !important;
+    font-size: .875rem;
+    line-height: 1.5;
+}
+
+.btn {
+    line-height: 1;
+}
+
+#row-3 #row-child-1, #row-3 #row-child-2, #row-3 #row-child-3, #row-3 #row-child-4 {
+    display: none;
 }

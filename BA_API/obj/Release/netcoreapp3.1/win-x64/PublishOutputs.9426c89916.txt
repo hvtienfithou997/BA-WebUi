@@ -1,5 +1,6 @@
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\BA_API.exe
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\jquery.datetimepicker.css
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\login.css
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\ruang-admin.css
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\ruang-admin.min.css
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\css\site.css

@@ -1,29 +1,29 @@
 ﻿$(document).ready(function () {
-    //localStorage.setItem('active', "active-menu");
     $("div label").addClass("font-weight-bold");
+    
 });
-//var AUTH = "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJ2bi5jb20uaGFuZWwiLCJpYXQiOjE1ODc3MTcwMjEsInN1YiI6IjIvMC8wL2FkbWluIiwiaXNzIjoidm4uY29tLmhhbmVsIiwiZXhwIjoxNTg3ODAzNDIxfQ.i1HnLej_QvKXxVyXeMOvJDd3i9ATB42eCMNfjVT5HgnPRB3cr7-392Z2uF8g35n-4T19NG4aZfg2HrKrccCpeQ";
 var WAY_URL = "http://210.211.96.3:8080/image-waypoint-api/";
 var REP_URL = "http://210.211.96.3:8080/image-report-api/";
-//var REP_URL = "http://210.211.96.3:8080/image-report-dev-api/";
-
-//var REP_URL = "http://14.232.243.194:29090/";
-//var WAY_URL = "http://14.232.243.194:29091/";
-
-
-var API_THONG_KE = "http://10.0.10.44:8081/api/";
-
-
+var API_THONG_KE = "http://210.211.96.4:8081/api/";
 var API_LHVT = "http://192.168.1.59:800/api/v1/transporttypelandmarks/lists?queryJson={%22FK_LanguageId%22:1}";
 var PAGE_SIZE = 75;
 var DIV_LOADING = `<div id="div_loader" class="loader"></div>`;
 
 var user = JSON.parse(localStorage.getItem("userLogin"));
-var AUTH = user.authorization;
 
-var USER_ROLE = user.roleId;
+var AUTH;
 
-var ALLOW_QUERY = user.allowQueryData;
+var USER_ROLE;
+
+var ALLOW_QUERY;
+if (user !== null) {
+     AUTH = user.authorization;
+
+     USER_ROLE = user.roleId;
+
+
+     ALLOW_QUERY = user.allowQueryData;
+}
 
 function addClassActive(selector1, selector2) {
     $("." + selector1).children("div").addClass("show");
@@ -103,11 +103,9 @@ function callApi(url, obj, method, callback) {
             },
             failure: function (response) {
                 $("#div_loader").remove();
-                //$.notify(`Lỗi xảy ra ${response.error}`, "error");
             },
             error: function (request, textStatus, errorThrown) {
                 $("#div_loader").remove();
-                //$.notify(`Lỗi xảy ra với API, vui lòng xem lại`, "error");
                 if (request.status === 401) {
                     $.notify(`Đăng nhập thất bại`, "error");
                     let token_exp = request.getResponseHeader('token-expired');
@@ -117,7 +115,7 @@ function callApi(url, obj, method, callback) {
                     console.log(request.statusText);
                 }
                 if (request.status === 409) {
-                    $.notify(`Không thêm được do trùng mã số thuế`, "error");
+                    $.notify(`Không thêm được do trùng dữ liệu`, "error");
                 }
             }
         });
@@ -395,8 +393,6 @@ function EpochToHuman(timestamp) {
     } else {
         outputtext += errormessage;
     }
-
-
 }
 
 

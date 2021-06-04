@@ -46,8 +46,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xl-10"></div>
-                <div class="col-xl-2" style="text-align: right">
+                <div class="col-xl-8"></div>
+                <div class="col-xl-4" style="text-align: right">
                     <button name="btn-result" class="btn btn-info">Tìm kiếm</button>&nbsp;
                     <button name="btn-addNew" class="btn btn-success" data-toggle="modal" data-target=".modalEdit" onclick="clearBeforeSave()"><i class="fas fa-plus fa-fw"></i>Thêm</button>
                 </div>
@@ -231,7 +231,7 @@
                         res += `<td class="text-left">${pro.address}</td>`;
                         res += `<td class="text-left">${pro.department_name}</td>`;
                         res += `<td class="text-right">${pro.phone = pro.phone !== null ? pro.phone : ""}</td>`;
-                        res += `<td><a href="" class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target=".modalEdit" onclick="loadData('${pro.id}')">Sửa</a>&nbsp<button class="btn btn-danger btn-rounded mb-4" onclick="showDelete('${pro.id}')">Xóa</button></td>`;
+                        res += `<td><a href="" class="btn btn-primary btn-rounded" data-toggle="modal" data-target=".modalEdit" onclick="loadData('${pro.id}')">Sửa</a>&nbsp<button class="btn btn-danger btn-rounded" onclick="showDelete('${pro.id}')">Xóa</button></td>`;
                         res += "</tr>";
                         count++;
                     });

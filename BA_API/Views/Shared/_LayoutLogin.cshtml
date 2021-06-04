@@ -1,43 +1,63 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Hệ thống giám sát hình ảnh</title>
-    <link href="~/vendor/fontawesome-free/css/all.css" rel="stylesheet" />
+    <title></title>
     <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    @*<link rel="stylesheet" href="~/css/site.css" />*@
     <script src="~/vendor/jquery/jquery.min.js"></script>
     <script src="~/lib/jquery/dist/notify.min.js"></script>
-    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
-    
-    
-    
-    
-    @*<script src="~/js/site.js"></script>*@
-   
+    <script src="~/js/site.js"></script>
+    <link href="~/css/login.css" rel="stylesheet" />
 </head>
-<body id="page-top">
-    <div id="wrapper">
-        <!-- Sidebar -->
-        <!-- Sidebar -->
-       
-            <div id="content">
-                <!-- TopBar -->
-                <!-- Topbar -->
-                <!-- Container Fluid-->
-                <div class="container-fluid" id="container-wrapper">
-                    <div class="row">
-                        @RenderBody()
-                    </div>
-                </div>
+<body style="margin: 0" class="login">
+<div class="wrapper">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light no-sidebar row">
+        <div class="d-none d-xs-none d-sm-none d-md-none d-lg-block col-lg-7">
+            <div class="row">
+                <div class="col-lg-4 logo-image d-none d-sm-inline-block"><img src="~/img/bogtvt 1.png" /></div>
+                <div class="col-lg-4 logo-image d-none d-sm-inline-block"><img src="~/img/drvnlogin 1.png" /></div>
+                <div class="col-lg-4 logo-image d-none d-sm-inline-block"><img src="~/img/ubatgtlogin 1.png" /></div>
             </div>
-    
-    </div>
-
-  
-
-    @RenderSection("Scripts", required: false)
+        </div>
+        <div class="col-lg-5 text-center text-white font-weight-bold">HỆ THỐNG GIÁM SÁT HÌNH ẢNH</div>
+    </nav>
+    @RenderBody()
+</div>
+@*<div class="main-footer bg-transparent">
+    Tổng cục đường bộ Việt Nam
+    <div class="float-right d-none d-sm-inline-block">Trung tâm thí điểm của Tổng cục đường bộ Việt Nam</div>
+</div>*@
+<footer class="footer text-white main-footer bg-transparent container-fluid" style="position: absolute; bottom: 0; width: 100%; background-color: #3666C8 !important">
+    Tổng cục đường bộ Việt Nam
+    <div class="float-right d-none d-sm-inline-block">Trung tâm thí điểm của Tổng cục đường bộ Việt Nam</div>
+</footer>
 </body>
 </html>
+
+<script>
+    localStorage.removeItem("userLogin");
+    //localStorage.removeItem("bagpsData");
+    //localStorage.removeItem("bafullname");
+    function login(event) {
+        event.preventDefault();
+        localStorage.removeItem("userLogin");
+        let user = $("#username").val();
+        let pass = $("#password").val();
+        if (user === "" || pass === "") {
+            $.notify("Cần nhập tài khoản và mật khẩu");
+            return false;
+        } else {
+            //$.notify("Đăng nhập thành công");
+            var obj = { "username": user, "password": pass }
+            callApi(`${REP_URL}user/login`, obj, "POST", function (item) {
+                console.log(item);
+                localStorage.setItem("userLogin", JSON.stringify(item));
+                //localStorage.setItem("bagps", item.authorization);
+                //localStorage.setItem("bafullname", item.fullname);
+                if (localStorage.getItem("userLogin") !== null) 
+                    window.location.href = "/he-thong-giam-sat-anh/trang-chu";
+                //localStorage.setItem("bagpsData", JSON.stringify(item.features));
+                //window.location.href = "/he-thong-giam-sat-anh/trang-chu";
+            });
+        }
+        return false;
+    }
+</script>

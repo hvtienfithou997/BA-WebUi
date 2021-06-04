@@ -247,8 +247,8 @@
                         res += `<td class="text-left">${pro.email}</td>`;
                         res += `<td class="text-left">${pro.role_name}</td>`;
                         res += `<td class="text-left">${pro.status_name}</td>`;
-                        res += `<td><a href="" class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target=".modalEdit" onclick="loadData('${pro.username}')">Sửa</a>&nbsp<button class="btn btn-danger btn-rounded mb-4" onclick="showDelete('${
-                            pro.username}')">Xóa</button>&nbsp<button class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target=".changePass" onclick="changePass('${pro.username}', '${pro.id}')" >Đổi mật khẩu</button></td>`;
+                        res += `<td><a href="" class="btn btn-primary btn-rounded" data-toggle="modal" data-target=".modalEdit" onclick="loadData('${pro.username}')">Sửa</a>&nbsp<button class="btn btn-danger btn-rounded" onclick="showDelete('${
+                            pro.username}')">Xóa</button>&nbsp<button class="btn btn-primary btn-rounded" data-toggle="modal" data-target=".changePass" onclick="changePass('${pro.username}', '${pro.id}')" >Đổi mật khẩu</button></td>`;
                         res += "</tr>";
                         count++;
                     });

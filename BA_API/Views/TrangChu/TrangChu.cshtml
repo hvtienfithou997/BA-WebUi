@@ -107,7 +107,7 @@
 </div>
 
 
-<script>
+@*<script>
     let d1 = $(".divOne").height();
     $(".divTwo").height(d1);
     datePickerOne();
@@ -164,8 +164,8 @@
             }]
         });
     });
-</script>
-@*<script>
+</script>*@
+<script>
     let d1 = $(".divOne").height();
     $(".divTwo").height(d1);
     datePickerOne();
@@ -193,9 +193,6 @@
         });
         $("#div_loader").remove();
 
-        console.log(TotalVehicle)
-        console.log(TotalVehicleTransfer)
-        console.log(SumImageInvalid)
     });
     setTimeout(function() {
             var chart = new Highcharts.Chart('linechart',
@@ -205,10 +202,11 @@
                         height: 500
                     },
                     xAxis: {
-                        categories: day
+                        categories: day,
+                        reversed: true
                     },
                     legend: {
-                        rtl: false
+                        rtl: true
                     },
                     title: {
                         text: 'Biểu đồ đường thống kê dữ liệu'
@@ -229,8 +227,6 @@
                 });
         },
         200);
-   
-
     
 
     //$.getJSON("../data.json", function (data) {
@@ -289,6 +285,6 @@
     //    });
     //});
 
-</script>*@
+</script>
 <script src="~/js/trang-chu.js"></script>
 

@@ -135,7 +135,7 @@
                     }
 
                     res += `<td class="text-left">${pro.status = pro.status == 0 ? "Khóa" : "Kích hoạt"}</td>`;
-                    res += `<td><a href="" class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target=".modalEdit" onclick="loadData('${pro.id}')">Sửa</a>&nbsp<button class="btn btn-danger btn-rounded mb-4" onclick="showDelete('${pro.id}')">Xóa</button></td>`;
+                    res += `<td><a href="" class="btn btn-primary btn-rounded" data-toggle="modal" data-target=".modalEdit" onclick="loadData('${pro.id}')">Sửa</a>&nbsp<button class="btn btn-danger btn-rounded" onclick="showDelete('${pro.id}')">Xóa</button></td>`;
                     res += "</tr>";
                     count++;
                 });

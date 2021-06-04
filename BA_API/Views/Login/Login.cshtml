@@ -1,412 +1,101 @@
 ﻿@{
     ViewData["Title"] = "Login";
-    //Layout = "~/Views/Shared/_LayoutLogin.cshtml";
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    //Layout = null;
 
 }
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-    <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <script src="~/vendor/jquery/jquery.min.js"></script>
-    <script src="~/lib/jquery/dist/notify.min.js"></script>
-    <script src="~/js/site.js"></script>
-    <style>
-        .navbar-primary {
-            background-color: #0e59a4;
-        }
-
-        .white-background-color {
-            background-color: #fff !important;
-        }
-
-        .logo-image {
-            position: relative;
-        }
-
-            .logo-image::after {
-                content: '';
-                height: 50%;
-                width: 1px;
-                position: absolute;
-                right: 0;
-                top: 18px;
-                background-color: #4fe4ee;
-            }
-
-        .login .no-sidebar, .login .content-wrapper, .login .main-footer {
-            margin: 0px !important;
-        }
-
-        .login {
-            /*background-image: url("../wwwroot/img/bglogin\ 1.png");*/
-            background-image: url("/img/bglogin1.png");
-            height: 100%;
-            /* Center and scale the image nicely */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-            .login .main-header {
-                background-color: #3666C8 !important;
-                margin: 0px;
-                padding: 0px;
-                border-bottom: none;
-            }
-
-            .login .main-footer {
-                background-color: #3666C8 !important;
-                padding: 5px;
-                color: #fff;
-                border-top: none;
-            }
-
-            .login .notification-box {
-                height: 100%;
-                color: #fff;
-                background-color: rgba(20, 56, 181, 0.75);
-            }
-
-                .login .notification-box .card-body {
-                    margin: 30px;
-                    border: 1px solid #4DA7C4;
-                    box-sizing: border-box;
-                    border-radius: 7px;
-                }
-
-                    .login .notification-box .card-body .notification-title {
-                        font-size: 14px;
-                    }
 
 
-
-            .login .card .card-header {
-                border-bottom: none;
-                background-color: #004488;
-            }
-
-            .login .card .card-title {
-                float: none;
-                color: #fff;
-                font-size: 18px;
-            }
-
-            .login .login-box {
-                height: 100%;
-                color: #fff;
-                background-color: #004488;
-                width: 100%;
-            }
-
-                .login .login-box .card-body {
-                    padding-bottom: 0px;
-                }
-
-                    .login .login-box .card-body .action-button {
-                        margin-bottom: 0px;
-                    }
-
-                .login .login-box .card-footer {
-                    margin: 0px;
-                    padding: 0px;
-                    background-color: #004488;
-                }
-
-        .card-footer {
-            background-color: transparent;
-        }
-
-        /* Notification Slideshow */
-        /* Slideshow container */
-        .login .notification-box .card-body .slideshow-container {
-            position: relative;
-        }
-
-        /* Slides */
-        .login .notification-box .card-body .mySlides {
-            display: none;
-        }
-
-
-        /* Next & previous buttons */
-        .login .notification-box .card-body .prev,
-        .login .notification-box .card-body .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            width: auto;
-            margin-top: 55px;
-            padding: 0px;
-            color: #4FE4EE;
-            font-weight: bold;
-            font-size: 20px;
-            border-radius: 0 3px 3px 0;
-            user-select: none;
-        }
-
-        /* Position the "next button" to the right */
-        .login .notification-box .card-body .next {
-            position: absolute;
-            right: 0;
-            border-radius: 3px 0 0 3px;
-        }
-
-        /* On hover, add a black background color with a little bit see-through */
-        /* .login .notification-box .card-body .prev:hover,
-        .login .notification-box .card-body .next:hover {
-          background-color: rgba(0,0,0,0.8);
-          color: white;
-        } */
-
-        /* The dot/bullet/indicator container */
-        .login .notification-box .card-footer .dot-container {
-            text-align: center;
-        }
-
-        /* The dots/bullets/indicators */
-        .login .notification-box .card-footer .dot {
-            cursor: pointer;
-            height: 10px;
-            width: 10px;
-            margin: 0 2px;
-            background-color: #fff;
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.6s ease;
-        }
-
-            /* Add a background color to the active dot/circle */
-            .login .notification-box .card-footer .active,
-            .login .notification-box .card-footer .dot:hover {
-                background-color: #4FE4EE;
-            }
-
-        /* Add an italic font style to all quotes */
-        .login .notification-box .card-body q {
-            /* font-style: italic; */
-        }
-
-        /* Add a blue color to the author */
-        .login .notification-box .card-body .author {
-            color: cornflowerblue;
-        }
-
-        /* End Notification slideshow */
-
-        .alert-box {
-            color: #fff;
-        }
-
-        .callout .alert-box {
-            margin-bottom: 0px;
-        }
-
-        .callout .message-content {
-            font-size: 12px;
-        }
-
-        .form-group label {
-            font-weight: 400 !important;
-        }
-
-        .dataTables_paginate {
-            float: left;
-        }
-
-        .dataTables_info {
-            float: right;
-        }
-
-        .paginate_button.current {
-            z-index: 3;
-            color: #fff !important;
-            background-color: #007bff !important;
-            border-color: #007bff !important;
-        }
-
-        .paginate_button {
-            position: relative !important;
-            padding: .5rem .75rem !important;
-            margin-left: -1px !important;
-            line-height: 1.25 !important;
-            color: #007bff !important;
-            background-color: #fff !important;
-            border: 1px solid #dee2e6 !important;
-        }
-
-        .modal-md {
-            max-width: 650px !important;
-        }
-
-        .modal-ct {
-            max-width: 550px !important;
-        }
-
-        table th, tr {
-            font-size: 12px;
-        }
-
-        table th {
-            text-align: center;
-        }
-
-        .ba-report-table .text-right {
-            text-align: right;
-        }
-
-        .ba-report-table .text-center {
-            text-align: center;
-        }
-
-        .ba-report-table .text-middle {
-            vertical-align: middle;
-        }
-
-        .dataTables_empty {
-            display: none;
-        }
-    </style>
-
-</head>
-<body style="height: 100%;margin: 0">
-    <div class="login">
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light no-sidebar row">
-            <div class="col-lg-7 row d-none d-sm-inline-block">
+    <div class="content-wrapper" style="height: auto;">
+        <section class="content">
+            <div class="container-fluid pt-5 pl-5 pr-5">
                 <div class="row">
-                    <div class="col-lg-4 logo-image d-none d-sm-inline-block"><img src="~/img/bogtvt 1.png" /></div>
-                    <div class="col-lg-4 logo-image d-none d-sm-inline-block"><img src="~/img/drvnlogin 1.png" /></div>
-                    <div class="col-lg-4 logo-image d-none d-sm-inline-block"><img src="~/img/ubatgtlogin 1.png" /></div>
-                </div>
-            </div>
-            <div class="col-lg-5 text-center text-white font-weight-bold">HỆ THỐNG GIÁM SÁT HÌNH ẢNH</div>
-        </nav>
-        <div class="content-wrapper">
-            <section class="content">
-                <div class="container-fluid pt-5 pl-5 pr-5">
-                    <div class="row pt-5">
-                        <div class="col-lg-7 pr-3 d-none d-sm-inline-block">
-                            <div class="card notification-box">
-                                <div class="card-header"><h4 class="card-title text-center font-weight-bold">Thông báo</h4></div>
-                                <div class="card-body">
-                                    <div class="slideshow-container">
-                                        <div class="mySlides" style="display: block;">
-                                            <h5 class="notification-title text-center font-weight-bold">Nghị định 10/2020/NĐ-CP</h5>
-                                            <q>
-                                                Nghị định 10/2020/NĐ-CP ban hành ngày 17/1/2020 Quy định về kinh doanh và điều kiện kinh doanh vận tải bằng xe ô tô có nội dung Quy định lắp camera trên xe ô tô kinh doanh vận tải chi tiết tại Khoản 2 Điều 13 và Khoản 2 Điều 14 Nghị định số 10/2020/NĐ-CP:
+                    <div class="d-none d-xs-none d-sm-none d-md-none d-lg-block col-lg-7">
+                        <div class="card notification-box">
+                            <div class="card-header"><h4 class="card-title text-center font-weight-bold">Thông báo</h4></div>
+                            <div class="card-body">
+                                <div class="slideshow-container">
+                                    <div class="mySlides" style="display: block;">
+                                        <h5 class="notification-title text-center font-weight-bold">Nghị định 10/2020/NĐ-CP</h5>
+                                        <q>
+                                            Nghị định 10/2020/NĐ-CP ban hành ngày 17/1/2020 Quy định về kinh doanh và điều kiện kinh doanh vận tải bằng xe ô tô có nội dung Quy định lắp camera trên xe ô tô kinh doanh vận tải chi tiết tại Khoản 2 Điều 13 và Khoản 2 Điều 14 Nghị định số 10/2020/NĐ-CP:
 
-                                                Khoản 2, Điều 13, Nghị định 10/2020/NĐ-CP quy định: Điều kiện kinh doanh vận tải hành khách bằng xe ô tô
+                                            Khoản 2, Điều 13, Nghị định 10/2020/NĐ-CP quy định: Điều kiện kinh doanh vận tải hành khách bằng xe ô tô
 
-                                                Trước ngày 01 tháng 7 năm 2021, xe ô tô kinh doanh vận tải hành khách có sức chứa từ 09 chỗ (kể cả người lái xe) trở lên phải lắp camera đảm bảo ghi, lưu trữ hình ảnh trên xe (bao gồm cả lái xe và cửa lên xuống của xe) trong quá trình xe tham gia giao thông. Dữ liệu hình ảnh được cung cấp cho cơ quan Công an, Thanh tra giao thông và cơ quan cấp giấy phép, bảo đảm giám sát công khai, minh bạch. Thời gian lưu trữ hình ảnh trên xe đảm bảo như sau:
+                                            Trước ngày 01 tháng 7 năm 2021, xe ô tô kinh doanh vận tải hành khách có sức chứa từ 09 chỗ (kể cả người lái xe) trở lên phải lắp camera đảm bảo ghi, lưu trữ hình ảnh trên xe (bao gồm cả lái xe và cửa lên xuống của xe) trong quá trình xe tham gia giao thông. Dữ liệu hình ảnh được cung cấp cho cơ quan Công an, Thanh tra giao thông và cơ quan cấp giấy phép, bảo đảm giám sát công khai, minh bạch. Thời gian lưu trữ hình ảnh trên xe đảm bảo như sau:
 
-                                                Tối thiểu 24 giờ gần nhất đối với xe hoạt động trên hành trình có cự ly đến 500 ki-lô-mét;
-                                                Tối thiểu 72 giờ gần nhất đối với xe hoạt động trên hành trình có cự ly trên 500 ki-lô-mét.
-                                                Khoản 2, Điều 14, Nghị định 10/2020/NĐ-CP quy định: Điều kiện kinh doanh vận tải hàng hóa bằng xe ô tô
+                                            Tối thiểu 24 giờ gần nhất đối với xe hoạt động trên hành trình có cự ly đến 500 ki-lô-mét;
+                                            Tối thiểu 72 giờ gần nhất đối với xe hoạt động trên hành trình có cự ly trên 500 ki-lô-mét.
+                                            Khoản 2, Điều 14, Nghị định 10/2020/NĐ-CP quy định: Điều kiện kinh doanh vận tải hàng hóa bằng xe ô tô
 
-                                                Trước ngày 01 tháng 7 năm 2021, xe ô tô kinh doanh vận tải hàng hoá bằng công-ten-nơ, xe đầu kéo phải lắp camera đảm bảo ghi, lưu trữ hình ảnh của người lái xe trong quá trình xe tham gia giao thông. Dữ liệu hình ảnh được cung cấp cho cơ quan Công an, Thanh tra giao thông và cơ quan cấp giấy phép, bảo đảm giám sát công khai, minh bạch. Thời gian lưu trữ hình ảnh trên xe đảm bảo như sau:
+                                            Trước ngày 01 tháng 7 năm 2021, xe ô tô kinh doanh vận tải hàng hoá bằng công-ten-nơ, xe đầu kéo phải lắp camera đảm bảo ghi, lưu trữ hình ảnh của người lái xe trong quá trình xe tham gia giao thông. Dữ liệu hình ảnh được cung cấp cho cơ quan Công an, Thanh tra giao thông và cơ quan cấp giấy phép, bảo đảm giám sát công khai, minh bạch. Thời gian lưu trữ hình ảnh trên xe đảm bảo như sau:
 
-                                                Tối thiểu 24 giờ gần nhất đối với xe hoạt động trên hành trình có cự ly đến 500 ki-lô-mét;
-                                                Tối thiểu 72 giờ gần nhất đối với xe hoạt động trên hành trình có cự ly trên 500 ki-lô-mét.
-                                            </q>
-                                        </div>
-                                        <div class="mySlides" style="display: none;">
-                                            <h5 class="notification-title text-center font-weight-bold">Tieu de thong bao 2</h5>
-                                            <q>
-                                                I lhad liked me for my own sake and for nothing else I love you the more in that I believe you had liked me for my own sake and for nothing else I love you the more in that I believe you
-                                                had liked me for my own sake and for nothing else I love you the more in that I believe you had liked me for my own sake and for nothing else
-                                            </q>
-                                        </div>
-                                        <div class="mySlides" style="display: none;">
-                                            <h5 class="notification-title text-center font-weight-bold">Tieu de thong bao 3</h5>
-                                            <q>
-                                                I love you the more in that I believe you had liked me for my own sake and for nothing else I love you the more in that I believe you had liked me for my own sake and for nothing iked me
-                                                for my own sake and for nothing else I love you the more in that I believe you had liked me for my own sake and for nothing else
-                                            </q>
-                                        </div>
-                                        @*<a class="prev">❮</a><a class="next">❯</a>*@
+                                            Tối thiểu 24 giờ gần nhất đối với xe hoạt động trên hành trình có cự ly đến 500 ki-lô-mét;
+                                            Tối thiểu 72 giờ gần nhất đối với xe hoạt động trên hành trình có cự ly trên 500 ki-lô-mét.
+                                        </q>
                                     </div>
+                                    <div class="mySlides" style="display: none;">
+                                        <h5 class="notification-title text-center font-weight-bold">Tieu de thong bao 2</h5>
+                                        <q>
+                                            I lhad liked me for my own sake and for nothing else I love you the more in that I believe you had liked me for my own sake and for nothing else I love you the more in that I believe you
+                                            had liked me for my own sake and for nothing else I love you the more in that I believe you had liked me for my own sake and for nothing else
+                                        </q>
+                                    </div>
+                                    <div class="mySlides" style="display: none;">
+                                        <h5 class="notification-title text-center font-weight-bold">Tieu de thong bao 3</h5>
+                                        <q>
+                                            I love you the more in that I believe you had liked me for my own sake and for nothing else I love you the more in that I believe you had liked me for my own sake and for nothing iked me
+                                            for my own sake and for nothing else I love you the more in that I believe you had liked me for my own sake and for nothing else
+                                        </q>
+                                    </div>
+                                    @*<a class="prev">❮</a><a class="next">❯</a>*@
                                 </div>
-                                @*<div class="card-footer pt-0 mt-0">
+                            </div>
+                            @*<div class="card-footer pt-0 mt-0">
                                         <div class="dot-container"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
                                     </div>*@
-                            </div>
                         </div>
-                        <div class="col-lg-5 pl-5">
-                            <div class="card login-box">
-                                <div class="card-header"><h4 class="card-title text-center font-weight-bold">Đăng nhập hệ thống</h4></div>
-                                <div class="card-body">
-                                    <form class="">
-                                        <div class="form-group">
-                                            <label for="username">Tên đăng nhập</label><input type="text" id="username" name="username" angular="" class="form-control " placeholder="Tên đăng nhập" />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+                        <div class="card login-box">
+                            <div class="card-header"><h4 class="card-title text-center font-weight-bold">Đăng nhập hệ thống</h4></div>
+                            <div class="card-body">
+                                <form class="">
+                                    <div class="form-group">
+                                        <label for="username">Tên đăng nhập</label><input type="text" id="username" name="username" class="form-control " placeholder="Tên đăng nhập"/>
+                                        <!---->
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Mật khẩu</label><input type="password" id="password" name="password" class="form-control " placeholder="Mật khẩu"/>
+                                        <!---->
+                                    </div>
+                                    <div class="row d-none">
+                                        <div class="col-6">
+                                            <div class="icheck-primary"><input type="checkbox" id="remember"/><label for="remember"> Ghi nhớ mật khẩu </label></div>
+                                        </div>
+                                        <div class="col-6 text-right d-none"><a routerlink="/auth/forgot-password" class="btn btn-link" href="#">Quên mật khẩu?</a></div>
+                                    </div>
+                                    <div class="form-group text-center action-button">
+                                        <button class="btn btn-primary" onclick="login(event)">
                                             <!---->
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password">Mật khẩu</label><input type="password" id="password" name="password" class="form-control " placeholder="Mật khẩu" />
-                                            <!---->
-                                        </div>
-                                        <div class="row d-none">
-                                            <div class="col-6">
-                                                <div class="icheck-primary"><input type="checkbox" id="remember" /><label for="remember"> Ghi nhớ mật khẩu </label></div>
-                                            </div>
-                                            <div class="col-6 text-right"><a routerlink="/auth/forgot-password" class="btn btn-link" href="#">Quên mật khẩu?</a></div>
-                                        </div>
-                                        <div class="form-group text-center action-button">
-                                            <button class="btn btn-primary" onclick="login(event)">
-                                                <!---->
-                                                Đăng nhập
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="card-footer">
-                                    <svg viewBox="0 0 500 100" preserveAspectRatio="none" style="height: 100%; width: 100%;">
-                                        <path d="M-1.97,-0.48 C144.74,148.52 334.36,-48.84 500.84,57.72 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: #0099ff;"></path>
-                                    </svg>
-                                </div>
+                                            Đăng nhập
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer" style="background-color: #004488">
+                                <svg viewBox="0 0 500 100" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+                                    <path d="M-1.97,-0.48 C144.74,148.52 334.36,-48.84 500.84,57.72 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: #0099ff;"></path>
+                                </svg>
                             </div>
                         </div>
                     </div>
-
-                    <!---->
                 </div>
-            </section>
-            <!---->
 
-        </div>
-        <footer class="main-footer bg-transparent" style="position: absolute; bottom: 0; width: 100%">
-            Tổng cục đường bộ Việt Nam
-            <div class="float-right d-none d-sm-inline-block">Trung tâm thí điểm của Tổng cục đường bộ Việt Nam</div>
-        </footer>
+                <!---->
+            </div>
+        </section>
     </div>
-</body>
-</html>
-<script>
-    localStorage.removeItem("userLogin");
-    //localStorage.removeItem("bagpsData");
-    //localStorage.removeItem("bafullname");
-    function login(event) {
-        event.preventDefault();
-        localStorage.removeItem("userLogin");
-        let user = $("#username").val();
-        let pass = $("#password").val();
-        if (user === "" || pass === "") {
-            $.notify("Cần nhập tài khoản và mật khẩu");
-            return false;
-        } else {
-            //$.notify("Đăng nhập thành công");
-            var obj = { "username": user, "password": pass }
-            callApi(`${REP_URL}user/login`, obj, "POST", function (item) {
-                console.log(item);
-                localStorage.setItem("userLogin", JSON.stringify(item));
-                //localStorage.setItem("bagps", item.authorization);
-                //localStorage.setItem("bafullname", item.fullname);
-                if (localStorage.getItem("userLogin") !== null) 
-                    window.location.href = "/he-thong-giam-sat-anh/trang-chu";
-                    //localStorage.setItem("bagpsData", JSON.stringify(item.features));
-                //window.location.href = "/he-thong-giam-sat-anh/trang-chu";
-            });
-        }
-        return false;
-    }
-</script>
+   
+

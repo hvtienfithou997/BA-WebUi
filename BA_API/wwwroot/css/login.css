@@ -1,0 +1,105 @@
+﻿.wrapper {
+    position: relative;
+}
+
+.login .main-header {
+    background-color: #3666C8 !important;
+    margin: 0px;
+    padding: 0px;
+    border-bottom: none;
+}
+.login .no-sidebar, .login .content-wrapper, .login .main-footer {
+    margin: 0px !important;
+}
+.login {
+    background-image: url("/img/bglogin1.png");
+    /*height: 100%;*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.login .card .card-header {
+    border-bottom: none;
+    background-color: #004488;
+}
+.login .card .card-title {
+    float: none;
+    color: #fff;
+    font-size: 18px;
+}
+.login .notification-box .card-body .notification-title {
+    font-size: 14px;
+}
+.login .notification-box .card-body {
+    margin: 30px;
+    border: 1px solid #4DA7C4;
+    box-sizing: border-box;
+    border-radius: 7px;
+}
+.logo-image {
+    position: relative;
+}
+/*.login .main-footer {
+    background-color: #3666C8 !important;
+    padding: 5px;
+    color: #fff;
+    border-top: none;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}*/
+.login .notification-box {
+    height: 100%;
+    color: #fff;
+    background-color: rgba(20, 56, 181, 0.75);
+}
+.login .card .card-header {
+    border-bottom: none;
+}
+.login .card .card-title {
+    float: none;
+    color: #fff;
+    font-size: 18px;
+}
+.login .notification-box .card-body {
+    margin: 30px;
+    border: 1px solid #4DA7C4;
+    box-sizing: border-box;
+    border-radius: 7px;
+}
+
+
+.login .notification-box .card-body .slideshow-container {
+    position: relative;
+}
+.login .login-box {
+    height: 100%;
+    color: #fff;
+    background-color: #004488 !important;
+    width: 100%;
+    
+}
+.form-group label {
+    font-weight: 400 !important;
+}
+.login .login-box .card-body .action-button {
+    margin-bottom: 0px;
+}
+.login .login-box .card-footer {
+    margin: 0px;
+    padding: 0px;
+}
+
+
+@media (min-width: 576px) {
+    .wrapper {
+        *display: none;
+    }
+}
+.main-footer {
+    background-color: #3666C8 !important;
+    padding: 5px;
+    color: #fff;
+    border-top: none;
+   
+}
