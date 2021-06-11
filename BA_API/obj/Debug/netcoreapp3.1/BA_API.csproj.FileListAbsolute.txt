@@ -1,3 +1,4 @@
+D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\wwwroot\data.json
 D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\appsettings.Development.json
 D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\appsettings.json
 D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\BA_API.exe
@@ -81,6 +82,7 @@ D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\ru\Microsoft.CodeAnalysis.Works
 D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.csproj.AssemblyReference.cache
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.AssemblyInfoInputs.cache
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.AssemblyInfo.cs
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.csproj.CoreCompileInputs.cache
@@ -94,6 +96,7 @@ D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.TagHelpers.input.cache
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.TagHelpers.output.cache
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.RazorCoreGenerate.cache
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\BaoCaoKhongTruyenDuLieu\DVTDL.cshtml.g.cs
+D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\BaoCaoKhongTruyenDuLieu\LienTiep.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\BaoCaoKhongTruyenDuLieu\SoGtvt.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\BaoCaoTongHop\AnhViPham.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\BaoCaoTongHop\DonViTruyenDuLieu.cshtml.g.cs
@@ -109,6 +112,7 @@ D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\BaoCaoTruyenDuLieu\
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\BaoCaoTruyenDuLieu\ToanQuoc.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\DanhMuc\DanhSachTinh.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\DanhMuc\DonViTruyenDuLieu.cshtml.g.cs
+D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\DanhMuc\LoaiHinhVanTai.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\DanhMuc\PhuongTien.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\DanhMuc\VanTai.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\Login\Login.cshtml.g.cs
@@ -132,5 +136,4 @@ D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.csproj.CopyComplete
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.dll
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.pdb
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.genruntimeconfig.cache
-D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\wwwroot\data.json
-D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.csproj.AssemblyReference.cache
+D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\Razor\Views\DanhMuc\LaiXe.cshtml.g.cs

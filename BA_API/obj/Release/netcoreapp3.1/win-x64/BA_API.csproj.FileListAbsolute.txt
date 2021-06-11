@@ -484,3 +484,5 @@ D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\Razor\Views\BaoCaoKho
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\Razor\Views\BaoCaoTongHop\AnhViPham.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\win-x64\wwwroot\data.json
 D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\win-x64\mscordaccore_amd64_amd64_4.700.21.21202.dll
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\Razor\Views\BaoCaoKhongTruyenDuLieu\LienTiep.cshtml.g.cs
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\Razor\Views\DanhMuc\LoaiHinhVanTai.cshtml.g.cs

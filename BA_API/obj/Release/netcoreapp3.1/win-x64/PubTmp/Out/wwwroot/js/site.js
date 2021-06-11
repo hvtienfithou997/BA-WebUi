@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     $("div label").addClass("font-weight-bold");
-    
+
 });
 var WAY_URL = "http://210.211.96.3:8080/image-waypoint-api/";
 var REP_URL = "http://210.211.96.3:8080/image-report-api/";
@@ -17,12 +17,12 @@ var USER_ROLE;
 
 var ALLOW_QUERY;
 if (user !== null) {
-     AUTH = user.authorization;
+    AUTH = user.authorization;
 
-     USER_ROLE = user.roleId;
+    USER_ROLE = user.roleId;
 
 
-     ALLOW_QUERY = user.allowQueryData;
+    ALLOW_QUERY = user.allowQueryData;
 }
 
 function addClassActive(selector1, selector2) {
@@ -196,9 +196,7 @@ function loadLoaiHinh() {
     <option value="800">Xe taxi tải </option>
     <option value="900">Xe đầu kéo </option>
     <option value="950">Xe trung chuyển </option>`;
-    //$("#vehicleType").select2();
     $("#vehicleType").html(res);
-    //$("#formVehicleType").select2();
     $("#formVehicleType").html(res);
 }
 
@@ -207,18 +205,7 @@ function datePickerOne() {
     var currMonth = String(d.getMonth()).padStart(2, '0');
     var currYear = d.getFullYear();
     var currDay = String(d.getDate()).padStart(2, '0');
-    var startDate = new Date(currYear, currMonth, 1);
     var endDate = new Date(currYear, currMonth, currDay);
-
-    //$('[name="date"]').datepicker({
-    //    format: 'dd/mm/yyyy'
-    //}).on('show',
-    //    function () {
-    //        try {
-    //            //$('[name="date"]').datepicker('setStartDate', $('[name="start"]').val());
-    //        } catch (e) {
-    //        }
-    //    });
     $('[name="date"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', endDate);
 }
 function datePicker() {
@@ -228,19 +215,6 @@ function datePicker() {
     var currDay = String(d.getDate()).padStart(2, '0');
     var startDate = new Date(currYear, currMonth, 1);
     var endDate = new Date(currYear, currMonth, currDay);
-
-    //$('[name="start"]').datepicker({
-    //    dateFormat: 'dd/mm/yyyy'
-    //}).on('show',
-    //    function () {
-    //        try {
-    //            //$('[name="start"]').datepicker('setEndDate', $('[name="end"]').val());
-    //        } catch (e) {
-    //        }
-    //    }).on('hide', function () {
-    //    });
-
-
     $('[name="start"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', startDate);
 
 
@@ -435,7 +409,6 @@ function getClockPref() {
     }
     return clockf;
 }
-
 
 function timezoneStart() {
     $(document).keypress(function (e) {

@@ -130,7 +130,7 @@
                 $("#report tbody").html(res);
                 $("#report tfoot tr").html(totalRes);
                 $("#report tfoot tr th").addClass("text-danger");
-                Paging(index, 'showResult', item.records);
+                Paging(0, 'showResult', item.records);
             } else {
                 $.notify(`Không tìm thấy kết quả nào`, "error");
             }

@@ -39,5 +39,19 @@ namespace BA_API.Controllers
         {
             return View();
         }
+
+
+        [Route("danh-muc/loai-hinh-van-tai")]
+        public IActionResult LoaiHinhVanTai()
+        {
+            return View();
+        }
+
+        [Route("danh-muc/lai-xe")]
+        public IActionResult LaiXe()
+        {
+            return View();
+        }
+
     }
 }

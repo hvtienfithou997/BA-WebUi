@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
     $("div label").addClass("font-weight-bold");
-    
+
 });
 var WAY_URL = "http://210.211.96.3:8080/image-waypoint-api/";
 var REP_URL = "http://210.211.96.3:8080/image-report-api/";
@@ -17,12 +17,12 @@ var USER_ROLE;
 
 var ALLOW_QUERY;
 if (user !== null) {
-     AUTH = user.authorization;
+    AUTH = user.authorization;
 
-     USER_ROLE = user.roleId;
+    USER_ROLE = user.roleId;
 
 
-     ALLOW_QUERY = user.allowQueryData;
+    ALLOW_QUERY = user.allowQueryData;
 }
 
 function addClassActive(selector1, selector2) {
@@ -136,30 +136,30 @@ function formatDate() {
 
     var yyyy = dt.getFullYear();
     if (dd < 10) {
-        dd = '0' + dd;
+        dd = `0${dd}`;
     }
     if (mm < 10) {
-        mm = '0' + mm;
+        mm = `0${mm}`;
     }
 
-    return dd + '/' + mm + '/' + yyyy;
+    return dd + "/" + mm + "/" + yyyy;
 }
 
 
 function Paging(page, functionName, totalRecord) {
 
     $(".total").html("Tổng số: " + totalRecord);
-    if (totalRecord === 0) { $('.pagination').html(''); return; }
+    if (totalRecord === 0) { $(".pagination").html(""); return; }
     let extSpace = false;
     let totalPage = Math.ceil(totalRecord / PAGE_SIZE);
 
     let htmlPaging = "";
-    if (page > 0)
+    if (page > 1)
         htmlPaging += `<li class="page-item" onclick="${functionName}(${page - 1})"><a class="page-link" href="#">Trước</a></li>`;
     else
-        htmlPaging += `<li class="page-item"><a class="page-link">Trước</a></li>`;
+        htmlPaging += `<li class="page-item disabled-custom"><a class="page-link">Trước</a></li>`;
 
-    for (var i = 1; i <= totalPage; i++) {
+    for (let i = 1; i <= totalPage; i++) {
         if (i > 2 && i < totalPage - 1) {
             if (!extSpace) {
                 extSpace = true;
@@ -177,14 +177,53 @@ function Paging(page, functionName, totalRecord) {
     if (page < totalPage)
         htmlPaging += `<li class="page-item" onclick="${functionName}(${page + 1})"><a class="page-link" href="#">Tiếp</a></li>`;
     else
-        htmlPaging += `<li class="page-item"><a class="page-link">Tiếp</a></li>`;
+        htmlPaging += `<li class="page-item disabled-custom"><a class="page-link">Tiếp</a></li>`;
 
     $('.pagination').html(htmlPaging);
 
 }
 
+function PagingClone(page, functionName, totalRecord) {
+
+    $(".total").html("Tổng số: " + totalRecord);
+    if (totalRecord === 0) { $('.pagination').html(''); return; }
+    let extSpace = false;
+    let totalPage = Math.ceil(totalRecord / PAGE_SIZE);
+
+    let htmlPaging = "";
+    if (page > 1)
+        htmlPaging += `<li class="page-item" onclick="${functionName}(${page - 1})"><a class="page-link" href="#">Trước</a></li>`;
+    else
+        htmlPaging += `<li class="page-item disabled-custom"><span class="page-link">Trước</span></li>`;
+
+    for (var i = 1; i <= totalPage; i++) {
+        if (i > 2 && i < totalPage - 1) {
+            if (!extSpace) {
+                extSpace = true;
+                htmlPaging += `...`;
+            }
+        } else {
+            if (page === (i)) {
+                htmlPaging += `<li class="page-item"><span class="page-link text-success" style="background-color:#4aa04a; color:white !important" font-weight-bold>${i}</span></li>`;
+            } else {
+                htmlPaging += `<li class="page-item" onclick="${functionName}(${i})"><a class="page-link" data-href="${i}" href="#">${i}</a></li>`;
+            }
+        }
+    }
+
+    if (page < totalPage)
+        htmlPaging += `<li class="page-item" onclick="${functionName}(${page + 1})"><a class="page-link" href="#">Tiếp</a></li>`;
+    else
+        htmlPaging += `<li class="page-item disabled-custom"><a class="page-link">Tiếp</a></li>`;
+
+    $('.pagination').html(htmlPaging);
+
+}
+
+
+
 function loadLoaiHinh() {
-    let res = `<option value="-1" >Tất cả</option>
+    const res = `<option value="-1" >Tất cả</option>
     <option value="0">Xe chưa phân loại </option>
     <option value="100">Xe tuyến cố định </option>
     <option value="200">Xe BUS </option>
@@ -196,9 +235,7 @@ function loadLoaiHinh() {
     <option value="800">Xe taxi tải </option>
     <option value="900">Xe đầu kéo </option>
     <option value="950">Xe trung chuyển </option>`;
-    //$("#vehicleType").select2();
     $("#vehicleType").html(res);
-    //$("#formVehicleType").select2();
     $("#formVehicleType").html(res);
 }
 
@@ -207,18 +244,7 @@ function datePickerOne() {
     var currMonth = String(d.getMonth()).padStart(2, '0');
     var currYear = d.getFullYear();
     var currDay = String(d.getDate()).padStart(2, '0');
-    var startDate = new Date(currYear, currMonth, 1);
     var endDate = new Date(currYear, currMonth, currDay);
-
-    //$('[name="date"]').datepicker({
-    //    format: 'dd/mm/yyyy'
-    //}).on('show',
-    //    function () {
-    //        try {
-    //            //$('[name="date"]').datepicker('setStartDate', $('[name="start"]').val());
-    //        } catch (e) {
-    //        }
-    //    });
     $('[name="date"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', endDate);
 }
 function datePicker() {
@@ -228,19 +254,6 @@ function datePicker() {
     var currDay = String(d.getDate()).padStart(2, '0');
     var startDate = new Date(currYear, currMonth, 1);
     var endDate = new Date(currYear, currMonth, currDay);
-
-    //$('[name="start"]').datepicker({
-    //    dateFormat: 'dd/mm/yyyy'
-    //}).on('show',
-    //    function () {
-    //        try {
-    //            //$('[name="start"]').datepicker('setEndDate', $('[name="end"]').val());
-    //        } catch (e) {
-    //        }
-    //    }).on('hide', function () {
-    //    });
-
-
     $('[name="start"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', startDate);
 
 
@@ -435,7 +448,6 @@ function getClockPref() {
     }
     return clockf;
 }
-
 
 function timezoneStart() {
     $(document).keypress(function (e) {

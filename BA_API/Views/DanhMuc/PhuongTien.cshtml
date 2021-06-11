@@ -203,12 +203,7 @@
     var index ='@ViewBag.index';
 
     $(function () {
-
-        //$(".category-DANH_MUC").children("div").addClass("show");
-        //$(".category-DANH_MUC").children("div").find(".DANH_MUC_PHUONG_TIEN").addClass("active");
-
         addClassActive("category-DANH_MUC", "DANH_MUC_PHUONG_TIEN");
-
         $("#transmissionUnit").select2().select2('val', providerId);
         $("#department").select2().select2('val', departmentId);
         $("#transmissionUnit").select2();
@@ -220,7 +215,7 @@
         if (USER_ROLE === 2 || USER_ROLE === 3) {
             $("#department").prop("disabled", true);
             $("#formDepartment").prop("disabled", true);
-            
+
             setTimeout(function () {
                     loadSoGTVT(ALLOW_QUERY.Department);
                 },
@@ -228,19 +223,15 @@
         } else if (USER_ROLE === 4 || USER_ROLE === 5) {
             setTimeout(function () {
                     loadSoGTVT(ALLOW_QUERY.Department);
-                },
-                500);
+            },500);
             $("#department").prop("disabled", true);
             $("#transportUnit").prop("disabled", true);
         } else if (USER_ROLE === 6 || USER_ROLE === 7) {
             $("#transmissionUnit").val(ALLOW_QUERY.Provider);
             $("#transmissionUnit").prop("disabled", true);
         }
-
         //showResult(index);
     });
-
-    
 
     callApi(`${REP_URL}provider/all`, null, "GET", function (obj) {
         let res = "<option value='0'>Chọn đơn vị truyền dữ liệu</option>";

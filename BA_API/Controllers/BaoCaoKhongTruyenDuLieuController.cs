@@ -34,5 +34,11 @@ namespace BA_API.Controllers
 
             return View();
         }
+        [Route("bao-cao-khong-truyen-du-lieu/lien-tiep")]
+        public IActionResult LienTiep()
+        {
+            return View();
+        }
+
     }
 }

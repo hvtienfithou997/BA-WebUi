@@ -5,6 +5,16 @@
 }
 
 
+<div class="col-xl-12 col-lg-12" style="margin-bottom: 10px;">
+    <div class="row">
+        <div class="col-xl-8"></div>
+        <div class="col-xl-4" style="text-align: right">
+            <button name="btn-addNew" class="btn btn-success" data-toggle="modal" data-target=".modalEdit" onclick="clearBeforeSave()"><i class="fas fa-plus fa-fw"></i>Thêm</button>
+        </div>
+    </div>
+</div>
+
+
 <!-- Hiển thị dữ liệu-->
 <div class="col-xl-12 col-lg-12">
     <div class="card mb-4">
@@ -12,11 +22,12 @@
             <h6 class="m-0 font-weight-bold text-primary">Danh sách đơn vị truyền dữ liệu</h6>
         </div>
         <div class="table-responsive p-3">
-            <table id="report" class="table table-bordered text-center" style="color: black;text-align: left">
+            <table id="report" class="table table-bordered text-center" style="color: black; text-align: left">
                 <thead>
                     <tr>
                         <th>STT</th>
                         <th>Tên đơn vị truyền dữ liệu</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -29,6 +40,49 @@
     </div>
 </div>
 
+<div class="modal fade modalEdit" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <input type="text" hidden="hidden" id="id" value="0" />
+                <div class="mb-3">
+                    <label data-error="wrong" data-success="right" for="providerName">Tên đơn vị truyền dữ liệu :</label>
+                    <input type="text" id="providerName" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label data-error="wrong" data-success="right" for="providerName">Số điện thoại :</label>
+                    <input type="text" id="providerNumber" class="form-control">    
+                </div>
+                <div class="mb-3">
+                    <label data-error="wrong" data-success="right" for="providerEmail">Email :</label>
+                    <input type="text" id="providerEmail" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label data-error="wrong" data-success="right" for="providerUrl">Website :</label>
+                    <input type="text" id="providerUrl" class="form-control">
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-success d-none" name="btnAdd">Lưu</button>
+                <button class="btn btn-success" name="btnSave">Lưu</button>
+                @*<button class="btn btn-primary" name="btnSaveContinue">Lưu và tiếp tục</button>*@
+                <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="boxMessage">
+    <p id="msg"></p>
+    <button class="btn btn-light custom" onclick="cancel()">Hoàn tác</button>
+</div>
 <script>
 
     $(function () {
@@ -43,6 +97,10 @@
                 res += `<tr>`;
                 res += `<td class="text-left">${count}</td>`;
                 res += `<td class="text-left">${pro.name}</td>`;
+                res +=
+                    `<td><a href="" class="btn btn-primary btn-rounded" data-toggle="modal" data-target=".modalEdit" onclick="loadData('${
+                    pro.id}')">Sửa</a>&nbsp<button class="btn btn-danger btn-rounded" onclick="showDelete('${pro.id
+                    }')">Xóa</button></td>`;
                 res += "</tr>";
                 count++;
             });
@@ -53,4 +111,127 @@
             $("#report tbody tr").remove();
         }
     });
+
+
+    function add() {
+        let providerName = $("#providerName").val();
+        let providerNumber = $("#providerNumber").val();
+        let providerEmail = $("#providerEmail").val();
+        let providerUrl = $("#providerUrl").val();
+
+       
+        if (providerName === "") {
+            $.notify("Chưa nhập tên đơn vị truyền dữ liệu");
+            $("#providerName").focus();
+            return;
+        }
+
+        let obj = { "name": providerName, "phone": providerNumber, "email": providerEmail, "url": providerUrl }
+
+        //callApi(`${API_THONG_KE}provider/all`, null, "GET", function (item) {
+        callApi(`${API_THONG_KE}provider/add`, obj, "POST", function (item) {
+            $.notify("Thêm thành công", "success");
+            $('#modalEdit').modal('hide');
+        });
+    }
+
+    $("[name='btnAdd']").click(function () {
+        add();
+        clearData();
+    });
+
+    $("[name='btnSave']").click(function() {
+        editData();
+    });
+    function clearData() {
+        $("#id").val('');
+        $("#providerName").val('');
+        $("#providerName").focus();
+        $("#providerNumber").val("");
+        $("#providerEmail").val("");
+        $("#providerUrl").val("");
+    }
+
+
+    function clearBeforeSave() {
+        $(".modal-title").html("Thêm đơn vị truyền dữ liệu ");
+        $("[name='btnAdd']").removeClass("d-none");
+        $("[name='btnSave']").addClass("d-none");
+        clearData();
+    }
+
+    function loadData(id) {
+
+        $(".modal-title").html("Sửa thông tin đơn vị truyền dữ liệu ");
+        $("[name='btnAdd']").addClass("d-none");
+        $("[name='btnSave']").removeClass("d-none");
+
+        clearData();
+        callApi(`${API_THONG_KE}provider/view?id=${id}`, null, "GET", function (item) {
+            $("#providerName").val(item.name);
+            $("#id").val(item.id);
+            $("#providerNumber").val(item.phone);
+            $("#providerEmail").val(item.email);
+            $("#providerUrl").val(item.url);
+        });
+    }
+
+
+    function editData() {
+        let id = $("#id").val();
+        let providerName = $("#providerName").val();
+        let providerNumber = $("#providerNumber").val();
+        let providerEmail = $("#providerEmail").val();
+        let providerUrl = $("#providerUrl").val();
+
+        if (providerName === "") {
+            $.notify("Chưa nhập tên đơn vị truyền dữ liệu");
+            $("#providerName").focus();
+            return;
+        }
+
+        let obj = { "id": id, "name": providerName, "phone": providerNumber, "email": providerEmail, "url": providerUrl }
+
+        callApi(`${API_THONG_KE}provider/edit`, obj, "PUT", function (item) {
+            if(item.success)
+                $.notify("Sửa thành công", "success");
+            $('#modalEdit').modal('hide');
+
+        });
+    }
+    function cancel() {
+        clearInterval(interval);
+        document.getElementById("msg").innerHTML = "Đã hủy";
+        setTimeout(function () {
+            $("#boxMessage").removeClass("show");
+        }, 500);
+    }
+
+
+    var interval;
+    function showDelete(id) {
+        var timer = 3;
+        $("#boxMessage").addClass("show");
+        interval = setInterval(function () {
+            timer--;
+            document.getElementById("msg").innerHTML = "Dữ liệu sẽ được xóa sau: " + timer;
+            $("#boxMessage").addClass("show");
+            if (timer < 1) {
+                clearInterval(interval);
+                callApi(`${API_THONG_KE}provider/delete?id=${id}`, null, "DELETE", function (res) {
+                    $.notify("Xóa thành công", "success");
+                });
+                document.getElementById("msg").innerHTML = "Đã xóa";
+                setTimeout(function () {
+                    $("#boxMessage").removeClass("show");
+                }, 500);
+            }
+        }, 1000);
+    }
+
+
 </script>
+
+
+
+
