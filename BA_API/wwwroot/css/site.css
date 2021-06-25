@@ -296,3 +296,13 @@ span.select2-selection.select2-selection--single {
 #row-3 #row-child-1, #row-3 #row-child-2, #row-3 #row-child-3, #row-3 #row-child-4 {
     display: none;
 }
+.notify {
+    font-size: 85%;
+}
+
+.mb-1rem {
+    margin-bottom: 1rem;
+}
+.all {
+    margin-bottom: 0;
+}

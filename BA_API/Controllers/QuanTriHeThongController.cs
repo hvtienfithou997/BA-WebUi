@@ -42,5 +42,11 @@ namespace BA_API.Controllers
         {
             return View();
         }
+
+        [Route("quan-tri/quan-ly-thong-bao")]
+        public IActionResult QuanLyThongBao()
+        {
+            return View();
+        }
     }
 }

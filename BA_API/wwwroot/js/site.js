@@ -4,6 +4,8 @@
 });
 var WAY_URL = "http://210.211.96.3:8080/image-waypoint-api/";
 var REP_URL = "http://210.211.96.3:8080/image-report-api/";
+
+
 var API_THONG_KE = "http://210.211.96.4:8081/api/";
 var API_LHVT = "http://192.168.1.59:800/api/v1/transporttypelandmarks/lists?queryJson={%22FK_LanguageId%22:1}";
 var PAGE_SIZE = 75;
@@ -18,19 +20,20 @@ var USER_ROLE;
 var ALLOW_QUERY;
 if (user !== null) {
     AUTH = user.authorization;
-
     USER_ROLE = user.roleId;
-
-
     ALLOW_QUERY = user.allowQueryData;
 }
 
-function addClassActive(selector1, selector2) {
-    $("." + selector1).children("div").addClass("show");
-    $("." + selector1).children("div").find("." + selector2).addClass("active");
-    $("." + selector2).parent("div").parent("div").addClass("show");
+//setTimeout(function () {
+//    console.log(localStorage.removeItem("userLogin"));
+//    localStorage.removeItem("userLogin");
+//}, 1800000);
 
-    //console.log($("." + selector2).parent("div"));
+
+function addClassActive(selector1, selector2) {
+    $(`.${selector1}`).children("div").addClass("show");
+    $(`.${selector1}`).children("div").find("." + selector2).addClass("active");
+    $(`.${selector2}`).parent("div").parent("div").addClass("show");
 }
 
 
@@ -51,7 +54,7 @@ $.ajaxSetup({
         $("#div_loader").remove();
         if (request.status == 401) {
             let token_exp = request.getResponseHeader('token-expired');
-            if (token_exp != null && token_exp == 'true') {
+            if (token_exp != null && token_exp == "true") {
                 document.location.href = "/";
             }
         }
@@ -268,6 +271,29 @@ function datePicker() {
     //    });
     $('[name="end"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', endDate);
 }
+
+function datePicker1() {
+    var d = new Date();
+    var currMonth = String(d.getMonth()).padStart(2, '0');
+    var currYear = d.getFullYear();
+    var currDay = String(d.getDate() + 1).padStart(2, '0');
+    var startDate = new Date(currYear, currMonth, 1);
+    var endDate = new Date(currYear, currMonth, currDay);
+    $('[name="start"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', startDate);
+
+
+    //$('[name="end"]').datepicker({
+    //    dateFormat: 'dd/mm/yyyy'
+    //}).on('show',
+    //    function () {
+    //        try {
+    //            //$('[name="end"]').datepicker('setStartDate', $('[name="start"]').val());
+    //        } catch (e) {
+    //        }
+    //    });
+    $('[name="end"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', endDate);
+}
+
 Date.prototype.epochConverterGMTString = function () {
     if (typeof moment === "undefined") {
         return this.toUTCString();

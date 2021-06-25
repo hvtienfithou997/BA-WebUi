@@ -2517,6 +2517,9 @@ D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.CodeAnalysis.Razor.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.CodeAnalysis.Workspaces.dll
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.IdentityModel.Logging.dll
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
@@ -2532,6 +2535,7 @@ D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\System.Com
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\System.Composition.Hosting.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\System.Composition.Runtime.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\System.Composition.TypedParts.dll
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\System.IdentityModel.Tokens.Jwt.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\cs\Microsoft.CodeAnalysis.resources.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\de\Microsoft.CodeAnalysis.resources.dll
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\es\Microsoft.CodeAnalysis.resources.dll

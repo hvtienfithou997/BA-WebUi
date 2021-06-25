@@ -32,129 +32,131 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="~/lib/jquery/dist/jquery.datetimepicker.full.min.js"></script>
     <link href="~/css/jquery.datetimepicker.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
             integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
             crossorigin=""></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
 </head>
+
 <body id="page-top">
     <div id="wrapper">
         <!-- sidebar -->
-        <!--<a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("trangchu","trangchu")">
+        @*<a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("trangchu","trangchu")">
                 <div class="sidebar-brand-icon">
                     <img src="~/img/logo/tcdb.png">
                 </div>
                 <div class="sidebar-brand-text mx-3">hệ thống <br> giám sát ảnh</div>
-            </a>-->
+            </a>*@
+
 
 
         <!--Fake-->
         <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar1">
             @*<li class="nav-item">
-                <a class="nav-link" href="@Url.Action("trangchu","TrangChu")">
-                    <i class="far fa-fw fa-window-maximize"></i>
-                    <span>Trang chủ</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categoryReport" aria-expanded="true" aria-controls="categoryReport">
-                    <i class="fab fa-fw fa-wpforms"></i>
-                    <span>Báo cáo</span>
-                </a>
-                <div id="categoryReport" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar1">
-                    <div class="bg-white py-2 collapse-inner rounded" style="color: #fff !important">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#totalReport" aria-expanded="true" aria-controls="collapseForm">
-                            <i class="fab fa-fw fa-wpforms"></i>
-                            <span>Tổng hợp</span>
-                        </a>
-                        <div id="totalReport" class="collapse" aria-labelledby="headingTable" data-parent="#categoryReport">
-                            <div class="bg-white rp-color py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="@Url.Action("ToanQuoc","BaoCaoTongHop", new {type = "tong-hop"})">Toàn quốc</a>
-                                <a class="collapse-item" href="@Url.Action("SoGTVT","BaoCaoTongHop", new { type = "tong-hop"})">Sở GTVT</a>
-                                <a class="collapse-item" href="@Url.Action("DonViVanTai","BaoCaoTongHop", new {type = "tong-hop"})">Đơn vị vận tải</a>
-                                <a class="collapse-item" href="@Url.Action("DonViTruyenDuLieu","BaoCaoTongHop", new {type = "tong-hop"})">Đơn vị truyền dữ liệu</a>
-                                <a class="collapse-item" href="@Url.Action("PhuongTienViPham","BaoCaoTongHop", new {type = "tong-hop"})">Phương tiện vi phạm ảnh</a>
+                    <a class="nav-link" href="@Url.Action("trangchu","TrangChu")">
+                        <i class="far fa-fw fa-window-maximize"></i>
+                        <span>Trang chủ</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categoryReport" aria-expanded="true" aria-controls="categoryReport">
+                        <i class="fab fa-fw fa-wpforms"></i>
+                        <span>Báo cáo</span>
+                    </a>
+                    <div id="categoryReport" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar1">
+                        <div class="bg-white py-2 collapse-inner rounded" style="color: #fff !important">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#totalReport" aria-expanded="true" aria-controls="collapseForm">
+                                <i class="fab fa-fw fa-wpforms"></i>
+                                <span>Tổng hợp</span>
+                            </a>
+                            <div id="totalReport" class="collapse" aria-labelledby="headingTable" data-parent="#categoryReport">
+                                <div class="bg-white rp-color py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="@Url.Action("ToanQuoc","BaoCaoTongHop", new {type = "tong-hop"})">Toàn quốc</a>
+                                    <a class="collapse-item" href="@Url.Action("SoGTVT","BaoCaoTongHop", new { type = "tong-hop"})">Sở GTVT</a>
+                                    <a class="collapse-item" href="@Url.Action("DonViVanTai","BaoCaoTongHop", new {type = "tong-hop"})">Đơn vị vận tải</a>
+                                    <a class="collapse-item" href="@Url.Action("DonViTruyenDuLieu","BaoCaoTongHop", new {type = "tong-hop"})">Đơn vị truyền dữ liệu</a>
+                                    <a class="collapse-item" href="@Url.Action("PhuongTienViPham","BaoCaoTongHop", new {type = "tong-hop"})">Phương tiện vi phạm ảnh</a>
+                                </div>
                             </div>
-                        </div>
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#passDataReport" aria-expanded="true" aria-controls="collapseForm">
-                            <i class="fab fa-fw fa-wpforms"></i>
-                            <span>Truyền dữ liệu</span>
-                        </a>
-                        <div id="passDataReport" class="collapse" aria-labelledby="headingTable" data-parent="#categoryReport">
-                            <div class="bg-white rp-color py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="@Url.Action("ToanQuoc","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Toàn quốc</a>
-                                <a class="collapse-item" href="@Url.Action("SoGtvt","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Sở GTVT</a>
-                                <a class="collapse-item" href="@Url.Action("DonViVanTai","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Đơn vị vận tải</a>
-                                <a class="collapse-item" href="@Url.Action("DonViTruyenDuLieu","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Đơn vị truyền dữ liệu</a>
-                                <a class="collapse-item" href="@Url.Action("BienSoXe","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Biển số xe</a>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#passDataReport" aria-expanded="true" aria-controls="collapseForm">
+                                <i class="fab fa-fw fa-wpforms"></i>
+                                <span>Truyền dữ liệu</span>
+                            </a>
+                            <div id="passDataReport" class="collapse" aria-labelledby="headingTable" data-parent="#categoryReport">
+                                <div class="bg-white rp-color py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="@Url.Action("ToanQuoc","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Toàn quốc</a>
+                                    <a class="collapse-item" href="@Url.Action("SoGtvt","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Sở GTVT</a>
+                                    <a class="collapse-item" href="@Url.Action("DonViVanTai","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Đơn vị vận tải</a>
+                                    <a class="collapse-item" href="@Url.Action("DonViTruyenDuLieu","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Đơn vị truyền dữ liệu</a>
+                                    <a class="collapse-item" href="@Url.Action("BienSoXe","BaoCaoTruyenDuLieu", new {type="truyen-du-lieu"})">Biển số xe</a>
+                                </div>
                             </div>
-                        </div>
 
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#nonPassDataReport" aria-expanded="true" aria-controls="collapseForm">
-                            <i class="fab fa-fw fa-wpforms"></i>
-                            <span>Không truyền dữ liệu</span>
-                        </a>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#nonPassDataReport" aria-expanded="true" aria-controls="collapseForm">
+                                <i class="fab fa-fw fa-wpforms"></i>
+                                <span>Không truyền dữ liệu</span>
+                            </a>
 
-                        <div id="nonPassDataReport" class="collapse" aria-labelledby="headingTable" data-parent="#categoryReport">
-                            <div class="bg-white rp-color py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="">Toàn quốc</a>
-                                <a class="collapse-item" href="">Sở GTVT</a>
-                                <a class="collapse-item" href="">Đơn vị vận tải</a>
-                                <a class="collapse-item" href="">Thống kê truyền liên tiếp 7 ngày</a>
+                            <div id="nonPassDataReport" class="collapse" aria-labelledby="headingTable" data-parent="#categoryReport">
+                                <div class="bg-white rp-color py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="">Toàn quốc</a>
+                                    <a class="collapse-item" href="">Sở GTVT</a>
+                                    <a class="collapse-item" href="">Đơn vị vận tải</a>
+                                    <a class="collapse-item" href="">Thống kê truyền liên tiếp 7 ngày</a>
+                                </div>
                             </div>
-                        </div>
 
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#detailReport" aria-expanded="true" aria-controls="collapseForm">
-                            <i class="fab fa-fw fa-wpforms"></i>
-                            <span>Chi tiết</span>
-                        </a>
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#detailReport" aria-expanded="true" aria-controls="collapseForm">
+                                <i class="fab fa-fw fa-wpforms"></i>
+                                <span>Chi tiết</span>
+                            </a>
 
-                        <div id="detailReport" class="collapse" aria-labelledby="headingTable" data-parent="#categoryReport">
-                            <div class="bg-white rp-color py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="@Url.Action("LichSuHinhAnhLaiXe","BaoCaoTongHop", new {type = "chi-tiet"})">Lịch sử hình ảnh</a>
-                                <a class="collapse-item" href="">Ảnh vi phạm</a>
+                            <div id="detailReport" class="collapse" aria-labelledby="headingTable" data-parent="#categoryReport">
+                                <div class="bg-white rp-color py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="@Url.Action("LichSuHinhAnhLaiXe","BaoCaoTongHop", new {type = "chi-tiet"})">Lịch sử hình ảnh</a>
+                                    <a class="collapse-item" href="">Ảnh vi phạm</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categoryCategory" aria-expanded="true" aria-controls="collapseBootstrap">
-                    <i class="fas fa-fw fa-list"></i>
-                    <span>Danh mục</span>
-                </a>
-                <div id="categoryCategory" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar1">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("PhuongTien","DanhMuc")">Danh mục phương tiện</a>
-                        <a class="collapse-item" href="@Url.Action("VanTai","DanhMuc")">Danh mục vận tải</a>
-                        <a class="collapse-item" href="@Url.Action("DanhSachTinh","DanhMuc")">Danh sách tỉnh</a>
-                        <a class="collapse-item" href="@Url.Action("DonViTruyenDuLieu","DanhMuc")">Danh sách đơn vị <br> truyền dữ liệu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#categoryCategory" aria-expanded="true" aria-controls="collapseBootstrap">
+                        <i class="fas fa-fw fa-list"></i>
+                        <span>Danh mục</span>
+                    </a>
+                    <div id="categoryCategory" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar1">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="@Url.Action("PhuongTien","DanhMuc")">Danh mục phương tiện</a>
+                            <a class="collapse-item" href="@Url.Action("VanTai","DanhMuc")">Danh mục vận tải</a>
+                            <a class="collapse-item" href="@Url.Action("DanhSachTinh","DanhMuc")">Danh sách tỉnh</a>
+                            <a class="collapse-item" href="@Url.Action("DonViTruyenDuLieu","DanhMuc")">Danh sách đơn vị <br> truyền dữ liệu</a>
+                        </div>
                     </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#adminSystem" aria-expanded="true" aria-controls="collapseForm">
-                    <i class="fa fa-fw fa-users-cog"></i>
-                    <span>Quản trị hệ thống</span>
-                </a>
-                <div id="adminSystem" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar1">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("QuanLyNguoiDung","QuanTriHeThong")">Quản lý người dùng</a>
-                        <a class="collapse-item" href="@Url.Action("PhanQuyenHeThong","QuanTriHeThong")">Phân quyền hệ thống</a>
-                        <a class="collapse-item" href="@Url.Action("NhomNguoiDung","QuanTriHeThong")">Nhóm người dùng</a>
-                        <a class="collapse-item" href="@Url.Action("NhatKyTruyCap","QuanTriHeThong")">Nhật ký truy cập</a>
-                        <a class="collapse-item" href="@Url.Action("ChucNangHeThong","QuanTriHeThong")">Chức năng hệ thống</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#adminSystem" aria-expanded="true" aria-controls="collapseForm">
+                        <i class="fa fa-fw fa-users-cog"></i>
+                        <span>Quản trị hệ thống</span>
+                    </a>
+                    <div id="adminSystem" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar1">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="@Url.Action("QuanLyNguoiDung","QuanTriHeThong")">Quản lý người dùng</a>
+                            <a class="collapse-item" href="@Url.Action("PhanQuyenHeThong","QuanTriHeThong")">Phân quyền hệ thống</a>
+                            <a class="collapse-item" href="@Url.Action("NhomNguoiDung","QuanTriHeThong")">Nhóm người dùng</a>
+                            <a class="collapse-item" href="@Url.Action("NhatKyTruyCap","QuanTriHeThong")">Nhật ký truy cập</a>
+                            <a class="collapse-item" href="@Url.Action("ChucNangHeThong","QuanTriHeThong")">Chức năng hệ thống</a>
+                        </div>
                     </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-info"></i>
-                    <span>Thông tin cần biết</span>
-                </a>
-            </li>*@
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-fw fa-info"></i>
+                        <span>Thông tin cần biết</span>
+                    </a>
+                </li>*@
         </ul>
 
 
@@ -186,9 +188,9 @@
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
-                                <span class="badge badge-danger badge-counter">3+</span>
+                                <span class="badge badge-danger badge-counter notify d-none">+</span>
                             </a>
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown" style="z-index: 99999">
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in show-notify" aria-labelledby="alertsDropdown" style="z-index: 99999">
                                 <h6 class="dropdown-header">
                                     Trung tâm thông báo
                                 </h6>
@@ -378,6 +380,51 @@
 </html>
 
 <script type="text/javascript">
+
+    callApi(`${REP_URL}dashboard/notification`, null, "GET", function (item) {
+
+        if (item.records > 0) {
+            $(".notify").html(item.records);
+            $(".notify").removeClass("d-none");
+        }
+            
+        let html = `<h6 class="dropdown-header">Trung tâm thông báo</h6>`;
+
+        item.data.forEach(function (noti) {
+            var icon = "";
+            var bg = "";
+            if (noti.category === "Thông báo") {
+                icon = `<i class="fas fa-exclamation-triangle text-white"></i>`;
+                bg = "bg-warning";
+            }else if (noti.category === "Hướng dẫn") {
+                icon = `<i class="fas fa-file-alt text-white"></i>`;
+                bg = "bg-primary";
+            }
+            html += `<a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle ${bg}">
+                                            ${icon}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">${ new Date(noti.dateCreate).toLocaleTimeString()+ "-" +  new Date(noti.dateCreate).toLocaleDateString()}</div>
+                                        <span class="font-weight-bold" onclick='readNotice("${noti.id}")'>${noti.title}</span>
+                                        <div class="small text-gray-500">${noti.description}</div>
+                                    </div>
+                                </a>`;
+        });
+        html += `<a class="dropdown-item text-center small text-gray-500" href="/nguoi-dung/thong-bao">Xem tất cả</a>`;
+        $(".show-notify").html(html);
+    });
+
+    function readNotice(id) {
+        callApi(`${REP_URL}dashboard/notification/${id}`, null, "GET", function(item) {
+            if (item !== null)
+                location.href = `/nguoi-dung/thong-bao/${id}`;
+        });
+    }
+
+
     $(".table").addClass("table-striped");
     var authorization = localStorage.getItem("userLogin");
     if (authorization == null)
@@ -387,7 +434,8 @@
         var user = JSON.parse(localStorage.getItem("userLogin"));
         $(".user-full-name").html(user.fullname);
         var menu = user.features;
-        let html = ``;
+        let html = `<a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("trangchu","trangchu")">
+        <div class="sidebar-brand-icon"><img src="/img/logo/tcdb.png"></div><div class="sidebar-brand-text mx-3">Hệ thống <br> giám sát ảnh</div></a>`;
         let stt = 1;
         let arr = [];
         let arrChild = [];
@@ -397,18 +445,18 @@
             else
                 arrChild.push(res);
         });
-        var arrNumber = [24, 25, 26, 27, 29, 30, 31, 32, 35, 36];
+        var arrNumber = [24, 25, 26, 27, 29, 30, 31, 32, 35, 36, 37];
         arr.forEach(parent => {
             let sharpToText = "category-" + parent.code;
             html += `<li class="nav-item ${sharpToText}">`;
-            if (parent.featureId === 1 || parent.featureId === 33) {
+            if (parent.featureId === 1 || parent.featureId === 33 || parent.featureId === 38) {
                 html += `<a class="nav-link" href='/${parent.page}'>`;
             } else {
                 html += `<a class="nav-link collapsed" href="/${parent.page}" data-toggle="collapse" data-target="#row-${stt}" aria-expanded="true" aria-controls="row-${stt}">`;
             }
             html += `<i class="${parent.icon}"></i>`;
             html += `<span>${parent.name}</span>`;
-            html += `</a>`;            
+            html += `</a>`;
 
             html += `<div id="row-${stt}" class="collapse " aria-labelledby="headingForm" data-parent="#accordionSidebar1">`;
             html += `<div class="bg-white py-2 collapse-inner rounded" style="color: #fff !important">`;
@@ -459,11 +507,11 @@
 
     var curUrl = window.location.pathname;
     $("#logout").on('click',
-        function() {
+        function () {
             callApi(`${REP_URL}user/logout`,
                 null,
                 "POST",
-                function(obj) {
+                function (obj) {
                     localStorage.removeItem("userLogin");
                     window.location.href = "/login/login";
                 });

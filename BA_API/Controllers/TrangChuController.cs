@@ -16,5 +16,13 @@ namespace BA_API.Controllers
         {
             return View();
         }
+
+        [Route("nguoi-dung/thong-bao/{id?}")]
+        public IActionResult ThongBao(string id)
+        {
+            ViewBag.id = id;
+            return View();
+        }    
+
     }
 }

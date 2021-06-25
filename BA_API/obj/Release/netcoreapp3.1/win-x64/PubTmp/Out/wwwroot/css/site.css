@@ -27,10 +27,16 @@ a {
   color: #0366d6;
 }
 
+.disabled-custom {
+    pointer-events: none;
+    -ms-opacity:0.6;
+    opacity:0.6;
+}
+
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -289,4 +295,14 @@ span.select2-selection.select2-selection--single {
 
 #row-3 #row-child-1, #row-3 #row-child-2, #row-3 #row-child-3, #row-3 #row-child-4 {
     display: none;
+}
+.notify {
+    font-size: 85%;
+}
+
+.mb-1rem {
+    margin-bottom: 1rem;
+}
+.all {
+    margin-bottom: 0;
 }

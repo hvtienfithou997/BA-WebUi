@@ -136,3 +136,11 @@ D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\wwwroot\data.json
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\BA_API.csproj.AssemblyReference.cache
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\Razor\Views\BaoCaoKhongTruyenDuLieu\LienTiep.cshtml.g.cs
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\Razor\Views\DanhMuc\LoaiHinhVanTai.cshtml.g.cs
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\Razor\Views\DanhMuc\LaiXe.cshtml.g.cs
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\Razor\Views\QuanTriHeThong\QuanLyThongBao.cshtml.g.cs
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\Razor\Views\TrangChu\ThongBao.cshtml.g.cs
+D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+D:\BA_Work\BA_API\BA_API\bin\Release\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\Razor\Views\GiamSatAnh\GiamSatAnh.cshtml.g.cs

@@ -12,12 +12,12 @@
         <div class="table-responsive p-3">
             <table id="report" class="table table-bordered text-center" style="color: black; text-align: left">
                 <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Tên lái xe</th>
-                    <th>Số GPLX</th>
-                    <th>Thao tác</th>
-                </tr>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên lái xe</th>
+                        <th>Số GPLX</th>
+                        <th>Thao tác</th>
+                    </tr>
                 </thead>
                 <tbody></tbody>
                 <tfoot><tr></tr></tfoot>
@@ -58,17 +58,18 @@
 
 <script>
     var index = 1;
-    $(function() {
+    $(function () {
+        addClassActive("category-DANH_MUC", "DANH_MUC_LAI_XE");
         showResult(index);
     });
-    
+
     function showResult(index) {
-      
+
         $("#report tbody tr").remove();
         $("#report tfoot tr th").remove();
-       
+
         //
-        callApi(`http://localhost:1279/api/driver/get-all?page=${index}`, null, "GET", function (item) {
+        callApi(`${API_THONG_KE}driver/get-all?page=${index}`, null, "GET", function (item) {
             if (item.total > 0) {
                 $.notify("Tải dữ liệu thành công", "success");
                 let res = "";
@@ -82,28 +83,22 @@
                     res += "</tr>";
                     count++;
                 });
-
                 $("#report tbody").html(res);
-             
                 $("#report tfoot tr th").addClass("text-danger");
                 PagingClone(index, 'showResult', item.total);
-
             } else {
                 $.notify(`Không tìm thấy kết quả nào`, "error");
             }
-
         });
     }
 
 
     function loadData(id) {
-
         $(".modal-title").html("Sửa thông tin loại hình vận tải ");
         $("[name='btnAdd']").addClass("d-none");
         $("[name='btnSave']").removeClass("d-none");
-
         clearData();
-        callApi(`http://localhost:1279/api/driver/view?id=${id}`, null, "GET", function (item) {
+        callApi(`${API_THONG_KE}driver/view?id=${id}`, null, "GET", function (item) {
             $("#laiXeName").val(item.name);
             $("#id").val(item.id);
 
@@ -124,7 +119,7 @@
     function editData() {
         let id = $("#id").val();
         let laixe = $("#laiXeName").val();
-       
+
 
         if (laixe === "") {
             $.notify("Chưa nhập tên lái xe");
@@ -132,9 +127,9 @@
             return;
         }
 
-        let obj = { "id": id, "name": laixe}
+        let obj = { "id": id, "name": laixe }
 
-        callApi(`http://localhost:1279/api/driver/edit`, obj, "PUT", function (item) {
+        callApi(`${API_THONG_KE}driver/edit`, obj, "PUT", function (item) {
             if (item.success)
                 $.notify("Sửa thành công", "success");
             $('#modalEdit').modal('hide');
