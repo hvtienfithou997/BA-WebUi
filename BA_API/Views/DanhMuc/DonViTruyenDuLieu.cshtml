@@ -1,9 +1,7 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Danh sách đơn vị truyền dữ liệu";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 
 <div class="col-xl-12 col-lg-12" style="margin-bottom: 10px;">
     <div class="row">
@@ -13,7 +11,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Hiển thị dữ liệu-->
 <div class="col-xl-12 col-lg-12">
@@ -57,7 +54,7 @@
                 </div>
                 <div class="mb-3">
                     <label data-error="wrong" data-success="right" for="providerName">Số điện thoại :</label>
-                    <input type="text" id="providerNumber" class="form-control">    
+                    <input type="text" id="providerNumber" class="form-control">
                 </div>
                 <div class="mb-3">
                     <label data-error="wrong" data-success="right" for="providerEmail">Email :</label>
@@ -67,7 +64,6 @@
                     <label data-error="wrong" data-success="right" for="providerUrl">Website :</label>
                     <input type="text" id="providerUrl" class="form-control">
                 </div>
-
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button class="btn btn-success d-none" name="btnAdd">Lưu</button>
@@ -98,8 +94,7 @@
                 res += `<td class="text-left">${count}</td>`;
                 res += `<td class="text-left">${pro.name}</td>`;
                 res +=
-                    `<td><a href="" class="btn btn-primary btn-rounded" data-toggle="modal" data-target=".modalEdit" onclick="loadData('${
-                    pro.id}')">Sửa</a>&nbsp<button class="btn btn-danger btn-rounded" onclick="showDelete('${pro.id
+                    `<td><a href="" class="btn btn-primary btn-rounded" data-toggle="modal" data-target=".modalEdit" onclick="loadData('${pro.id}')">Sửa</a>&nbsp<button class="btn btn-danger btn-rounded" onclick="showDelete('${pro.id
                     }')">Xóa</button></td>`;
                 res += "</tr>";
                 count++;
@@ -112,14 +107,12 @@
         }
     });
 
-
     function add() {
         let providerName = $("#providerName").val();
         let providerNumber = $("#providerNumber").val();
         let providerEmail = $("#providerEmail").val();
         let providerUrl = $("#providerUrl").val();
 
-       
         if (providerName === "") {
             $.notify("Chưa nhập tên đơn vị truyền dữ liệu");
             $("#providerName").focus();
@@ -140,7 +133,7 @@
         clearData();
     });
 
-    $("[name='btnSave']").click(function() {
+    $("[name='btnSave']").click(function () {
         editData();
     });
     function clearData() {
@@ -151,7 +144,6 @@
         $("#providerEmail").val("");
         $("#providerUrl").val("");
     }
-
 
     function clearBeforeSave() {
         $(".modal-title").html("Thêm đơn vị truyền dữ liệu ");
@@ -176,7 +168,6 @@
         });
     }
 
-
     function editData() {
         let id = $("#id").val();
         let providerName = $("#providerName").val();
@@ -193,7 +184,7 @@
         let obj = { "id": id, "name": providerName, "phone": providerNumber, "email": providerEmail, "url": providerUrl }
 
         callApi(`${API_THONG_KE}provider/edit`, obj, "PUT", function (item) {
-            if(item.success)
+            if (item.success)
                 $.notify("Sửa thành công", "success");
             $('#modalEdit').modal('hide');
 
@@ -206,7 +197,6 @@
             $("#boxMessage").removeClass("show");
         }, 500);
     }
-
 
     var interval;
     function showDelete(id) {
@@ -228,10 +218,4 @@
             }
         }, 1000);
     }
-
-
 </script>
-
-
-
-

@@ -12,7 +12,7 @@
     margin: 0px !important;
 }
 .login {
-    background-image: url("/img/bglogin1.png");
+    background-image: url("/img/HxGN_SmartNet_Satellite_Positioning_Service_1680x885.jpg");
     /*height: 100%;*/
     background-position: center;
     background-repeat: no-repeat;
@@ -77,8 +77,10 @@
     color: #fff;
     background-color: #004488 !important;
     width: 100%;
-    
+    -ms-opacity: 0.9;
+    opacity: 0.9;    
 }
+
 .form-group label {
     font-weight: 400 !important;
 }

@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Lịch sử hình ảnh lái xe";
 }
 
@@ -15,7 +14,6 @@
     #embedIframe {
         padding: 0 15px 0 0;
     }
-
 
     #report2 {
         display: block;
@@ -57,7 +55,7 @@
     }
 
     #embedIframe {
-        height: 600px;
+        height: 100%;
     }
 </style>
 
@@ -69,7 +67,6 @@
                 <div class="col-xl-3 col-lg-3 ">
                     <label for="start">Từ ngày</label>
                     <input type="text" class="form-control" autocomplete="off" id="start" name="start" placeholder="Từ ngày">
-
                 </div>
                 <div class="col-xl-3 col-lg-3 ">
                     <label for="end">Đến ngày</label>
@@ -87,12 +84,30 @@
 
         <div class="row">
             <div class="col-md-4 col-xl-4 col-lg-4 ">
+
+                <div class="p-3 info-vehicle d-none">
+                    <div class="container-fluid">
+                        <div class="row" style="border: 3px solid #c0c0c0; -ms-border-radius: 10px; border-radius: 10px; background-color: rgb(40,44,52); text-shadow: 1px 1px #5f9ea0; color: white; padding: 15px 0;">
+                            <div class="col-md-7" style="border-right: 1px solid gainsboro">
+                                <h6><i class="fa fa-home"></i> <span class="info-1"> </span></h6>
+                                <h6><i class="fa fa-building"></i> <span class="info-2"></span></h6>
+                                <h6><i class="fa fa-handshake"></i> <span class="info-3"></span></h6>
+                                <h6><i class="fa fa-phone-square"></i> <span class="info-4"></span></h6>
+                            </div>
+                            <div class="col-md-5">
+                                <h3><i class="fa fa-car"></i> <span class="info-5"></span></h3>
+                                <p><i class="fa fa-search"></i> <span class="info-6"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="table-responsive p-3">
-                    <table id="report2" class="table table-bordered text-center" style="color: black;text-align: left">
-                        <thead>
+                    <table id="report2" class="table table-bordered text-center" style="color: black; text-align: left">
+                        <thead class="thead-dark">
                             <tr>
+                                <th>Giấy phép Lx</th>
                                 <th>Địa chỉ</th>
-                                <!--<th>Tốc độ</th>-->
                                 <th>Thời gian</th>
                             </tr>
                         </thead>
@@ -102,10 +117,8 @@
             </div>
             <div class="col-md-8 col-xl-8 col-lg-8" style="position: relative; padding: 0 20px 0 0;">
                 <div id="image" class="image">
-
                 </div>
                 <div id="embedIframe">
-
                 </div>
             </div>
         </div>
@@ -153,13 +166,13 @@
     //datePicker();
     $(function () {
         addClassActive("category-BAO_CAO", "BAO_CAO_CHI_TIET_HANH_TRINH");
-       
+
         $('.map-btn').click(function (event) {
             event.preventDefault();
             var lat = 10.829619407653809;
             var lng = 106.76204681396484;
             showMap(lat, lng);
-        });        
+        });
         $('#report2 tbody').on('click', 'tr', function () {
             $("#embedIframe").append(DIV_LOADING);
             var lat = $(this).attr("data-latitude");
@@ -180,7 +193,6 @@
         ////let iframe = `<iframe width="100%" height="600px" src="${src}"></iframe>`;
         //$("#embedIframe").html(src);
 
-
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibXJ0aWVuMDIzIiwiYSI6ImNrcDR4NW1oaDBnaWEyd3MxMnhtcnFjMjEifQ.s2ANDHDH7Fsdtiy9MN1AQA', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
@@ -190,14 +202,13 @@
             accessToken: 'pk.eyJ1IjoibXJ0aWVuMDIzIiwiYSI6ImNrcDR4NW1oaDBnaWEyd3MxMnhtcnFjMjEifQ.s2ANDHDH7Fsdtiy9MN1AQA'
         }).addTo(mymap);
 
-        var marker = L.marker([lat, lng]).addTo(mymap).bindPopup(`<img width="300" height="250" src="${urlImg}"/>`).openPopup();;
+        var marker = L.marker([lat, lng]).addTo(mymap).bindPopup(`<img width="300" height="250" src="${urlImg}" />`).openPopup();;
         //$("#image").css("background-image", `url(${urlImg})`);
     }
     //
 </script>
 
 <script>
-
 
     var plate = '@ViewBag.plate';
     var start = @ViewBag.start;
@@ -238,12 +249,10 @@
             });
         }
 
-
         $("#licensePlate").val(plate);
 
         if (plate !== "")
             showResult2(index);
-
 
     });
 
@@ -252,8 +261,8 @@
         showResult2();
     });
 
-
     function showResult2(index) {
+
         $("#div_loader").remove();
         var licensePlate = $("#licensePlate").val();
         var start = $("#start").val();
@@ -270,6 +279,7 @@
                 let count = 1;
                 item.forEach(function (pro) {
                     res += `<tr data-latitude='${pro.latitude}' data-longitude='${pro.longitude}' data-img='${pro.image_url}'>`;
+                    res += `<td>${pro.driver_license}</td>`;
                     if (pro.address !== "" || pro.address !== null) res += `<td class='textDisplay' title='${pro.address}'><code>${pro.address}</code></td>`;else res += `<td></td>`;
 
                     res += `<td>${pro.stime}</td>`;
@@ -285,6 +295,30 @@
             }
             $("#div_loader").remove();
         });
+        loadDetailVehicle(licensePlate);
+    }
+
+    function loadDetailVehicle(licensePlate) {
+        $(".info-vehicle").removeClass('d-none');
+        //var licensePlate = $("#licensePlate").val();
+        clear();
+        callApi(`${REP_URL}vehicle/${licensePlate}/${start}/${end}`, null, "GET", function (item) {
+            $(".info-1").html(item.departmentName);
+            $(".info-2").html(item.providerName);
+            $(".info-3").html(item.companyName);
+            $(".info-4").html(item.phone);
+            $(".info-5").html(item.vehicle);
+            $(".info-6").html("Loại xe: " + item.vehicleTypeString);
+            $("#div_loader").remove();
+        });
+    }
+
+    function clear() {
+        $(".info-1").html("");
+        $(".info-2").html("");
+        $(".info-3").html("");
+        $(".info-4").html("");
+        $(".info-5").html("");
+        $(".info-6").html("");
     }
 </script>
-

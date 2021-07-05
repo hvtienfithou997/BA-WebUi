@@ -16,6 +16,7 @@ D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\im
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\img\drvnlogin 1.png
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\img\error.svg
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\img\girl.png
+D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\img\HxGN_SmartNet_Satellite_Positioning_Service_1680x885.jpg
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\img\innovation.svg
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\img\logo\logo-tcdb.png
 D:\BA_Work\BA_API\BA_API\obj\Release\netcoreapp3.1\win-x64\PubTmp\Out\wwwroot\img\logo\logo.ai
