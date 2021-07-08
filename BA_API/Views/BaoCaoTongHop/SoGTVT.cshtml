@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Sở giao thông vận tải";
 }
 
@@ -44,7 +43,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Báo cáo tổng hợp sở giao thông vận tải</h6>
             <h6 class="total font-weight-bold"></h6>
             @*<div id="dvjson"></div>
-            <button class="btn btn-success" name="exportToExcel">Xuất Excel</button>*@
+                <button class="btn btn-success" name="exportToExcel">Xuất Excel</button>*@
         </div>
         <div class="table-responsive p-3">
             <table id="synthesisReport" class="table table-bordered text-center" style="color: black">
@@ -72,7 +71,6 @@
 </div>
 @*<script src="~/js/bao-cao.js"></script>*@
 
-
 <script>
     var id = '@ViewBag.id';
     var start = '@ViewBag.start';
@@ -80,13 +78,13 @@
     var vehicleType = '@ViewBag.vehicleType';
     var index = '@ViewBag.index';
     $(document).ready(function () {
-            
+
         addClassActive("category-BAO_CAO", "BAO_CAO_TONG_HOP_SO_GTVT");
-            
+
         datePicker();
         loadLoaiHinh();
         //$("#vehicleType").val(vehicleType);
-        
+
         loadSoGTVT(0);
         if (USER_ROLE === 2 || USER_ROLE === 3) {
             $("#department").prop("disabled", true);
@@ -99,12 +97,9 @@
             $("#transportUnit").prop("disabled", true);
         } else if (USER_ROLE === 6 || USER_ROLE === 7) {
             $("#transmissionUnit").prop("disabled", true);
-            
-        } 
-        
-        
-    
-        
+
+        }
+
         if (start > 0)
             $('[name="start"]').datepicker({ format: 'dd/mm/yyyy'}).datepicker('setDate', EpochToHuman(start));
         if (end > 0)
@@ -187,8 +182,4 @@
             }
         });
     }
-
-  
-
 </script>
-

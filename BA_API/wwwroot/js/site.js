@@ -1,10 +1,8 @@
 ﻿$(document).ready(function () {
     $("div label").addClass("font-weight-bold");
-
 });
 var WAY_URL = "http://210.211.96.3:8080/image-waypoint-api/";
 var REP_URL = "http://210.211.96.3:8080/image-report-api/";
-
 
 var API_THONG_KE = "http://210.211.96.4:8081/api/";
 var API_LHVT = "http://192.168.1.59:800/api/v1/transporttypelandmarks/lists?queryJson={%22FK_LanguageId%22:1}";
@@ -29,13 +27,20 @@ if (user !== null) {
 //    localStorage.removeItem("userLogin");
 //}, 1800000);
 
+function epochToTime(str) {
+    if (str === 0)
+        return "";
+    var date = new Date(str * 1000),
+        month = ("0" + (date.getMonth() + 1)).slice(-2),
+        day = ("0" + date.getDate()).slice(-2);
+    return `${[date.getHours().toString().padStart(2, '0'), date.getMinutes().toString().padStart(2, '0'), date.getSeconds().toString().padStart(2, '0')].join(":")} ${[day, month, date.getFullYear()].join("-")}`;
+}
 
 function addClassActive(selector1, selector2) {
     $(`.${selector1}`).children("div").addClass("show");
     $(`.${selector1}`).children("div").find("." + selector2).addClass("active");
     $(`.${selector2}`).parent("div").parent("div").addClass("show");
 }
-
 
 $.ajaxSetup({
     contentType: 'application/json',
@@ -47,6 +52,7 @@ $.ajaxSetup({
     beforeSend: function (xhr) {
         xhr.setRequestHeader("Authorization", AUTH);
         $("#container-wrapper").append(DIV_LOADING);
+        $("#report2").append(DIV_LOADING);
     },
     success: function (data, textStatus, request) {
     },
@@ -125,11 +131,9 @@ function callApi(url, obj, method, callback) {
     }
 }
 
-
 function EpochToDate(timestamp) {
     var d = new Date(timestamp);
     console.log(d);
-
 }
 
 function formatDate() {
@@ -148,9 +152,7 @@ function formatDate() {
     return dd + "/" + mm + "/" + yyyy;
 }
 
-
 function Paging(page, functionName, totalRecord) {
-
     $(".total").html("Tổng số: " + totalRecord);
     if (totalRecord === 0) { $(".pagination").html(""); return; }
     let extSpace = false;
@@ -183,11 +185,9 @@ function Paging(page, functionName, totalRecord) {
         htmlPaging += `<li class="page-item disabled-custom"><a class="page-link">Tiếp</a></li>`;
 
     $('.pagination').html(htmlPaging);
-
 }
 
 function PagingClone(page, functionName, totalRecord) {
-
     $(".total").html("Tổng số: " + totalRecord);
     if (totalRecord === 0) { $('.pagination').html(''); return; }
     let extSpace = false;
@@ -220,10 +220,7 @@ function PagingClone(page, functionName, totalRecord) {
         htmlPaging += `<li class="page-item disabled-custom"><a class="page-link">Tiếp</a></li>`;
 
     $('.pagination').html(htmlPaging);
-
 }
-
-
 
 function loadLoaiHinh() {
     const res = `<option value="-1" >Tất cả</option>
@@ -259,7 +256,6 @@ function datePicker() {
     var endDate = new Date(currYear, currMonth, currDay);
     $('[name="start"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', startDate);
 
-
     //$('[name="end"]').datepicker({
     //    dateFormat: 'dd/mm/yyyy'
     //}).on('show',
@@ -280,7 +276,6 @@ function datePicker1() {
     var startDate = new Date(currYear, currMonth, 1);
     var endDate = new Date(currYear, currMonth, currDay);
     $('[name="start"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', startDate);
-
 
     //$('[name="end"]').datepicker({
     //    dateFormat: 'dd/mm/yyyy'
@@ -425,7 +420,6 @@ function EpochToHuman(timestamp) {
         outputtext += "<b" + cn + ">GMT</b>: " + convertedDate;
         outputtext += "<br/><b" + cn + ">Your time zone</b>: <span title=\"" + datum.toDateString() + " " + datum.toTimeString() + "\">" + datum.epochConverterLocaleString(1) + "</span>";
 
-
         let d = new Date(datum.epochConverterLocaleString(1));
 
         return datum;
@@ -433,7 +427,6 @@ function EpochToHuman(timestamp) {
         outputtext += errormessage;
     }
 }
-
 
 function getTime(o, t) {
     o = o || 0;
@@ -451,7 +444,6 @@ function getTime(o, t) {
     if (hex) res = res.toString(16).toUpperCase();
     return res;
 }
-
 
 function getTzPref() {
     var tzpref = 1;
@@ -507,7 +499,6 @@ function kp(id) {
     $('#' + id).select();
 }
 
-
 function isValidDate(d) {
     if (Object.prototype.toString.call(d) !== "[object Date]")
         return false;
@@ -527,7 +518,6 @@ function Ax() {
         return 0;
     }
 }
-
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
@@ -554,7 +544,6 @@ function regexInput(input) {
 
 var interval = (1000 * 60 * 60 * 24);
 function SetDefaultDateTime() {
-
     //let dt = new Date().toLocaleDateString();
     var formatDt = formatDate();
     let startOfDay = (ConvertToUnix(formatDt) / interval) * interval;

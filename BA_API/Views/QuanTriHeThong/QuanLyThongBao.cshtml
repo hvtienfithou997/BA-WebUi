@@ -1,0 +1,460 @@
+﻿
+@{
+    ViewData["Title"] = "Quản lý thông báo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .select2 {
+        width: 100% !important;
+    }
+</style>
+<script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+
+<!-- Khu vực tìm kiếm -->
+<div class="col-xl-12 col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">
+                Tra cứu thông tin
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-xl-4 col-lg-6">
+                    <label for="start">Từ ngày</label>
+                    <input type="text" class="form-control" id="start" name="start" placeholder="Từ ngày">
+                </div>
+                <div class="form-group col-xl-4 col-lg-6">
+                    <label for="end">Đến ngày</label>
+                    <input type="text" class="form-control" id="end" name="end" placeholder="Đến ngày">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2">
+                    <button type="submit" name="btn-result" class="btn btn-info" style="margin: auto">Xem danh sách</button>
+                    <button name="btn-addNew" class="btn btn-success" data-toggle="modal" data-target=".modalEdit" onclick="clearBeforeSave()"><i class="fas fa-plus fa-fw"></i>Thêm mới</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hiển thị dữ liệu-->
+<div class="col-xl-12 col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Báo cáo tổng hợp đơn vị vận tải</h6>
+            <h6 class="total font-weight-bold"></h6>
+        </div>
+        <div class="table-responsive p-3">
+            <table id="all-notify" class="table table-bordered text-center" style="color: black">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="width: 10px;">STT</th>
+                        <th rowspan="2">Tiêu đề thông báo</th>
+                        <th rowspan="2">Chuyên mục</th>
+                        <th rowspan="2">Ngày tạo</th>
+                        <th rowspan="2">Ngày công bố</th>
+                        <th rowspan="2">Người tạo</th>
+                        <th rowspan="2">Trạng thái</th>
+                        <th rowspan="2">Thao tác</th>
+                    </tr>
+
+                </thead>
+                <tbody></tbody>
+                <tfoot><tr></tr></tfoot>
+            </table>
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination"></ul>
+        </nav>
+    </div>
+</div>
+
+<div class="modal fade modalEdit" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="padding: 20px;">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br />
+            <input class="form-control" hidden="hidden" id="id" type="text" />
+            <div class="row form-group">
+                <div class="col-md-4"><label>Tiêu đề thông báo: </label></div>
+                <div class="col-md-8"><input class="form-control" id="title" type="text" /></div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4"><label>Danh mục user: </label></div>
+                <div class="col-md-8">
+                    <select class="form-control" id="category-user" multiple>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row form-group d-none all">
+
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-4"><label>Tóm tắt thông báo</label></div>
+                <div class="col-md-8"><input class="form-control" id="summary" type="text" /></div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4"><label>Chi tiết thông báo</label></div>
+                <div class="col-md-8"><textarea class="form-control" id="description" name="editor"></textarea></div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4"><label>Chuyên mục:</label></div>
+                <div class="col-md-8">
+                    <select class="form-control" id="categories" style="width: 30%">
+                        <option selected value="Thông báo">Thông báo</option>
+                        <option value="Hướng dẫn">Hướng dẫn</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-success" name="btnPublish">Công bố</button>
+                <button class="btn btn-primary" name="btnDraft">Lưu nháp</button>
+                <button class="btn btn-success d-none" name="btnEditPublish">Công bố</button>
+                <button class="btn btn-primary d-none" name="btnEditDraft">Lưu nháp</button>
+                <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modalDetail" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="padding: 20px;">
+            <div class="modal-header text-center">
+                <h4 class="modal-title2 w-100 font-weight-bold">Chi tiết thông báo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br />
+            <div class="row" style="padding: 0px;">
+                <div id="viewThongBao" style="margin: 20px 50px; padding: 30px; padding-bottom: 60px; border: 1px solid white; box-shadow: 1px 4px 25px 3px #dadada; width: 100%;">
+                </div>
+            </div>
+            <hr />
+            <div class="row form-group">
+                <div class="col-md-4">
+                    Ngày tạo
+                </div>
+                <div class="col-md-8" id="dateCreate"></div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    Trạng thái
+                </div>
+                <div class="col-md-8" id="dStatus">
+
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    Danh sách người nhận
+                </div>
+                <div class="col-md-8" id="user-receive">
+
+                </div>
+            </div>
+
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="boxMessage">
+    <p id="msg"></p>
+    <button class="btn btn-light custom" onclick="cancel()">Hoàn tác</button>
+</div>
+<script>
+
+    $(function () {
+        addClassActive("category-QUAN_TRI_HE_THONG", "QUAN_TRI_HE_THONG_QUAN_LY_THONG_BAO");
+        datePicker1();
+        loadLoaiHinh();
+        CKEDITOR.replace('editor');
+        search();
+    });
+
+
+    $('#category-user').on('select2:select', function (e) {
+        //console.log(e.params.data);
+        if (e.params.data.selected) {
+            $(".all").removeClass("d-none");
+            let htmlTitle = `<div class="col-md-4 mb-1rem"><label class="font-weight-bold" id="title-${e.params.data.id}"></label></div>`;
+            let htm = `<div class='col-md-8 mb-1rem'><select class='form-control' multiple id='user-${e.params.data.id}' name='user-${e.params.data.id}'>`;
+            htm += "</select></div>";
+            $(".all").append(htmlTitle).append(htm);
+            callApi(`${API_THONG_KE}user/role/${e.params.data.id}`, null, "GET", function (res) {
+                let html = '';
+                res.forEach(function (pro) {
+                    html += ` <option value="${pro.username}">${pro.username}</option>`;
+                });
+                $(`#user-${e.params.data.id}`).html(html);
+                $(`#user-${e.params.data.id}`).select2();
+                $(`#title-${e.params.data.id}`).html("Người dùng " + e.params.data.text.toLowerCase());
+            });
+        }
+    });
+
+    $('#category-user').on("select2:unselect", function (e) {
+        if (e.params.data.selected === false) {
+            $(`#user-${e.params.data.id}`).select2('destroy');
+            $(`#user-${e.params.data.id}`).parent().remove();
+            $(`#user-${e.params.data.id}`).remove();
+            $(`#title-${e.params.data.id}`).parent().remove();
+            $(`#title-${e.params.data.id}`).remove();
+        }
+
+    });
+
+    function loadUserByGroup(idGroup) {
+        callApi(`${API_THONG_KE}role/${idGroup}`, null, "GET", function (res) {
+            //console.log(res);
+        });
+    }
+
+    var interval;
+    function showDelete(id) {
+        var timer = 3;
+        $("#boxMessage").addClass("show");
+        interval = setInterval(function () {
+            timer--;
+            document.getElementById("msg").innerHTML = "Dữ liệu sẽ được xóa sau: " + timer;
+            $("#boxMessage").addClass("show");
+            if (timer < 1) {
+                clearInterval(interval);
+                callApi(`${REP_URL}notifications/${id}`, null, "DELETE", function (res) {
+                    $.notify("Xóa thành công", "success");
+                });
+                document.getElementById("msg").innerHTML = "Đã xóa";
+                setTimeout(function () {
+                    $("#boxMessage").removeClass("show");
+                }, 500);
+            }
+        }, 1000);
+    }
+
+    function cancel() {
+        clearInterval(interval);
+        document.getElementById("msg").innerHTML = "Đã hủy";
+        setTimeout(function () {
+            $("#boxMessage").removeClass("show");
+        }, 500);
+    }
+
+    $("[name='btn-result']").click(function () {
+        search();
+    });
+
+    callApi(`${REP_URL}roles?name=`, null, "GET", function (item) {
+        //let res = ` <option value="0">Chọn nhóm người dùng</option>`;
+        let res = ``;
+        item.forEach(function (pro) {
+            res += ` <option value="${pro.id}">${pro.name}</option>`;
+        });
+        $("#category-user").html(res);
+        $("#category-user").select2();
+
+    });
+
+    function search() {
+        var start = $("#start").val();
+        var end = $("#end").val();
+        start = start !== "" ? ConvertToUnix(start) : 0;
+        end = end !== "" ? ConvertToUnix(end) : 0;
+        callApi(`${REP_URL}notifications/all?start=${start}&end=${end}&index=0`, null, "GET", function (res) {
+            let html = "";
+            let count = 1;
+            res.data.forEach(function (item) {
+                html += "<tr>";
+                html += `<td>${count}</td>`;
+                html += `<td class="text-left">${item.title}</td>`;
+                html += `<td class="text-left">${item.category}</td>`;
+                html += `<td class="text-left">${item.dateCreate}</td>`;
+                html += `<td class="text-left">${item.datePublic == null ? "Chưa công bố" : item.datePublic}</td>`;
+                html += `<td class="text-left">${item.createBy}</td>`;
+                html += `<td class="text-left">${item.statusName}</td>`;
+                html += `<td class="">`;
+                html += `<a href="" class="btn btn-success btn-rounded" data-toggle="modal" onclick="loadDetail('${item.id}')" title='Xem chi tiết thông báo' data-target=".modalDetail"><i class="fab fa-fw fa-wpforms"></i></a> `;
+                if (item.status === 0) {
+                    html += `<button class="btn btn-dark btn-rounded" title='Công bố thông báo' onclick="public('${item.id}')"><i class="fas fa-fw fa-upload"></i></button> `;
+                    html += `<a href="" class="btn btn-primary btn-rounded" title='Chỉnh sửa thông báo' data-toggle="modal" onclick="loadData('${item.id}')" data-target=".modalEdit"><i class="fas fa-fw fa-edit"></i></a> `;
+                }
+                html += `<a href="#" class="btn btn-danger btn-rounded" title='Xóa thông báo' onclick="showDelete('${item.id}')"><i class="fas fa-fw fa-trash"></i></a>`;
+                html += `</td>`;
+                html += "</tr>";
+                count++;
+            });
+            $("#all-notify tbody").html(html);
+            Paging(0, "search", res.records);
+        });
+    }
+
+
+    function loadDetail(id) {
+        callApi(`${REP_URL}notifications/${id}`, null, "GET", function (item) {
+            $("#viewThongBao").html(item.content);
+            $("#dateCreate").html(item.dateCreate);
+            $("#dStatus").html(item.statusName);
+            $("#user-receive").html(item.receivers_string);
+        });
+    }
+
+    function loadData(id) {
+        $("[name='btnDraft']").addClass("d-none");
+        $("[name='btnPublish']").addClass("d-none");
+        $("[name='btnEditDraft']").removeClass("d-none");
+        $("[name='btnEditPublish']").removeClass("d-none");
+        if (id !== "") {
+            $(".modal-title").html("Sửa thông tin ");
+            $(".all").children().remove();
+            $("#id").val("");
+            $("#title").val("");
+            $("#category-user").val([]).trigger('change');
+            $("#summary").val("");
+            CKEDITOR.instances['description'].setData('');
+            $("#categories").val("");
+            callApi(`${REP_URL}notifications/${id}`, null, "GET", function (item) {
+                var listRoleId = [];
+                $(".all").removeClass("d-none");
+                item.receivers.forEach(user => {
+                    callApi(`${REP_URL}user/${user}`, null, "GET", function (res) {
+                        listRoleId.push(res.roleId);
+                        $("#category-user").val(listRoleId).trigger('change');
+                        //////////////////////
+                        let htmlTitle = `<div class="col-md-4 mb-1rem"><label class="font-weight-bold" id="title-${res.roleId}"></label></div>`;
+                        let htm = `<div class='col-md-8 mb-1rem'><select class='form-control' multiple id='user-${res.roleId}' name='user-${res.roleId}'>`;
+                        htm += "</select></div>";
+                        $(".all").append(htmlTitle).append(htm);
+                        callApi(`${API_THONG_KE}user/role/${res.roleId}`, null, "GET", function (result) {
+                            //console.log(result);
+                            let html = '';
+                            result.forEach(function (pro) {
+                                html += ` <option value="${pro.username}">${pro.username}</option>`;
+                            });
+                            $(`#user-${res.roleId}`).html(html);
+                            $(`#user-${res.roleId}`).select2();
+                            $(`#user-${res.roleId}`).val(user).trigger('change');
+                            $(`#title-${res.roleId}`).html("Người dùng " + "123");
+                        });
+                    });
+                });
+
+                $("#title").val(item.title);
+                $("#summary").val(item.description);
+                $("#id").val(item.id);
+                CKEDITOR.instances['description'].setData(item.content);
+                $("#categories").val(item.category);
+            });
+        }
+    }
+
+    function clearBeforeSave() {
+        $("[name='btnDraft']").removeClass("d-none");
+        $("[name='btnPublish']").removeClass("d-none");
+        $("[name='btnEditDraft']").addClass("d-none");
+        $("[name='btnEditPublish']").addClass("d-none");
+        $(".modal-title").html("Tạo mới dữ liệu");
+        $(".all").children().remove();
+        $("#id").val("");
+        $("#title").val("");
+        $("#category-user").val([]).trigger('change');
+        $("#summary").val("");
+        $("#description").val("");
+        CKEDITOR.instances['description'].setData('');
+        $("#categories").val("");
+        $("#categories").val("");
+    }
+
+    $("[name='btnDraft']").click(function () {
+        add(0);
+    });
+
+    $("[name='btnPublish']").click(function () {
+        add(1);
+    });
+
+    $("[name='btnEditDraft']").click(function () {
+        edit(0);
+    });
+
+    $("[name='btnEditPublish']").click(function () {
+        edit(1);
+    });
+
+
+
+    var receivers = [];
+
+    function add(stt) {
+        receivers = [];
+        let id = $("#id").val();
+        let title = $("#title").val();
+        let categories = $("#categories").val();
+        let summary = $("#summary").val();
+        let description = CKEDITOR.instances['description'].getData();
+
+        $("select[name^='user-']").each(function (el) {
+            try {
+                let me = $(this).val();
+                me.forEach(item => {
+                    receivers.push(item);
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        });
+        let obj = { "title": title, "category": categories, "description": summary, "content": description, "receivers": receivers }
+        callApi(`${REP_URL}notifications?status=${stt}`, obj, "POST", function (item) {
+            $.notify("Thành công", "success");
+            $('#modalEdit').modal('hide');
+        });
+    }
+
+
+    function edit(stt) {
+        receivers = [];
+        let id = $("#id").val();
+        let title = $("#title").val();
+        let categories = $("#categories").val();
+        let summary = $("#summary").val();
+        let description = CKEDITOR.instances['description'].getData();
+
+        $("select[name^='user-']").each(function (el) {
+            try {
+                let me = $(this).val();
+                me.forEach(item => {
+                    receivers.push(item);
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        });
+        let obj = {"id": id, "title": title, "category": categories, "description": summary, "content": description, "receivers": receivers }
+        callApi(`${REP_URL}notifications?status=${stt}`, obj, "POST", function (item) {
+            $.notify("Thành công", "success");
+            $('#modalEdit').modal('hide');
+        });
+    }
+
+
+    function public(id) {
+        callApi(`${REP_URL}notifications/public/${id}`, null, "POST", function (item) {
+            $.notify("Thành công", "success");
+        });
+    }
+
+    // => bản thảo - chi tiết, công bố, sửa xóa
+    // => công bố  - chi tiết, xóa
+</script>
