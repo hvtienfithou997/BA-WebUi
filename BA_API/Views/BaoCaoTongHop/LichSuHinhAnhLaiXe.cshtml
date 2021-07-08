@@ -207,8 +207,16 @@
         let html = ``;
 
         urlImg.forEach(function (item) {
+<<<<<<< HEAD
             html += `<div><img width="280" height="230" class='img-responsive' style='padding-right:5px' src="${item.imageLocation}" /><h6>Channel: ${item.cameraChannel}</h6></div>`;
         });
+=======
+            //console.log(item)
+            html += `<div><img width="280" height="230" class='img-responsive' style='padding-right:5px' src="${item.imageLocation}" /><h6>Channel: ${item.cameraChannel}</h6></div>`;
+           
+
+        })
+>>>>>>> origin/tien
 
         html += ``;
 
@@ -284,6 +292,10 @@
         window.history.pushState(window.location.href, "Lịch sử hình ảnh lái xe", `?plate=${licensePlate}&start=${start}&end=${end}`);
         callApi(`${API_THONG_KE}processimage/image/${licensePlate}/${start}/${end}`, null, "GET", function (item) {
         //callApi(`${WAY_URL}waypoint/${licensePlate}/${start}/${end}`, null, "GET", function (item) {
+<<<<<<< HEAD
+=======
+            console.log(item)
+>>>>>>> origin/tien
             if (item.length > 0) {
                 $.notify("Tải dữ liệu thành công", "success");
                 let res = "";
