@@ -57,6 +57,12 @@
     #embedIframe {
         height: 100%;
     }
+
+    .leaflet-popup-content {
+        width: auto !important;
+        display: flex;
+        justify-content: center;
+    }
 </style>
 
 <div class="col-xl-12 col-lg-12">
@@ -178,6 +184,7 @@
             var lat = $(this).attr("data-latitude");
             var lng = $(this).attr("data-longitude");
             var urlImg = $(this).attr("data-img");
+            urlImg = JSON.parse(urlImg);
             showMap(lat, lng, urlImg);
             $("#div_loader").remove();
         });
@@ -187,11 +194,6 @@
     var mymap = L.map('embedIframe');
     function showMap(lat, lng, urlImg) {
         mymap.setView([lat, lng], 13);
-        ////let src = `https://maps.google.com/maps?q=${lat},${lng}&hl=es;z=14&amp;output=embed&z=14`;
-        //let src = `<iframe width="100%" height="600px" src="https://www.google.com/maps/d/u/0/embed?mid=1mAX0Ju4uf1Cl5MNTSBv4DT0OMW-Zkozs&ll=${lat},${lng}&z=14&showmaker=true" width="640" height="480"></iframe>`;
-        ////var src = `http://210.211.96.4:8080/he-thong-giam-sat-anh/trang-chu`;
-        ////let iframe = `<iframe width="100%" height="600px" src="${src}"></iframe>`;
-        //$("#embedIframe").html(src);
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibXJ0aWVuMDIzIiwiYSI6ImNrcDR4NW1oaDBnaWEyd3MxMnhtcnFjMjEifQ.s2ANDHDH7Fsdtiy9MN1AQA', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -202,7 +204,19 @@
             accessToken: 'pk.eyJ1IjoibXJ0aWVuMDIzIiwiYSI6ImNrcDR4NW1oaDBnaWEyd3MxMnhtcnFjMjEifQ.s2ANDHDH7Fsdtiy9MN1AQA'
         }).addTo(mymap);
 
-        var marker = L.marker([lat, lng]).addTo(mymap).bindPopup(`<img width="300" height="250" src="${urlImg}" />`).openPopup();;
+        let html = ``;
+
+        urlImg.forEach(function (item) {
+            //console.log(item)
+            html += `<div><img width="280" height="230" class='img-responsive' style='padding-right:5px' src="${item.imageLocation}" /><h6>Channel: ${item.cameraChannel}</h6></div>`;
+           
+
+        })
+
+        html += ``;
+
+        //var marker = L.marker([lat, lng]).addTo(mymap).bindPopup(`<img width="300" height="250" src="${urlImg}" />`).openPopup();
+        var marker = L.marker([lat, lng]).addTo(mymap).bindPopup(`${html}`).openPopup();
         //$("#image").css("background-image", `url(${urlImg})`);
     }
     //
@@ -269,20 +283,23 @@
         var end = $("#end").val();
         start = start !== "" ? strToDate(start) : 0;
         end = end !== "" ? strToDate(end) : 0;
-
+        $("#report2 tbody tr").remove();
+        $("#embedIframe iframe").remove();
         //$("#report tbody tr").remove();
         window.history.pushState(window.location.href, "Lịch sử hình ảnh lái xe", `?plate=${licensePlate}&start=${start}&end=${end}`);
-        callApi(`${WAY_URL}waypoint/${licensePlate}/${start}/${end}`, null, "GET", function (item) {
+        callApi(`${API_THONG_KE}processimage/image/${licensePlate}/${start}/${end}`, null, "GET", function (item) {
+        //callApi(`${WAY_URL}waypoint/${licensePlate}/${start}/${end}`, null, "GET", function (item) {
+            console.log(item)
             if (item.length > 0) {
                 $.notify("Tải dữ liệu thành công", "success");
                 let res = "";
                 let count = 1;
                 item.forEach(function (pro) {
-                    res += `<tr data-latitude='${pro.latitude}' data-longitude='${pro.longitude}' data-img='${pro.image_url}'>`;
-                    res += `<td>${pro.driver_license}</td>`;
-                    if (pro.address !== "" || pro.address !== null) res += `<td class='textDisplay' title='${pro.address}'><code>${pro.address}</code></td>`;else res += `<td></td>`;
-
-                    res += `<td>${pro.stime}</td>`;
+                    res += `<tr data-latitude='${pro.latitude}' data-longitude='${pro.longitude}' data-img='${JSON.stringify(pro.lstImageMap)}'>`;
+                    res += `<td>${pro.driverLicense}</td>`;
+                    //if (pro.address !== "" || pro.address !== null) res += `<td class='textDisplay' title='${pro.address}'><code>${pro.address}</code></td>`;else res += `<td></td>`;
+                    res += `<td class='textDisplay' title='Đang cập nhật'><code>Đang cập nhật</code></td>`;
+                    res += `<td>${epochToTime(pro.dateTime)}</td>`;
                     res += "</tr>";
                     count++;
                 });

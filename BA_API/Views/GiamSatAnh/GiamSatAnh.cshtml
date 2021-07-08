@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "Giám sát ảnh";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .pdb-15{
+        padding-bottom: 15px;
+    }
+</style>
+<div class="col-xl-12 col-lg-12">
+    <div class="form-group form-inline">
+        <input type="text" class="form-control" id="amount" placeholder="Số ảnh hiển thị" value="20" name="name" value="" />
+        <button class="btn btn-primary" onclick="result()">Xem</button>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách hình ảnh</h6>
+        </div>
+
+        <div id="imageWrapper">
+           
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        result();
+    })
+    function result() {
+        let amount = $("#amount").val();
+        callApi(`${API_THONG_KE}processimage/get-image?amount=${amount}`, null, "GET", function (res) {
+            if (res.length > 0) {
+                let html = "";
+                html += '<div class="row">';
+                res.forEach(function (item) {
+                    html += `<div class="col-md-3 pdb-15"><span onclick="forceDownload('${item.imageLocation}', 'image-${item.vehicle}-${item.dateTime}')"><img class='img-thumbnail img-responsive' src="${item.imageLocation}" alt="Not found"/></span></div>`
+                });
+                html += "</div>";
+                $("#imageWrapper").html(html);
+            }
+        });
+    }
+
+    function forceDownload(url, fileName) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "blob";
+        xhr.onload = function () {
+            var urlCreator = window.URL || window.webkitURL;
+            var imageUrl = urlCreator.createObjectURL(this.response);
+            var tag = document.createElement('a');
+            tag.href = imageUrl;
+            tag.download = fileName;
+            document.body.appendChild(tag);
+            tag.click();
+            document.body.removeChild(tag);
+        }
+        xhr.send();
+    }
+
+
+   
+
+</script>

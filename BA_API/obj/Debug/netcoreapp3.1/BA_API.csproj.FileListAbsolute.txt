@@ -86,6 +86,7 @@ D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\ru\Microsoft.CodeAnalysis.Works
 D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\BA_Work\BA_API\BA_API\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.csproj.AssemblyReference.cache
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.AssemblyInfoInputs.cache
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.AssemblyInfo.cs
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.csproj.CoreCompileInputs.cache
@@ -143,4 +144,3 @@ D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.csproj.CopyComplete
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.dll
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.pdb
 D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.genruntimeconfig.cache
-D:\BA_Work\BA_API\BA_API\obj\Debug\netcoreapp3.1\BA_API.csproj.AssemblyReference.cache

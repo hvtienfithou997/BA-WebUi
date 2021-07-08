@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewData["Title"] = "ThongBao";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-xl-12 col-lg-12">
+    <button class="btn btn-info btn-rounded mb-1rem" onclick="markAll()">Đánh dấu tất cả là đã đọc</button>
+    <br />
+    <div class="card mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách thông báo</h6>
+        </div>
+        <div class="table-responsive p-3">
+            <table id="all-notify" class="table table-bordered text-center" style="color: black; text-align: left">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tiêu đề</th>
+                        <th>Nội dung tóm tắt</th>
+                        <th>Thể loại</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot><tr></tr></tfoot>
+            </table>
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination"></ul>
+        </nav>
+    </div>
+</div>
+<div class="modal fade modalDetail" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="padding: 20px;">
+            <div class="modal-header text-center">
+                <h4 class="modal-title2 w-100 font-weight-bold">Chi tiết thông báo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="row" style="padding: 0 30px">
+                <div class="col-md-6"><div class="text-left" id="title"></div></div>
+                <div class="col-md-6"><div class="text-right" id="dateCreate"></div></div>
+            </div>
+            <div class="row" style="padding: 0px;">
+                <div id="viewThongBao" style="margin: 20px 50px; padding: 30px; padding-bottom: 60px; border: none; box-shadow: 1px 4px 25px 3px #dadada; width: 100%;">
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var id = '@ViewBag.id';
+
+    if (id !== "") {
+        $(".modalDetail").modal("show");
+        loadDetail(id);
+    }
+    callApi(`${REP_URL}dashboard/notification/all`, null, "GET", function (item) {
+        let html = ``;
+        let count = 1;
+        item.data.forEach(function (res) {
+            html += `<tr>`;
+            html += `<td>${count}</td>`;
+            html += `<td class="text-left">${res.title}</td>`;
+            html += `<td class="text-left">${res.description}</td>`;
+            html += `<td class="text-left">${res.category}</td>`;
+            html += `<td class=""><button class="btn btn-primary btn-rounded" data-toggle="modal" data-target=".modalDetail" onclick="loadDetail('${res.id}')">Xem chi tiết</button></td>`;
+            html += `</tr>`;
+            count++;
+        });
+        window.$("#all-notify tbody").html(html);
+    });
+
+    function loadDetail(nid) {
+        callApi(`${REP_URL}notifications/${nid}`, null, "GET", function (item) {
+            if (item !== "") {
+                $("#viewThongBao").html(item.content);
+                $("#dateCreate").html("Ngày thông báo: " + new Date(item.dateCreate).toLocaleDateString() + "-" + new Date(item.dateCreate).toLocaleTimeString());
+                $("#title").html(item.title);
+            } else {
+                $.notify("Không tìm thấy thông báo nào");
+            }
+        });
+    }
+    function markAll() {
+        callApi(`${REP_URL}dashboard/notification/all`, null, "POST", function (item) {
+            $.notify("Thao tác thành công!", "success");
+        });
+    }
+
+</script>
+

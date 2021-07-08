@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Nhật ký truy cập người dùng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -15,7 +14,7 @@
             <div class="row">
                 <div class="form-group col-xl-4 col-lg-6">
                     <label for="username">Tên đăng nhập</label>
-                    <input class="form-control" id="username" placeholder="Tên đăng nhập" />
+                    <input class="form-control" autocomplete="off" id="username" placeholder="Tên đăng nhập" />
                 </div>
                 <div class="form-group col-xl-4 col-lg-6">
                     <label for="start">Từ ngày</label>
@@ -67,9 +66,7 @@
 
     $(document).ready(function () {
 
-
         addClassActive("category-QUAN_TRI_HE_THONG", "QUAN_TRI_HE_THONG_NHAT_KY_TRUY_CAP");
-
             datePicker();
         if (start > 0)
             $('[name="start"]').datepicker({ format: 'dd/mm/yyyy' }).datepicker('setDate', EpochToHuman(start));
@@ -80,10 +77,7 @@
             $("#username").val(username);
             showResult(0);
         }
-
-
     });
-
 
     function showResult(index) {
         let username = $("#username").val();
@@ -94,7 +88,6 @@
         $("#report tbody tr").remove();
         $("#report tfoot tr th").remove();
         window.history.pushState(window.location.href, "Nhật ký truy cập", `?username=${username}&start=${start}&end=${end}&index=${index}`);
-
         callApi(`${REP_URL}user/log?username=${username}&start=${start}&end=${end}&index=${index}`, null, "GET", function (item) {
             if (item.records > 0) {
                 $.notify("Tải dữ liệu thành công", "success");
@@ -127,6 +120,4 @@
         index = 0;
         showResult(index);
     });
-
-
 </script>
