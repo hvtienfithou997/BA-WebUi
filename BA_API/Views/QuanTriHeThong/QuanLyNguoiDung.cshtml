@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Quản lý người dùng";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -50,7 +49,6 @@
                         <option value="2">Lock</option>
                     </select>
                 </div>
-
             </div>
             <div class="row">
 
@@ -153,7 +151,6 @@
     </div>
 </div>
 
-
 <div class="modal fade changePass" id="changePass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -173,7 +170,6 @@
                     <label data-error="wrong" data-success="right" for="">Mật khẩu </label>
                     <input type="text" id="passMoi" class="form-control">
                 </div>
-
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button class="btn btn-success" name="btnChange">Lưu</button>
@@ -213,7 +209,6 @@
             }
         });
 
-
         if (username !== "") {
             $("#username").val(username);
         }
@@ -240,7 +235,7 @@
 
                     item.data.forEach(function (pro) {
                         res += "<tr>";
-                        res += `<td><input type='checkbox' value='${pro.id}' name='choosed'/></td>`;
+                        res += `<td><input type='checkbox' value='${pro.id}' name='choosed' /></td>`;
                         res += `<td>${count}</td>`;
                         res += `<td class="text-left"><a href='/quan-tri/nhat-ky-truy-cap?username=${pro.username}&start=0&end=0&index=0'>${pro.username}</a></td>`;
                         res += `<td class="text-left">${pro.fullname}</td>`;
@@ -274,7 +269,6 @@
         save();
         $("#userGroup").val("");
     });
-
 
     function save() {
         let id = $("#id").val();
@@ -354,7 +348,6 @@
         loadSoGTVT("");
         loadDvtdl("");
     }
-
 
     callApi(`${REP_URL}roles?name=`, null, "GET", function (item) {
         let res = ` <option value="0">Chọn nhóm người dùng</option>`;
@@ -481,8 +474,6 @@
         }, 500);
     }
 
-
-    
     function loadSoGTVT(id) {
         let res = ``;
         callApi(`${REP_URL}department/all`, null, "GET", function (obj) {
@@ -511,7 +502,7 @@
             $("#company").html(res);
             if (idRef !== "")
                 $("#company").val(idRef);
-            
+
         });
     }
 
@@ -528,14 +519,12 @@
         });
     }
 
-
     function dvvtThuocSo(dvvt, idRef) {
         callApi(`${REP_URL}department/company/${dvvt}`, null, "GET", function (obj) {
             //let res = "<option value='-1'>Chọn đơn vị vận tải</option>";
             loadSoGTVT(obj.id);
             loadDVVT(obj.id, idRef);
         });
-       
-    }
 
+    }
 </script>

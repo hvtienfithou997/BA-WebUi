@@ -75,10 +75,6 @@
     </div>
 </div>
 
-
-
-
-
 <script>
     $(function () {
         addClassActive("category-BAO_CAO", "BAO_CAO_KHONG_TRUYEN_DL_LIEN_TIEP");
@@ -135,7 +131,7 @@
                     res += "<tr>";
                     res += `<td>${count}</td>`;
                     res += `<td class="text-left"><a href="/bao-cao-truyen-du-lieu/truyen-du-lieu/bien-so-xe?vehicle=${pro.vehicle}">${pro.vehicle}</a></td>`;
-                    res += `<td class="text-left">${pro.vehicleType}</td>`;
+                    res += `<td class="text-left">${pro.vehicleTypeName}</td>`;
                     res += `<td class="text-left">${pro.companyId}</td>`;
                     res += `<td class="text-left">${pro.providerId}</td>`;
                     res += `<td class="text-right">${pro.day}</td>`;
@@ -143,7 +139,7 @@
                     count++;
                 });
                 $("#result tbody").html(res);
-                //Paging(index, 'showResult', item.records);
+                //Paging(index, 'showResult', item.records);            
         });
     }
 

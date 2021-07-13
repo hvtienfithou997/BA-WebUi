@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace BA_API.Controllers
 {
     public class BaoCaoKhongTruyenDuLieuController : Controller
     {
         [Route("bao-cao-khong-truyen-du-lieu/so-gtvt")]
-        public IActionResult SoGtvt(string department, string companyId, string vehicle, int start, int end , int index = 0)
+        public IActionResult SoGtvt(string department, string companyId, string vehicle, int start, int end, int index = 0)
         {
             ViewBag.department = department;
             ViewBag.companyId = companyId;
@@ -17,7 +13,6 @@ namespace BA_API.Controllers
             ViewBag.start = start;
             ViewBag.end = end;
             ViewBag.index = index;
-
             return View();
         }
 
@@ -34,11 +29,11 @@ namespace BA_API.Controllers
 
             return View();
         }
+
         [Route("bao-cao-khong-truyen-du-lieu/lien-tiep")]
         public IActionResult LienTiep()
         {
             return View();
         }
-
     }
 }
