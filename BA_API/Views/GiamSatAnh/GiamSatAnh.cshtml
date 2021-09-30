@@ -1,10 +1,9 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Giám sát ảnh";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
-    .pdb-15{
+    .pdb-15 {
         padding-bottom: 15px;
     }
 </style>
@@ -19,11 +18,9 @@
         </div>
 
         <div id="imageWrapper">
-           
         </div>
     </div>
 </div>
-
 
 <script>
     $(function () {
@@ -36,7 +33,7 @@
                 let html = "";
                 html += '<div class="row">';
                 res.forEach(function (item) {
-                    html += `<div class="col-md-3 pdb-15"><span onclick="forceDownload('${item.imageLocation}', 'image-${item.vehicle}-${item.dateTime}')"><img class='img-thumbnail img-responsive' src="${item.imageLocation}" alt="Not found"/></span></div>`
+                    html += `<div class="col-md-3 pdb-15"><span onclick="downloadImage('${item.imageLocation}', 'image-${item.vehicle}-${item.dateTime}')"><img class='img-thumbnail img-responsive' src="${item.imageLocation}" alt="Not found" /></span></div>`
                 });
                 html += "</div>";
                 $("#imageWrapper").html(html);
@@ -61,7 +58,21 @@
         xhr.send();
     }
 
-
-   
-
+    function downloadImage(url, name) {
+        fetch(url)
+            .then(resp => resp.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;                
+                a.download = name + ".png";
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(() => alert('An error sorry'));
+    }
+    //cmt
+    
 </script>
